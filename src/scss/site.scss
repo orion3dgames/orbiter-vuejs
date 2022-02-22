@@ -1,0 +1,69 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : 14/12/2018, 9:26:47 AM
+    Author     : Orion
+*/
+
+@import "variables";
+
+@import "bootstrap-custom";
+
+body{
+  background: #F7F7F7;
+  padding: 0px;
+}
+
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
+  padding-right: 0;
+  padding-left: 0;
+  max-width: 768px;
+}
+
+$header-height: 56px;
+
+.game-container{
+  position:absolute;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  bottom: 0px;
+
+  .aframe-scene{
+    width: 100%;
+    height: 100%;
+  }
+
+  .game-header{
+    position:absolute;
+    width: 100%;
+    height: $header-height;
+    left: 0px;
+    top: 0px;
+  }
+
+  .game-area{
+    position:absolute;
+    width: 80%;
+    height: calc(100% - #{$header-height});
+    left: 0px;
+    top: $header-height;
+    border: 1px solid #EEE;
+  }
+
+  .game-sidebar{
+    position:absolute;
+    width: 20%;
+    height: calc(100% - #{$header-height});
+    right: 0px;
+    top: $header-height;
+    border-top: 1px solid #EEE;
+    padding: 15px;
+  }
+
+}
+
+
