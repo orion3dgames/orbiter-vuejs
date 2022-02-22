@@ -4,6 +4,21 @@ import router from './router'
 import Vuex from 'vuex'
 
 Vue.config.productionTip = false;
+Vue.config.ignoredElements = [
+  'a-scene',
+  'a-camera',
+  'a-box',
+  'a-image',
+  'a-asset',
+  'a-asset-item',
+  'a-assets',
+  'a-sphere',
+  'a-entity',
+  'a-cursor',
+  'a-mixin',
+  'a-sky',
+  'a-cylinder',
+];
 
 // import styles
 import "@/scss/site.scss";
@@ -19,14 +34,6 @@ Vue.component('game_layout', GameLayout);
 // VUEX
 Vue.use(Vuex);
 import store from './store'
-
-// IGNORE AFRAME
-Vue.config.ignoredElements = [
-  'a-scene',
-  'a-camera',
-  'a-box',
-  'a-image',
-]
 
 // INITIALIZE VUE
 new Vue({

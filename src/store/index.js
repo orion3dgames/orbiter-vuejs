@@ -30,8 +30,17 @@ function formatSessionPlayer(user){
     uid: user.uid,
     displayName: user.displayName,
     email: user.email,
-    score: 0,
-    symbol: user.symbol,
+    position: {
+      x: 0,
+      y: 0,
+      z: 0
+    },
+    rotation:{
+      x: 0,
+      y: 0,
+      z: 0
+    },
+    color: '#000000'
   };
 }
 
@@ -114,6 +123,18 @@ export default new Vuex.Store({
     session: (state) => (id) => {
       return state.sessions.find(session => session.uid == id);
     },
+    isUserInSession: (state) => (session_id) => {
+      let session = state.sessions.find(session => session.uid == session_id);
+      if(session){
+        for(const player in session.players){
+          if(player === state.user.uid){
+            return true;
+          }
+        }
+      }
+      return false;
+    },
+
     players(state) {
       return state.players;
     },
@@ -220,7 +241,7 @@ export default new Vuex.Store({
     async logout ({ commit }) {
       await signOut(auth)
       commit('CLEAR_USER')
-      //router.push('/')
+      router.push('/login')
     },
 
     addSession ({ commit, state}) {
@@ -231,17 +252,11 @@ export default new Vuex.Store({
         let session = {
           'uid': newSessionRef.key,
           'players': [],
-          'player_turn': "",
           'messages': "",
-          'play_board': [...state.DEFAULT_BOARD],
-          'started': 0,
-          'draw': 0,
           'creator': formatSessionPlayer(state.user),
-          'challenger': false,
-          'latest_winner': 'creator'
         };
         set(newSessionRef, session).then(() => {
-          set(ref(database, 'players/' +state.user.uid+'/sessions/'+newSessionRef.key+'/'), 'creator');
+          set(ref(database, 'sessions/'+newSessionRef.key+'/players/'+state.user.uid+'/'), formatSessionPlayer(state.user));
         });
         resolve(session);
       })

@@ -1,25 +1,19 @@
 <template>
   <div>
     <div class="btn-group w-100" role="group" aria-label="Game Options Buttons">
-      <button @click="leaveGame(session.uid)" class="btn btn-outline-danger" v-if="session.challenger && session.challenger.uid === user.uid">Leave</button>
-      <button @click="deleteGame(session.uid)" class="btn btn-outline-secondary" v-if="session.creator.uid === user.uid">Cancel</button>
-      <button @click="startGame(session.uid)" class="btn btn-primary" v-if="(session.challenger && session.creator) && session.started === 0">Start</button>
+      <button @click="leaveGame(session.uid)" class="btn btn-outline-danger" v-if="isUserInSession && session.creator.uid !== user.uid">Leave</button>
+      <button @click="deleteGame(session.uid)" class="btn btn-outline-secondary" v-if="session.creator.uid === user.uid">Delete Session</button>
     </div>
 
     <hr>
 
-    <h5>Players</h5>
+    <h5>Players Online</h5>
     <hr>
     <table class="table table-bordered table-sm">
       <tbody>
-      <tr>
-        <th>{{ session.creator.displayName }}</th>
-        <td class="text-center" width="100">{{ session.creator.score }}</td>
-      </tr>
-      <tr v-if="session.challenger">
-        <th>{{ session.challenger.displayName }}</th>
-        <td class="text-center">{{ session.challenger.score }}</td>
-      </tr>
+        <tr v-for="(player, index) in session.players" :key="index">
+          <th>{{ player.displayName }}</th>
+        </tr>
       </tbody>
     </table>
 
@@ -50,6 +44,11 @@ export default {
     return {
       chat_message:""
     }
+  },
+  computed: {
+    isUserInSession() {
+      return this.$store.getters.isUserInSession(this.session.uid);
+    },
   },
   methods: {
     leaveGame(uid){
