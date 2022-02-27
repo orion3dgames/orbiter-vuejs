@@ -3,12 +3,10 @@ import SAT from 'sat'
 
 class PlayerCharacter {
     constructor() {
+
         this.x = 0
         this.y = 0
         this.z = 0
-        this.rotation = 0
-        this.hitpoints = 100
-        this.isAlive = true
 
         this.position = {
             x: 0,
@@ -22,20 +20,16 @@ class PlayerCharacter {
             z: 0,
         }
 
+        this.material = {
+            color: "#FFFFFF"
+        }
+
         this.geometry = {
             primitive: 'box',
             height:0.5,
             width: 0.5,
             depth: 0.5,
         };
-
-        this.moveDirection = {
-            x: 0,
-            y: 0,
-            z: 0
-        }
-
-        this.speed = 400
 
         this.collider = new SAT.Circle(new SAT.Vector(this.x, this.y), 25)
     }

@@ -82,16 +82,19 @@ export default {
       client.connect('ws://localhost:8079', {});
 
       // run game server
-      const gameClient = new GameClient();
+      const gameClient = new GameClient()
       let tick = 0
       let previous = performance.now()
-      setInterval(function () {
+      const loop = function() {
+        window.requestAnimationFrame(loop)
         const now = performance.now()
         const delta = (now - previous) / 1000
         previous = now
         tick++
         gameClient.update(delta, tick, now)
-      }, 50)
+      }
+
+      loop()
 
     }, 2000);
 
