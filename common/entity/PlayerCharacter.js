@@ -1,17 +1,22 @@
 import nengi from 'nengi'
-import SAT from 'sat'
 
 class PlayerCharacter {
-    constructor() {
+    constructor(entity) {
 
+        this.nid = 0;
         this.x = 0
         this.y = 0
         this.z = 0
+        this.color = '#FFFFFF';
+
+        if (entity) {
+            Object.assign(this, entity)
+        }
 
         this.position = {
-            x: 0,
-            y: 1,
-            z: 0,
+            x: this.x,
+            y: this.y,
+            z: this.z,
         };
 
         this.rotation = {
@@ -21,7 +26,7 @@ class PlayerCharacter {
         }
 
         this.material = {
-            color: "#FFFFFF"
+            color: this.color
         }
 
         this.geometry = {
@@ -30,25 +35,12 @@ class PlayerCharacter {
             width: 0.5,
             depth: 0.5,
         };
-
-        this.collider = new SAT.Circle(new SAT.Vector(this.x, this.y), 25)
     }
 
     processMove(command) {
-        if (!this.isAlive) {
-            return
-        }
-        console.log();
-
-        this.rotation = command.rotation
-
-        this.x = command.pos_x;
-        this.y = command.pos_y;
-        this.z = command.pos_z
-    }
-
-    move(delta) {
-        // obsolete??
+        this.x = command.x;
+        this.y = command.y;
+        this.z = command.z
     }
 }
 
@@ -56,9 +48,7 @@ PlayerCharacter.protocol = {
     x: { type: nengi.Float32, interp: true },
     y: { type: nengi.Float32, interp: true },
     z: { type: nengi.Float32, interp: true },
-    rotation: { type: nengi.RotationFloat32, interp: true },
-    isAlive: nengi.Boolean,
-    hitpoints: nengi.UInt8
+    color: nengi.UTF8String,
 }
 
 export default PlayerCharacter

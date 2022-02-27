@@ -48,12 +48,9 @@ class GameClient {
       this.renderer.processLocalMessage(localMessage)
     })
 
-    //console.log(this.renderer);
-
     /* sending */
     let playerPos = this.renderer.playerEl.getAttribute('position');
-    let playerRot = { x: 0, y: 0, z: 0};
-    this.client.addCommand(new MoveCommand(playerPos, playerRot, delta))
+    this.client.addCommand(new MoveCommand(playerPos, delta))
 
     /*
     if (input.mouseDown) {

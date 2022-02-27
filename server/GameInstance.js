@@ -67,7 +67,7 @@ class GameInstance {
 
     // TODO: the rest of the game logic
     this.instance.clients.forEach(client => {
-      client.entity.move(delta)
+      //client.entity.move(delta)
     })
 
     // when instance.updates, nengi sends out snapshots to every client
