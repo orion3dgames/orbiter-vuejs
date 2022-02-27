@@ -2,6 +2,7 @@ import nengi from 'nengi'
 import nengiConfig from '../common/nengiConfig'
 import InputSystem from './InputSystem'
 import AFRAMERenderer from './graphics/AFrame'
+import MoveCommand from '../common/command/MoveCommand'
 
 class GameClient {
   constructor() {
@@ -21,7 +22,7 @@ class GameClient {
 
   }
 
-  update() {
+  update(delta, tick, now) {
     /* receiving */
     const network = this.client.readNetwork()
 
@@ -47,29 +48,21 @@ class GameClient {
       this.renderer.processLocalMessage(localMessage)
     })
 
+    //console.log(this.renderer);
+
     /* sending */
+    let playerPos = this.renderer.playerEl.getAttribute('position');
+    let playerRot = { x: 0, y: 0, z: 0};
+    this.client.addCommand(new MoveCommand(playerPos, playerRot, delta))
+
     /*
-    const input = this.input.frameState
-
-    let rotation = 0
-    const worldCoord = this.renderer.toWorldCoordinates(this.input.currentState.mx, this.input.currentState.my)
-
-    if (this.renderer.myEntity) {
-      // calculate the direction our character is facing
-      const dx = worldCoord.x - this.renderer.myEntity.x
-      const dy = worldCoord.y - this.renderer.myEntity.y
-      rotation = Math.atan2(dy, dx)
-    }
-
-    this.client.addCommand(new MoveCommand(input.w, input.a, input.s, input.d, rotation, delta))
-
     if (input.mouseDown) {
       this.client.addCommand(new FireCommand(worldCoord.x, worldCoord.y))
     }
+    */
 
-    this.input.releaseKeys()
     this.client.update()
-
+    /*
     //this.renderer.update(delta)
     */
   }

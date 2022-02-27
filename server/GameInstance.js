@@ -60,7 +60,7 @@ class GameInstance {
         const entity = client.entity
 
         if (command.protocol.name === 'MoveCommand') {
-          console.log('MoveCommand', command);
+          //console.log('MoveCommand', command);
           entity.processMove(command)
         }
 
@@ -81,7 +81,6 @@ class GameInstance {
     // when instance.updates, nengi sends out snapshots to every client
     this.instance.update()
 
-    //console.log('UPDATE', this.players);
   }
 }
 

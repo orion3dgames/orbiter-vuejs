@@ -11,9 +11,9 @@ class PlayerCharacter {
         this.isAlive = true
 
         this.position = {
-            x: Math.random() * 10,
-            y: Math.random() * 2,
-            z: -5,
+            x: 0,
+            y: 1,
+            z: 0,
         };
 
         this.rotation = {
@@ -24,8 +24,9 @@ class PlayerCharacter {
 
         this.geometry = {
             primitive: 'box',
-            height:0.1,
-            width: 0.1,
+            height:0.5,
+            width: 0.5,
+            depth: 0.5,
         };
 
         this.moveDirection = {
@@ -43,41 +44,17 @@ class PlayerCharacter {
         if (!this.isAlive) {
             return
         }
+        console.log();
 
         this.rotation = command.rotation
 
-        let unitX = 0
-        let unitY = 0
-        let unitZ = 0
-
-        // create forces from input
-        if (command.forward) { unitY -= 1 }
-        if (command.backward) { unitY += 1 }
-        if (command.left) { unitX -= 1 }
-        if (command.right) { unitX += 1 }
-
-        // normalize
-        const len = Math.sqrt(unitX * unitX + unitY * unitY)
-        if (len > 0) {
-            unitX = unitX / len
-            unitY = unitY / len
-        }
-
-        this.moveDirection.x = unitX
-        this.moveDirection.y = unitY
-        this.moveDirection.z = unitZ
-
-
+        this.x = command.pos_x;
+        this.y = command.pos_y;
+        this.z = command.pos_z
     }
 
     move(delta) {
-        this.x += this.moveDirection.x * this.speed * delta
-        this.y += this.moveDirection.y * this.speed * delta
-        this.z += this.moveDirection.z * this.speed * delta
-
-        this.collider.pos.x = this.x
-        this.collider.pos.y = this.y
-        this.collider.pos.z = this.z
+        // obsolete??
     }
 }
 

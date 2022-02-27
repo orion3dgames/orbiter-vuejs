@@ -1,7 +1,21 @@
 <template>
   <div v-if="session">
     <div class="game-area">
-      <a-scene class="aframe-scene" embedded></a-scene>
+      <a-scene class="aframe-scene" embedded>
+        <a-assets>
+          <img id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg" crossorigin="anonymous" />
+          <img id="skyTexture" src="https://cdn.aframe.io/a-painter/images/sky.jpg" crossorigin="anonymous" />
+        </a-assets>
+        <a-sky id="bg" radius="30" src="#skyTexture" theta-length="90"></a-sky>
+        <a-cylinder id="ground" shadow="cast: false; receive: true" ammo-body="type: static" ammo-shape="type: cylinder" class="collidable spawnable" src="#groundTexture" radius="32" height="0.1"></a-cylinder>
+
+        <!-- PLAYER -->
+        <a-entity id="player" player wasd-controls="fly: true" position="0 0 0" rotation="0 0 0">
+          <!-- camera -->
+          <a-entity id="camera" camera look-controls player-head position="0 0.5 1" rotation="0 0 0"></a-entity>
+        </a-entity>
+
+      </a-scene>
     </div>
     <div class="game-sidebar">
       <game-sidebar v-bind:session="session" v-bind:user="user"></game-sidebar>
@@ -77,7 +91,7 @@ export default {
         previous = now
         tick++
         gameClient.update(delta, tick, now)
-      }, 100)
+      }, 50)
 
     }, 2000);
 
