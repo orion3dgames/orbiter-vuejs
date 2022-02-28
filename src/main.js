@@ -18,6 +18,7 @@ Vue.config.ignoredElements = [
   'a-mixin',
   'a-sky',
   'a-cylinder',
+  'a-plane',
 ];
 
 // import styles

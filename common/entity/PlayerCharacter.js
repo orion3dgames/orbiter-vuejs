@@ -10,6 +10,7 @@ class PlayerCharacter {
         this.color = '#FFFFFF';
 
         if (entity) {
+            console.log('new [PlayerCharacter]', entity);
             Object.assign(this, entity)
         }
 

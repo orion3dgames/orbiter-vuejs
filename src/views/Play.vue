@@ -2,12 +2,8 @@
   <div v-if="session">
     <div class="game-area">
       <a-scene class="aframe-scene" embedded>
-        <a-assets>
-          <img id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg" crossorigin="anonymous" />
-          <img id="skyTexture" src="https://cdn.aframe.io/a-painter/images/sky.jpg" crossorigin="anonymous" />
-        </a-assets>
-        <a-sky id="bg" radius="30" src="#skyTexture" theta-length="90"></a-sky>
-        <a-cylinder id="ground" shadow="cast: false; receive: true" ammo-body="type: static" ammo-shape="type: cylinder" class="collidable spawnable" src="#groundTexture" radius="32" height="0.1"></a-cylinder>
+        <a-sky color="#CCC"></a-sky>
+        <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color="#EEE"></a-plane>
 
         <!-- PLAYER -->
         <a-entity id="player" player wasd-controls="fly: true" position="0 0 0" rotation="0 0 0">
@@ -64,22 +60,6 @@ export default {
 
     // WAIT FOR LOADING
     setTimeout(function() {
-
-      // construct the client
-      const client = new nengi.Client(config, 100);
-
-      // connection callback
-      client.onConnect(res => {
-        console.log('nengi: onConnect response:', res);
-      });
-
-      // connection closed callback
-      client.onClose(() => {
-        console.log('nengi: connection closed');
-      });
-
-      // connect to a server
-      client.connect('ws://localhost:8079', {});
 
       // run game server
       const gameClient = new GameClient()

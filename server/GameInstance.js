@@ -11,21 +11,23 @@ class GameInstance {
 
     this.instance.onConnect((client, clientData, callback) => {
 
+      // set default stats
+      let defaultPlayer = {
+        x: Math.random() * 2,
+        y: Math.random() * 2,
+        z: Math.random() * 1,
+        color: "#"+Math.floor(Math.random()*16777215).toString(16)
+      }
+
       // create a entity for this client
-      const entity = new PlayerCharacter()
+      const entity = new PlayerCharacter(defaultPlayer)
+
       this.instance.addEntity(entity) // adding an entity to a nengi instance assigns it an id
 
       // tell the client which entity it controls (the client will use this to follow it with the camera)
       this.instance.message(new Identity(entity.nid), client)
 
-      // set random starting point
-      entity.x = Math.random() * 10
-      entity.y = Math.random() * 10
-      entity.z = Math.random() * 10
-
-      // set player color
-      var randomColor = Math.floor(Math.random()*16777215).toString(16);
-      entity.color = "#"+randomColor;
+      console.log(entity);
 
       // establish a relation between this entity and the client
       entity.client = client
