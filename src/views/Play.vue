@@ -2,21 +2,22 @@
   <div v-if="session">
     <div class="game-area">
       <a-scene class="aframe-scene" embedded>
-        <a-sky color="#CCC"></a-sky>
-        <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color="#EEE"></a-plane>
 
-        <!-- PLAYER -->
-        <a-entity id="player" player wasd-controls="fly: true" position="0 0 0" rotation="0 0 0">
-          <!-- camera -->
-          <a-entity id="camera" camera look-controls player-head position="0 0.5 1" rotation="0 0 0"></a-entity>
-        </a-entity>
+        <a-assets>
+          <img id="groundTexture" src="/assets/floor_grid.jpg" crossorigin="anonymous" />
+        </a-assets>
+
+        <a-sky color="#CCC"></a-sky>
+        <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color="#EEE" src="#groundTexture" repeat="1 1"></a-plane>
 
       </a-scene>
     </div>
+    <!--
     <div class="game-sidebar">
       <game-sidebar v-bind:session="session" v-bind:user="user"></game-sidebar>
       {{session}}
     </div>
+    -->
   </div>
 
 </template>
@@ -24,7 +25,7 @@
 <script>
 
 import MySphere from '../components/MySphere';
-import GameSidebar from '../components/UI/GameSidebar';
+//import GameSidebar from '../components/UI/GameSidebar';
 import GameClient from '../../client/GameClient';
 
 import nengi from 'nengi';
@@ -33,7 +34,7 @@ import config from '../../common/nengiConfig';
 export default {
   name: 'Play',
   components: {
-    GameSidebar,
+    //GameSidebar,
   },
   data() {
     return {

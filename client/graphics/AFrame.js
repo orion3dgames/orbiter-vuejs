@@ -1,4 +1,4 @@
-require('aframe');
+import { registerComponent } from 'aframe';
 
 import PlayerCharacter from '../../common/entity/PlayerCharacter'
 
@@ -7,17 +7,18 @@ class AFRAMERenderer {
   constructor() {
 
     this.sceneEl = document.querySelector('a-scene');
-    this.playerEl = document.querySelector('#player');
-
+    this.playerEl = null;
     this.myId = null
     this.myEntity = null
     this.entities = new Map();
 
-    /*
-    window.addEventListener('resize', () => {
-      this.resize()
-    })
-    */
+    // register component
+    registerComponent('player', {
+      init() {
+        //console.log('init COMPONENT ENTITY');
+      },
+    });
+
   }
 
   createEntity(entity) {
@@ -35,36 +36,37 @@ class AFRAMERenderer {
         this.myEntity = clientEntity
       }
 
-      // IF MYSELF
-      if(this.myId === entity.nid){
-        this.setPlayer(clientEntity);
+      // create entity
+      console.log('CREATE CLIENT', clientEntity)
+      var entityEl = document.createElement('a-entity');
+      entityEl.setAttribute('id', 'nid-'+ clientEntity.nid);
+      entityEl.setAttribute('position', clientEntity.position);
+      entityEl.setAttribute('rotation', clientEntity.rotation);
+      entityEl.setAttribute('geometry', clientEntity.geometry);
+      entityEl.setAttribute('material', clientEntity.material);
+
+
+      // if myself
+      if (entity.nid === this.myId) {
+
+        // add player component
+        entityEl.setAttribute('player');
+
+        // add camera to entity
+        var cameraEl = document.createElement('a-entity');
+        cameraEl.setAttribute('camera', 'active', true);
+        entityEl.appendChild(cameraEl);
+
+        // add control
+        entityEl.setAttribute('wasd-controls', { fly: true, acceleration: 65 });
+        cameraEl.setAttribute('look-controls', 'enabled', true);
+
+        this.playerEl = entityEl;
       }
 
-      // ELSE INSTANTIATE OTHER PLAYER(S)
-      if(this.myId !== entity.nid) {
-        this.createClient(clientEntity);
-      }
+      this.sceneEl.appendChild(entityEl);
 
     }
-  }
-
-  // set local player
-  setPlayer(clientEntity) {
-    console.log('SET PLAYER', this.playerEl, clientEntity.position)
-    //this.playerEl.setAttribute('position', clientEntity.position);
-    //this.playerEl.setAttribute('material', clientEntity.material);
-  }
-
-  // create all client entity
-  createClient(clientEntity) {
-    console.log('CREATE CLIENT', clientEntity)
-    var entityEl = document.createElement('a-entity');
-    entityEl.setAttribute('id', 'nid-'+ clientEntity.nid);
-    entityEl.setAttribute('position', clientEntity.position);
-    entityEl.setAttribute('rotation', clientEntity.rotation);
-    entityEl.setAttribute('geometry', clientEntity.geometry);
-    entityEl.setAttribute('material', clientEntity.material);
-    this.sceneEl.appendChild(entityEl)
   }
 
   updateEntity(update) {
@@ -75,11 +77,10 @@ class AFRAMERenderer {
     // if entity found
     if(entity) {
 
-      console.log('[updateEntity]', update, entity);
-
       // update pos todo: to be improved
       let position = ['x', 'y', 'z'];
       if (position.includes(update.prop)) {
+        console.log('[updateEntity]', update, entity);
         let currentPosition = entity.getAttribute('position');
         currentPosition[update.prop] = update.value;
         entity.setAttribute('position', currentPosition);
@@ -91,7 +92,6 @@ class AFRAMERenderer {
   processMessage(message) {
     if (message.protocol.name === 'Identity') {
       this.myId = message.entityId
-      this.playerEl.setAttribute('id', '#nid-'+this.myId)
       console.log('identified as', this.myId)
     }
   }

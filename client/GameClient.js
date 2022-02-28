@@ -49,8 +49,10 @@ class GameClient {
     })
 
     /* sending */
-    let playerPos = this.renderer.playerEl.getAttribute('position');
-    this.client.addCommand(new MoveCommand(playerPos, delta))
+    if(this.renderer.playerEl) {
+      let playerPos = this.renderer.playerEl.getAttribute('position');
+      this.client.addCommand(new MoveCommand(playerPos, delta));
+    }
 
     /*
     if (input.mouseDown) {
