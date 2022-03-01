@@ -50,16 +50,14 @@ class AFRAMERenderer {
       if (entity.nid === this.myId) {
 
         // add player component
-        entityEl.setAttribute('player');
+        //entityEl.setAttribute('player');
+        //entityEl.setAttribute('wasd-controls', { fly: true, acceleration: 65 });
 
         // add camera to entity
         var cameraEl = document.createElement('a-entity');
         cameraEl.setAttribute('camera', 'active', true);
-        entityEl.appendChild(cameraEl);
-
-        // add control
-        entityEl.setAttribute('wasd-controls', { fly: true, acceleration: 65 });
         cameraEl.setAttribute('look-controls', 'enabled', true);
+        entityEl.appendChild(cameraEl);
 
         this.playerEl = entityEl;
       }

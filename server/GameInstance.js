@@ -58,6 +58,7 @@ class GameInstance {
         const entity = client.entity
 
         if (command.protocol.name === 'MoveCommand') {
+          console.log('[MoveCommand]', command.x, command.y, command.z);
           entity.processMove(command)
         }
 
@@ -69,7 +70,7 @@ class GameInstance {
 
     // TODO: the rest of the game logic
     this.instance.clients.forEach(client => {
-      //client.entity.move(delta)
+      client.entity.move(delta)
     })
 
     // when instance.updates, nengi sends out snapshots to every client

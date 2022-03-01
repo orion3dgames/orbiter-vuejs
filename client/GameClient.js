@@ -48,22 +48,20 @@ class GameClient {
       this.renderer.processLocalMessage(localMessage)
     })
 
-    /* sending */
-    if(this.renderer.playerEl) {
-      let playerPos = this.renderer.playerEl.getAttribute('position');
-      this.client.addCommand(new MoveCommand(playerPos, delta));
-    }
+    const input = this.input.frameState
+    //console.log(input);
+    this.client.addCommand(new MoveCommand(input.w, input.a, input.s, input.d, delta))
 
-    /*
     if (input.mouseDown) {
-      this.client.addCommand(new FireCommand(worldCoord.x, worldCoord.y))
+      //this.client.addCommand(new FireCommand(worldCoord.x, worldCoord.y))
     }
-    */
 
+    this.input.releaseKeys()
     this.client.update()
-    /*
-    //this.renderer.update(delta)
-    */
+    /* * */
+
+    /* rendering */
+    this.renderer.update(delta)
   }
 }
 

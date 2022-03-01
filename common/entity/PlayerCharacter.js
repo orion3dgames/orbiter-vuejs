@@ -8,6 +8,12 @@ class PlayerCharacter {
         this.y = 0
         this.z = 0
         this.color = '#FFFFFF';
+        this.speed = 2;
+
+        this.moveDirection = {
+            x: 0,
+            y: 0
+        }
 
         if (entity) {
             console.log('new [PlayerCharacter]', entity);
@@ -39,10 +45,34 @@ class PlayerCharacter {
     }
 
     processMove(command) {
-        this.x = command.x;
-        this.y = command.y;
-        this.z = command.z
+
+        let unitX = 0
+        let unitY = 0
+
+        // create forces from input
+        if (command.forward) { unitY -= 1 }
+        if (command.backward) { unitY += 1 }
+        if (command.left) { unitX -= 1 }
+        if (command.right) { unitX += 1 }
+
+        // normalize
+        const len = Math.sqrt(unitX * unitX + unitY * unitY)
+        if (len > 0) {
+            unitX = unitX / len
+            unitY = unitY / len
+        }
+
+        this.moveDirection.x = unitX
+        this.moveDirection.y = unitY
+
+
     }
+
+    move(delta) {
+        this.x += this.moveDirection.x * this.speed * delta
+        this.z += this.moveDirection.y * this.speed * delta
+    }
+
 }
 
 PlayerCharacter.protocol = {
