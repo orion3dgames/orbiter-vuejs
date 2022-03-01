@@ -49,12 +49,8 @@ class GameClient {
     })
 
     const input = this.input.frameState
-    //console.log(input);
-    this.client.addCommand(new MoveCommand(input.w, input.a, input.s, input.d, delta))
-
-    if (input.mouseDown) {
-      //this.client.addCommand(new FireCommand(worldCoord.x, worldCoord.y))
-    }
+    const rotation = this.renderer.cameraEl.getAttribute('rotation').y;
+    this.client.addCommand(new MoveCommand(input.w, input.a, input.s, input.d, input.space, rotation, delta))
 
     this.input.releaseKeys()
     this.client.update()

@@ -9,6 +9,7 @@ class InputSystem {
       a: false,
       d: false,
       r: false,
+      space: false,
       mx: 0,
       my: 0,
       mouseDown: false
@@ -20,6 +21,7 @@ class InputSystem {
       a: false,
       d: false,
       r: false,
+      space: false,
       mouseDown: false
     }
 
@@ -50,6 +52,11 @@ class InputSystem {
         this.currentState.d = true
         this.frameState.d = true
       }
+      // space
+      if (event.keyCode === 32) {
+        this.currentState.space = true
+        this.frameState.space = true
+      }
     })
 
     document.addEventListener('keyup', event => {
@@ -65,6 +72,9 @@ class InputSystem {
       }
       if (event.keyCode === 68 || event.keyCode === 39) {
         this.currentState.d = false
+      }
+      if (event.keyCode === 32) {
+        this.currentState.space = false
       }
     })
 
@@ -93,6 +103,7 @@ class InputSystem {
     this.frameState.s = this.currentState.s
     this.frameState.d = this.currentState.d
     this.frameState.r = this.currentState.r
+    this.frameState.space = this.currentState.space
     this.frameState.mouseDown = this.currentState.mouseDown
   }
 }

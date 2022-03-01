@@ -8,6 +8,8 @@ class AFRAMERenderer {
 
     this.sceneEl = document.querySelector('a-scene');
     this.playerEl = null;
+    this.cameraEl = null;
+
     this.myId = null
     this.myEntity = null
     this.entities = new Map();
@@ -45,13 +47,13 @@ class AFRAMERenderer {
       entityEl.setAttribute('geometry', clientEntity.geometry);
       entityEl.setAttribute('material', clientEntity.material);
 
+      // add name
+      var nameEl = document.createElement('a-text');
+      nameEl.setAttribute('text', 'TECTYsdadasdasda');
+      //entityEl.appendChild(nameEl);
 
       // if myself
       if (entity.nid === this.myId) {
-
-        // add player component
-        //entityEl.setAttribute('player');
-        //entityEl.setAttribute('wasd-controls', { fly: true, acceleration: 65 });
 
         // add camera to entity
         var cameraEl = document.createElement('a-entity');
@@ -60,6 +62,7 @@ class AFRAMERenderer {
         entityEl.appendChild(cameraEl);
 
         this.playerEl = entityEl;
+        this.cameraEl = cameraEl;
       }
 
       this.sceneEl.appendChild(entityEl);
@@ -75,13 +78,21 @@ class AFRAMERenderer {
     // if entity found
     if(entity) {
 
+      console.log('[updateEntity]', update, entity);
+
       // update pos todo: to be improved
       let position = ['x', 'y', 'z'];
       if (position.includes(update.prop)) {
-        console.log('[updateEntity]', update, entity);
         let currentPosition = entity.getAttribute('position');
         currentPosition[update.prop] = update.value;
         entity.setAttribute('position', currentPosition);
+      }
+
+      let rotation = ['rotation'];
+      if (rotation.includes(update.prop)) {
+        let currentPosition = entity.getAttribute('rotation');
+        currentPosition['y'] = update.value;
+        entity.setAttribute('rotation', currentPosition);
       }
     }
 

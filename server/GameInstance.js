@@ -16,6 +16,7 @@ class GameInstance {
         x: Math.random() * 2,
         y: Math.random() * 2,
         z: Math.random() * 1,
+        rotation: 0,
         color: "#"+Math.floor(Math.random()*16777215).toString(16)
       }
 
@@ -58,7 +59,7 @@ class GameInstance {
         const entity = client.entity
 
         if (command.protocol.name === 'MoveCommand') {
-          console.log('[MoveCommand]', command.x, command.y, command.z);
+          //console.log('[MoveCommand]', command);
           entity.processMove(command)
         }
 
