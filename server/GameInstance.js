@@ -14,10 +14,11 @@ class GameInstance {
       // set default stats
       let defaultPlayer = {
         x: Math.random() * 2,
-        y: Math.random() * 2,
+        y: 1,
         z: Math.random() * 1,
         rotation: 0,
-        color: "#"+Math.floor(Math.random()*16777215).toString(16)
+        color: "#"+Math.floor(Math.random()*16777215).toString(16),
+        name: "loading..."
       }
 
       // create a entity for this client

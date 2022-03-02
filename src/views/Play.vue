@@ -63,7 +63,7 @@ export default {
     setTimeout(function() {
 
       // run game server
-      const gameClient = new GameClient()
+      const gameClient = new GameClient(this.user)
       let tick = 0
       let previous = performance.now()
       const loop = function() {

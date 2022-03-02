@@ -6,16 +6,17 @@ class PlayerCharacter {
 
         this.nid = 0;
         this.x = 0
-        this.y = 0
+        this.y = 1
         this.z = 0
         this.rotation = 0
         this.color = '#FFFFFF';
         this.speed = 2;
+        this.name = 'Loading';
 
         this.moveRotation = 0;
         this.moveDirection = {
             x: 0,
-            y: 0,
+            y: 1,
             z: 0,
         }
 
@@ -42,9 +43,9 @@ class PlayerCharacter {
 
         this.geometry = {
             primitive: 'box',
-            height:0.5,
-            width: 0.5,
-            depth: 0.5,
+            height: 1,
+            width: 1,
+            depth: 1,
         };
     }
 
@@ -52,38 +53,37 @@ class PlayerCharacter {
 
         let unitX = 0
         let unitZ = 0
-        let unitY = 0
-        let radian = command.rotation * (Math.PI / 180)
+        let unitY = 1
+        let radian = Math.cos(command.rotation * Math.PI / 180)
 
         // create forces from input
         if (command.forward) { unitZ -= 1 }
         if (command.backward) { unitZ += 1 }
         if (command.left) { unitX -= 1 }
         if (command.right) { unitX += 1 }
-        if (command.jump) {
-            //unitY += 1
-        }else{
-            //unitY -= 1
-        }
 
+        let x = unitX * Math.cos(radian);
+        let y = unitY * Math.sin(radian);
+
+        // add values
         this.moveDirection.x = unitX
         this.moveDirection.z = unitZ
         this.moveDirection.y = unitY
         this.moveRotation = command.rotation
 
         // DONT GO BELOW GROUND
-        if(unitY < 0){
+        if(unitY < 1){
             //this.y = 0;
         }
 
-        console.log(command, unitZ, unitX, unitY);
+        console.log(command.rotation, radian, x, y, unitZ, unitX, unitY);
 
     }
 
     move(delta) {
         this.x += this.moveDirection.x * this.speed * delta
         this.z += this.moveDirection.z * this.speed * delta
-        this.y = 0;
+        this.y = 1;
         this.rotation = this.moveRotation;
     }
 
@@ -95,6 +95,7 @@ PlayerCharacter.protocol = {
     z: { type: nengi.Float32, interp: true },
     rotation: { type: nengi.Float32, interp: true },
     color: nengi.UTF8String,
+    name: nengi.UTF8String,
 }
 
 export default PlayerCharacter

@@ -1,6 +1,6 @@
 import { registerComponent } from 'aframe';
-
 import PlayerCharacter from '../../common/entity/PlayerCharacter'
+import store from '../../src/store'; // path to your Vuex store
 
 class AFRAMERenderer {
 
@@ -28,9 +28,11 @@ class AFRAMERenderer {
     // create and add an entity to the renderer
     if (entity.protocol.name === 'PlayerCharacter') {
 
-      console.log('[createEntity]', entity);
+      let user = store.getters.user;
 
       const clientEntity = new PlayerCharacter(entity)
+      clientEntity.name = user.displayName;
+
       this.entities.set(entity.nid, clientEntity)
 
       // if that entity is ours, save it to myEntity
@@ -46,11 +48,13 @@ class AFRAMERenderer {
       entityEl.setAttribute('rotation', clientEntity.rotation);
       entityEl.setAttribute('geometry', clientEntity.geometry);
       entityEl.setAttribute('material', clientEntity.material);
+      entityEl.setAttribute('movement-controls');
 
-      // add name
+      // add username (not multiplayer yet)
       var nameEl = document.createElement('a-text');
-      nameEl.setAttribute('text', 'TECTYsdadasdasda');
-      //entityEl.appendChild(nameEl);
+      nameEl.setAttribute('text', 'value', clientEntity.name);
+      nameEl.setAttribute('position', {x:-0.5, y:1.25, z:0});
+      entityEl.appendChild(nameEl);
 
       // if myself
       if (entity.nid === this.myId) {
@@ -58,7 +62,11 @@ class AFRAMERenderer {
         // add camera to entity
         var cameraEl = document.createElement('a-entity');
         cameraEl.setAttribute('camera', 'active', true);
-        cameraEl.setAttribute('look-controls', 'enabled', true);
+        cameraEl.setAttribute('position', {x:0, y:1, z:1.25});
+        cameraEl.setAttribute('look-controls', {
+          'enabled': true,
+          'pointerLockEnabled': false
+        });
         entityEl.appendChild(cameraEl);
 
         this.playerEl = entityEl;
