@@ -1,26 +1,15 @@
 # Orbiter VUEJS
-A small personal to test my skills. 
+A small personal project to test my skills and for a bit of fun :)
 
 ## Technology
 I will be using
-- FIREBASE
-- AFRAME
-- VUEJS
-
-## Firebase Structure (WIP)
-```
-{
-    "players" : {
-
-    },
-    "sessions" : {
-    
-    }
-}
-```
+- FIREBASE (database)
+- AFRAME (3d engine)
+- VUEJS (ui)
+- NENJI (multiplayer)
 
 ## Installation Guide
-NODE V14 - HIGHER WILL NOT WORK
+IMPORTANT: NODE V14- (any higher version are not compatible with NENGI yet)
 - Clone the repository
 - Open a terminal and launch these commands from the root folder
 - ```yarn install``` (install client dependencies)
