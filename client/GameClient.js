@@ -14,6 +14,7 @@ class GameClient {
     this.client = new nengi.Client(nengiConfig)
     this.renderer = new AFRAMERenderer()
     this.input = new InputSystem()
+    this.latestCubePlacedTime = 0;
 
     this.client.onConnect(res => {
       console.log('onConnect response:', res)
@@ -24,6 +25,13 @@ class GameClient {
     })
 
     this.client.connect('ws://localhost:8079')
+
+    // ADD EVENT
+    this.cubeAdded = null;
+    this.renderer.sceneEl.addEventListener('cube_added', (data) => {
+      console.log(data);
+      this.cubeAdded = data.detail;
+    });
 
   }
 
@@ -58,8 +66,14 @@ class GameClient {
     this.client.addCommand(new MoveCommand(input.w, input.a, input.s, input.d, input.space, rotation, delta))
 
     if (input.mouseDown) {
-      console.log('FireCommand', 'Click event fired...', this.renderer.intersect);
-      this.client.addCommand(new FireCommand(this.renderer.intersect));
+      var thisClickTime = new Date().getTime();
+      if (thisClickTime - this.latestCubePlacedTime > 1000 && this.cubeAdded) {
+        this.latestCubePlacedTime = thisClickTime;
+        console.log('FireCommand', 'Click event fired...', this.cubeAdded);
+        this.client.addCommand(new FireCommand(this.cubeAdded.x, this.cubeAdded.y,this.cubeAdded.z));
+        this.cubeAdded = null;
+      }
+
     }
 
     this.input.releaseKeys()

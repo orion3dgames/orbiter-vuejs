@@ -7,25 +7,7 @@ window.AFRAME.registerComponent('intersection-spawn', {
     const data = this.data;
     const el = this.el;
     el.addEventListener(data.event, evt => {
-
-      // Create element.
-      const spawnEl = document.createElement('a-entity');
-
-      // Snap intersection point to grid and offset from center.
-      spawnEl.setAttribute('position', evt.detail.intersection.point);
-
-      // Set components and properties.
-      Object.keys(data).forEach(name => {
-        if (name === 'event') { return; }
-        window.AFRAME.utils.entity.setComponentProperty(spawnEl, name, data[name]);
-      });
-
-      // Append to scene.
-      el.sceneEl.appendChild(spawnEl);
-
-      // Cube added
       el.emit('cube_added', evt.detail.intersection.point)
-
     });
   }
 });

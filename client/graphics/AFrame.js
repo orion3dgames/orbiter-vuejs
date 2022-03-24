@@ -4,7 +4,7 @@ import store from '../../src/store'; // path to your Vuex store
 
 // import aframe components
 import intersectionSpawn from './components/intersection-spawn';
-import randomColor from './components/random-color';
+//import randomColor from './components/random-color';
 import snap from './components/snap';
 import FireCommand from "../../common/command/FireCommand";
 
@@ -20,25 +20,24 @@ class AFRAMERenderer {
     this.myEntity = null
     this.entities = new Map();
 
-    this.intersect = false;
-    this.sceneEl.addEventListener('cube_added', function (data) {
-      this.intersect = data;
-    });
-
   }
 
   createEntity(entity) {
 
     // create and add an entity to the renderer
     if (entity.protocol.name === 'Cube') {
-      console.log('[create Cube]', entity);
+      if (entity.sourceId === this.myId) {
+        //return false;
+      }
       const cubeIdentity = new Cube(entity)
+      this.entities.set(entity.nid, cubeIdentity)
+
       let cubeEl = document.createElement('a-entity');
       cubeEl.setAttribute('id', 'nid-'+ cubeIdentity.nid);
       cubeEl.setAttribute('position', cubeIdentity.position);
       cubeEl.setAttribute('rotation', cubeIdentity.rotation);
-      cubeEl.setAttribute('geometry', cubeIdentity.geometry);
       cubeEl.setAttribute('material', cubeIdentity.material);
+      cubeEl.setAttribute('mixin', cubeIdentity.mixin);
       this.sceneEl.appendChild(cubeEl);
     }
 
@@ -63,11 +62,13 @@ class AFRAMERenderer {
       var entityEl = document.createElement('a-entity');
       entityEl.setAttribute('id', 'nid-'+ clientEntity.nid);
       entityEl.setAttribute('position', clientEntity.position);
-      entityEl.setAttribute('mixin', 'voxel');
+      entityEl.setAttribute('rotation', clientEntity.rotation);
+      entityEl.setAttribute('geometry', clientEntity.geometry);
+      entityEl.setAttribute('material', clientEntity.material);
 
       // add username (not multiplayer yet)
       var nameEl = document.createElement('a-text');
-      nameEl.setAttribute('text', 'value', clientEntity.name);
+      nameEl.setAttribute('text', 'value', clientEntity.name+"\n"+clientEntity.nid);
       nameEl.setAttribute('position', {x:-0.5, y:1.25, z:0});
       entityEl.appendChild(nameEl);
 
@@ -81,7 +82,7 @@ class AFRAMERenderer {
         // add camera to entity
         var cameraEl = document.createElement('a-entity');
         cameraEl.setAttribute('camera', 'active', true);
-        cameraEl.setAttribute('position', {x:0, y:1, z:1.25});
+        cameraEl.setAttribute('position', {x:0, y:1, z:1.50});
         cameraEl.setAttribute('player-head');
         cameraEl.setAttribute('look-controls', {
           'enabled': true,

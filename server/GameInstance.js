@@ -61,22 +61,26 @@ class GameInstance {
         const command = cmd.commands[i]
         const entity = client.entity
 
-        console.log('COMMAND', command);
+        console.log('COMMAND', command, entity.nid);
 
         if (command.protocol.name === 'MoveCommand') {
           entity.processMove(command)
         }
 
         if (command.protocol.name === 'FireCommand') {
-          //this.instance.addLocalMessage(new PlaceCube(command.x, command.y, command.z));
+
           const cube = new Cube({
-            x: Math.random() * 1000,
-            y: 0,
-            z: Math.random() * 1000
+            sourceId: entity.nid,
+            x: command.x,
+            y: command.y,
+            z: command.z,
+            color: "#"+Math.floor(Math.random()*16777215).toString(16),
           })
+
           // Order is important for the next two lines
           this.instance.addEntity(cube) // assigns an `nid` to green
           this.entities.set(cube.nid, cube) // uses the `nid` as a key
+          console.log('new [Cube]', cube);
         }
 
 

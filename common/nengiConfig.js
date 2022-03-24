@@ -10,7 +10,7 @@ import MoveCommand from './command/MoveCommand'
 import FireCommand from './command/FireCommand'
 
 const config = {
-    UPDATE_RATE: 1,
+    UPDATE_RATE: 10,
 
     ID_BINARY_TYPE: nengi.UInt16,
     TYPE_BINARY_TYPE: nengi.UInt8, 

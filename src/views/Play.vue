@@ -8,7 +8,6 @@
           <a-mixin id="voxel"
                    geometry="primitive: box; height: 0.5; width: 0.5; depth: 0.5"
                    material="shader: standard"
-                   random-color
                    snap="offset: 0.25 0.25 0.25; snap: 0.5 0.5 0.5"
           ></a-mixin>
         </a-assets>
