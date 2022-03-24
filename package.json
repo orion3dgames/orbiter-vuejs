@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "daemon": "node ./server",
+    "start": "node ./server",
     "build": "vue-cli-service build"
   },
   "dependencies": {
