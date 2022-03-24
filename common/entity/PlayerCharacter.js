@@ -61,12 +61,12 @@ class PlayerCharacter {
         if (command.left) { velocityX -= 1 }
         if (command.right) { velocityX += 1 }
 
-        let x = velocityX * Math.cos(command.rotation + Math.PI / 2);
-        let z = velocityZ * Math.sin(command.rotation + Math.PI / 2);
+        //let x = velocityX * Math.cos(command.rotation + Math.PI / 2);
+        //let z = velocityZ * Math.sin(command.rotation + Math.PI / 2);
 
         // add values
-        this.moveDirection.x = x
-        this.moveDirection.z = z
+        this.moveDirection.x = velocityX
+        this.moveDirection.z = velocityZ
         this.moveDirection.y = velocityY
         this.moveRotation = command.rotation
 

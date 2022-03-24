@@ -1,11 +1,12 @@
-import { registerComponent, utils, entity } from 'aframe';
 import PlayerCharacter from '../../common/entity/PlayerCharacter'
+import Cube from '../../common/entity/Cube'
 import store from '../../src/store'; // path to your Vuex store
 
 // import aframe components
 import intersectionSpawn from './components/intersection-spawn';
 import randomColor from './components/random-color';
 import snap from './components/snap';
+import FireCommand from "../../common/command/FireCommand";
 
 class AFRAMERenderer {
 
@@ -19,9 +20,27 @@ class AFRAMERenderer {
     this.myEntity = null
     this.entities = new Map();
 
+    this.intersect = false;
+    this.sceneEl.addEventListener('cube_added', function (data) {
+      this.intersect = data;
+    });
+
   }
 
   createEntity(entity) {
+
+    // create and add an entity to the renderer
+    if (entity.protocol.name === 'Cube') {
+      console.log('[create Cube]', entity);
+      const cubeIdentity = new Cube(entity)
+      let cubeEl = document.createElement('a-entity');
+      cubeEl.setAttribute('id', 'nid-'+ cubeIdentity.nid);
+      cubeEl.setAttribute('position', cubeIdentity.position);
+      cubeEl.setAttribute('rotation', cubeIdentity.rotation);
+      cubeEl.setAttribute('geometry', cubeIdentity.geometry);
+      cubeEl.setAttribute('material', cubeIdentity.material);
+      this.sceneEl.appendChild(cubeEl);
+    }
 
     // create and add an entity to the renderer
     if (entity.protocol.name === 'PlayerCharacter') {
@@ -44,10 +63,7 @@ class AFRAMERenderer {
       var entityEl = document.createElement('a-entity');
       entityEl.setAttribute('id', 'nid-'+ clientEntity.nid);
       entityEl.setAttribute('position', clientEntity.position);
-      entityEl.setAttribute('rotation', clientEntity.rotation);
-      entityEl.setAttribute('geometry', clientEntity.geometry);
-      entityEl.setAttribute('material', clientEntity.material);
-      //entityEl.setAttribute('movement-controls');
+      entityEl.setAttribute('mixin', 'voxel');
 
       // add username (not multiplayer yet)
       var nameEl = document.createElement('a-text');
@@ -59,7 +75,6 @@ class AFRAMERenderer {
       if (entity.nid === this.myId) {
 
         // add cursor
-        ///<a-cursor intersection-spawn="event: click; mixin: voxel"></a-cursor>
         var cursorEl = document.createElement('a-cursor');
         cursorEl.setAttribute('intersection-spawn', {event: 'click', mixin: 'voxel'});
 

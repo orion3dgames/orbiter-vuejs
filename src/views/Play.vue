@@ -30,12 +30,8 @@
 
 <script>
 
-import MySphere from '../components/MySphere';
 //import GameSidebar from '../components/UI/GameSidebar';
 import GameClient from '../../client/GameClient';
-
-import nengi from 'nengi';
-import config from '../../common/nengiConfig';
 
 export default {
   name: 'Play',

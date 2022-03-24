@@ -3,6 +3,9 @@ import App from './App.vue'
 import router from './router'
 import Vuex from 'vuex'
 
+require('aframe');
+//require('aframe-environment-component');
+
 Vue.config.productionTip = false;
 Vue.config.ignoredElements = [
   'a-scene',

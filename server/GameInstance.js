@@ -2,10 +2,12 @@ import nengi from 'nengi'
 import nengiConfig from '../common/nengiConfig'
 import PlayerCharacter from '../common/entity/PlayerCharacter'
 import Identity from '../common/message/Identity'
+import PlaceCube from '../common/message/PlaceCube'
+import Cube from "../common/entity/Cube";
 
 class GameInstance {
   constructor() {
-    this.players = new Map()
+    this.entities = new Map()
 
     this.instance = new nengi.Instance(nengiConfig, { port: 8079 })
 
@@ -35,14 +37,14 @@ class GameInstance {
       entity.client = client
       client.entity = entity
 
-      this.players.set(entity.nid, entity)
+      this.entities.set(entity.nid, entity)
 
       callback({ accepted: true, text: 'Welcome!' })
 
     })
 
     this.instance.onDisconnect(client => {
-      this.players.delete(client.entity.nid)
+      this.entities.delete(client.entity.nid)
       this.instance.removeEntity(client.entity)
     })
 
@@ -59,14 +61,25 @@ class GameInstance {
         const command = cmd.commands[i]
         const entity = client.entity
 
+        console.log('COMMAND', command);
+
         if (command.protocol.name === 'MoveCommand') {
-          //console.log('[MoveCommand]', command);
           entity.processMove(command)
         }
 
         if (command.protocol.name === 'FireCommand') {
-          console.log('FireCommand', command);
+          //this.instance.addLocalMessage(new PlaceCube(command.x, command.y, command.z));
+          const cube = new Cube({
+            x: Math.random() * 1000,
+            y: 0,
+            z: Math.random() * 1000
+          })
+          // Order is important for the next two lines
+          this.instance.addEntity(cube) // assigns an `nid` to green
+          this.entities.set(cube.nid, cube) // uses the `nid` as a key
         }
+
+
       }
     }
 

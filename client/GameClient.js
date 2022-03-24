@@ -1,7 +1,11 @@
+import store from "@/store";
+
 import nengi from 'nengi'
 import nengiConfig from '../common/nengiConfig'
+
 import InputSystem from './InputSystem'
 import AFRAMERenderer from './graphics/AFrame'
+
 import MoveCommand from '../common/command/MoveCommand'
 import FireCommand from '../common/command/FireCommand'
 
@@ -54,15 +58,8 @@ class GameClient {
     this.client.addCommand(new MoveCommand(input.w, input.a, input.s, input.d, input.space, rotation, delta))
 
     if (input.mouseDown) {
-      console.log('FireCommand', 'Click event fired...');
-      /*
-      var cursor = document.querySelector('a-cursor');
-      if (!cursor.components.intersectedEl) { return; }
-      var intersection = cursor.components.raycaster.getIntersection(cursor.components.intersectedEl);
-      var worldCoord = intersection.point;
-      console.log('FireCommand', worldCoord);
-      this.client.addCommand(new FireCommand(worldCoord.x, worldCoord.y, worldCoord.z))
-      */
+      console.log('FireCommand', 'Click event fired...', this.renderer.intersect);
+      this.client.addCommand(new FireCommand(this.renderer.intersect));
     }
 
     this.input.releaseKeys()

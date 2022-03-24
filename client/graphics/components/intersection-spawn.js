@@ -24,7 +24,7 @@ window.AFRAME.registerComponent('intersection-spawn', {
       el.sceneEl.appendChild(spawnEl);
 
       // Cube added
-      console.log('intersection-spawn', spawnEl, name, data[name]);
+      el.emit('cube_added', evt.detail.intersection.point)
 
     });
   }

@@ -12,7 +12,6 @@ window.AFRAME.registerComponent('random-color', {
   dependencies: ['material'],
   init() {
     var color = getRandomColor();
-    console.log('random-color', color);
     this.el.setAttribute('material', 'color', color);
   },
 });
