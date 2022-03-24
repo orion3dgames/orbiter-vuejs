@@ -1,6 +1,9 @@
 <template>
   <div class="game-container">
     <div class="game-header">
+      <div class="float-end">
+        <router-link to="/" class="btn btn-sm btn-secondary">Quit Game</router-link>
+      </div>
       HEADER AREA
     </div>
     <slot />

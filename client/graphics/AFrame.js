@@ -1,6 +1,11 @@
-import { registerComponent } from 'aframe';
+import { registerComponent, utils, entity } from 'aframe';
 import PlayerCharacter from '../../common/entity/PlayerCharacter'
 import store from '../../src/store'; // path to your Vuex store
+
+// import aframe components
+import intersectionSpawn from './components/intersection-spawn';
+import randomColor from './components/random-color';
+import snap from './components/snap';
 
 class AFRAMERenderer {
 
@@ -13,13 +18,6 @@ class AFRAMERenderer {
     this.myId = null
     this.myEntity = null
     this.entities = new Map();
-
-    // register component
-    registerComponent('player', {
-      init() {
-        //console.log('init COMPONENT ENTITY');
-      },
-    });
 
   }
 
@@ -37,6 +35,7 @@ class AFRAMERenderer {
 
       // if that entity is ours, save it to myEntity
       if (entity.nid === this.myId) {
+        clientEntity.name = user.displayName;
         this.myEntity = clientEntity
       }
 
@@ -48,7 +47,7 @@ class AFRAMERenderer {
       entityEl.setAttribute('rotation', clientEntity.rotation);
       entityEl.setAttribute('geometry', clientEntity.geometry);
       entityEl.setAttribute('material', clientEntity.material);
-      entityEl.setAttribute('movement-controls');
+      //entityEl.setAttribute('movement-controls');
 
       // add username (not multiplayer yet)
       var nameEl = document.createElement('a-text');
@@ -59,15 +58,31 @@ class AFRAMERenderer {
       // if myself
       if (entity.nid === this.myId) {
 
+        // add cursor
+        ///<a-cursor intersection-spawn="event: click; mixin: voxel"></a-cursor>
+        var cursorEl = document.createElement('a-cursor');
+        cursorEl.setAttribute('intersection-spawn', {event: 'click', mixin: 'voxel'});
+
         // add camera to entity
         var cameraEl = document.createElement('a-entity');
         cameraEl.setAttribute('camera', 'active', true);
         cameraEl.setAttribute('position', {x:0, y:1, z:1.25});
+        cameraEl.setAttribute('player-head');
         cameraEl.setAttribute('look-controls', {
           'enabled': true,
           'pointerLockEnabled': false
         });
+        cameraEl.appendChild(cursorEl);
         entityEl.appendChild(cameraEl);
+
+        // add hands
+        /*
+        var rightHandEl = document.createElement('a-entity');
+        rightHandEl.setAttribute('hand-controls', 'right');
+        rightHandEl.setAttribute('controller-cursor');
+        rightHandEl.setAttribute('intersection-spawn', {event: 'click', mixin: 'voxel'});
+        entityEl.appendChild(rightHandEl);
+         */
 
         this.playerEl = entityEl;
         this.cameraEl = cameraEl;

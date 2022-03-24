@@ -11,7 +11,7 @@ class PlayerCharacter {
         this.rotation = 0
         this.color = '#FFFFFF';
         this.speed = 2;
-        this.name = 'Loading';
+        this.name = '...loading';
 
         this.moveRotation = 0;
         this.moveDirection = {
@@ -51,32 +51,31 @@ class PlayerCharacter {
 
     processMove(command) {
 
-        let unitX = 0
-        let unitZ = 0
-        let unitY = 1
-        let radian = Math.cos(command.rotation * Math.PI / 180)
+        let velocityX = 0
+        let velocityZ = 0
+        let velocityY = 1
 
         // create forces from input
-        if (command.forward) { unitZ -= 1 }
-        if (command.backward) { unitZ += 1 }
-        if (command.left) { unitX -= 1 }
-        if (command.right) { unitX += 1 }
+        if (command.forward) { velocityZ -= 1 }
+        if (command.backward) { velocityZ += 1 }
+        if (command.left) { velocityX -= 1 }
+        if (command.right) { velocityX += 1 }
 
-        let x = unitX * Math.cos(radian);
-        let y = unitY * Math.sin(radian);
+        let x = velocityX * Math.cos(command.rotation + Math.PI / 2);
+        let z = velocityZ * Math.sin(command.rotation + Math.PI / 2);
 
         // add values
-        this.moveDirection.x = unitX
-        this.moveDirection.z = unitZ
-        this.moveDirection.y = unitY
+        this.moveDirection.x = x
+        this.moveDirection.z = z
+        this.moveDirection.y = velocityY
         this.moveRotation = command.rotation
 
         // DONT GO BELOW GROUND
-        if(unitY < 1){
-            //this.y = 0;
+        if(velocityY < 1){
+            this.y = 0;
         }
 
-        console.log(command.rotation, radian, x, y, unitZ, unitX, unitY);
+        //console.log(command.rotation, radian, x, y, unitZ, unitX, unitY);
 
     }
 

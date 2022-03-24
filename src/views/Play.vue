@@ -5,6 +5,12 @@
 
         <a-assets>
           <img id="groundTexture" src="/assets/floor_grid.jpg" crossorigin="anonymous" />
+          <a-mixin id="voxel"
+                   geometry="primitive: box; height: 0.5; width: 0.5; depth: 0.5"
+                   material="shader: standard"
+                   random-color
+                   snap="offset: 0.25 0.25 0.25; snap: 0.5 0.5 0.5"
+          ></a-mixin>
         </a-assets>
 
         <a-sky color="#CCC"></a-sky>
@@ -55,9 +61,6 @@ export default {
     }
   },
   mounted: function () {
-
-    let that = this;
-    console.log('MOUNTED');
 
     // WAIT FOR LOADING
     setTimeout(function() {
