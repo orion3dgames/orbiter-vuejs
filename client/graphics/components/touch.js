@@ -12,7 +12,6 @@ window.AFRAME.registerComponent('thumbstick-logging', {
         if (evt.detail.y < -0.95) {
             console.log("UP");
             window.app.debug('UP')
-            window.location.reload()
             window.app.gameClient.frameState.w = true
         }
         if (evt.detail.x < -0.95) {
