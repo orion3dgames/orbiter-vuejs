@@ -110,7 +110,7 @@ class AFRAMERenderer {
         debug.setAttribute('id', 'debug');
         debug.setAttribute('position', '1 2 0');
         debug.setAttribute('geometry', 'primitive: plane; width: 2; height: 2;');
-        debug.setAttribute('text', 'color: #000; align: left; value: "debug"; width: 2; side: double');
+        debug.setAttribute('text', 'color: #000; align: left; value: "DEBUG"; width: 2; side: double');
         this.sceneEl.appendChild(debug);
 
         //<a-entity sphere-collider="objects: a-box" super-hands hand-controls="hand: left"></a-entity>
