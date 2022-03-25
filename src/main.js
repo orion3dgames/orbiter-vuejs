@@ -4,7 +4,6 @@ import router from './router'
 import Vuex from 'vuex'
 
 require('aframe');
-require('super-hands');
 //require('aframe-environment-component');
 
 Vue.config.productionTip = false;
