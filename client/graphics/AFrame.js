@@ -94,12 +94,12 @@ class AFRAMERenderer {
 
         // add right hand
         var rightHand = document.createElement('a-entity');
-        rightHand.setAttribute('hand-controls', 'hand', 'right');
+        rightHand.setAttribute('hand-controls', {'hand': 'right', 'handModelStyle':'lowPoly'});
         cameraEl.appendChild(rightHand);
 
         // add left hand
         var leftHand = document.createElement('a-entity');
-        leftHand.setAttribute('hand-controls', 'hand', 'left');
+        leftHand.setAttribute('hand-controls', {'hand': 'left', 'handModelStyle':'lowPoly'});
         cameraEl.appendChild(leftHand);
 
         //<a-entity sphere-collider="objects: a-box" super-hands hand-controls="hand: left"></a-entity>
