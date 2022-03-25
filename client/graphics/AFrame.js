@@ -4,6 +4,7 @@ import store from '../../src/store'; // path to your Vuex store
 
 // import aframe components
 import intersectionSpawn from './components/intersection-spawn';
+import './components/touch';
 //import randomColor from './components/random-color';
 import snap from './components/snap';
 import FireCommand from "../../common/command/FireCommand";

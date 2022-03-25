@@ -1,3 +1,4 @@
+import './helpers'
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -44,7 +45,7 @@ new Vue({
   router,
   store: store,
   render: h => h(App),
-  data: function(){
+  data: function () {
     return {
       user: {}
     }

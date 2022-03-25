@@ -72,7 +72,7 @@ export default {
     setTimeout(function() {
 
       // run game server
-      const gameClient = new GameClient(this.user)
+      app.gameClient = new GameClient(this.user)
       let tick = 0
       let previous = performance.now()
       const loop = function() {
@@ -81,7 +81,7 @@ export default {
         const delta = (now - previous) / 1000
         previous = now
         tick++
-        gameClient.update(delta, tick, now)
+        app.gameClient.update(delta, tick, now)
       }
 
       loop()
