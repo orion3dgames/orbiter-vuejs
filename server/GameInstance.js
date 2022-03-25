@@ -7,13 +7,17 @@ import Cube from "../common/entity/Cube";
 ////////////////////////////////////////////////////////////////////
 ////////////////  INITIALIZE FIREBASE  /////////////////////////
 
+/*
 // Your web app's Firebase configuration
 var admin = require("firebase-admin");
-var serviceAccount = require("../service_firebase.json");
-
+require('dotenv').config();
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  project_id: "orbiter-8f3ef",
+  credential: admin.credential.cert({
+    "projectId": process.env.FIREBASE_PROJECT_ID,
+    "private_key": process.env.FIREBASE_PRIVATE_KEY,
+    "client_email": process.env.FIREBASE_CLIENT_EMAIL,
+  }),
+  project_id: process.env.FIREBASE_PROJECT_ID,
   databaseURL: "https://orbiter-8f3ef-default-rtdb.firebaseio.com"
 });
 
@@ -32,7 +36,7 @@ var findPlayer = (hash, username) => {
     return false;
   }
   return players[foundUserIndex]
-}
+}*/
 
 ////////////////////////////////////////////////////////////////////
 ////////////////  GAME INSTANCE ////////////////////////////////////
@@ -44,8 +48,6 @@ class GameInstance {
     this.instance = new nengi.Instance(nengiConfig, { port: 8079 })
 
     this.instance.onConnect((client, clientData, callback) => {
-
-      console.log(players);
 
       // set default stats
       let defaultPlayer = {

@@ -5,6 +5,7 @@ config
 
 service_firebase.json
 # local env files
+.env
 .env.local
 .env.*.local
 
@@ -22,3 +23,5 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+.env
+.env
