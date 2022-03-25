@@ -41,11 +41,40 @@ var findPlayer = (hash, username) => {
 ////////////////////////////////////////////////////////////////////
 ////////////////  GAME INSTANCE ////////////////////////////////////
 
+require('dotenv').config();
+const express = require('express');
+
+const path = require('path');
+const PORT = process.env.PORT || 8080;
+let indexPath = "dist/";
+let clientFile = "index.html";
+
+const app = express();
+app.use(express.static(indexPath));
+let indexFile = path.resolve(indexPath+clientFile);
+
+app.get('/', function (req, res) {
+  res.sendFile(indexFile);
+});
+app.get('/play', function (req, res) {
+  res.sendFile(indexFile);
+});
+
+const server = require('http').createServer(app);
+
+server.listen(PORT, function () {
+  console.log('Socket Server started on port '+PORT);
+});
+
+////////////////////////////////////////////////////////////////////
+////////////////  GAME INSTANCE ////////////////////////////////////
+
 class GameInstance {
   constructor() {
     this.entities = new Map()
 
-    this.instance = new nengi.Instance(nengiConfig, { port: nengiConfig.PORT })
+    //this.instance = new nengi.Instance(nengiConfig, { port: nengiConfig.PORT })
+    this.instance = new nengi.Instance(nengiConfig, { httpServer: server })
 
     this.instance.onConnect((client, clientData, callback) => {
 

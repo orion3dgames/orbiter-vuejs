@@ -1,37 +1,3 @@
-////////////////////////////////////////////////////////////////////
-////////////////    START VUE CLIENT      //////////////////////////
-
-const express = require('express');
-const path = require('path');
-
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
-
-const PORT = process.env.PORT || 8080;
-let indexPath = "dist/";
-let clientFile = "index.html";
-
-const app = express();
-
-// ONLY USE THIS WHEN IN PRODUCTION (locally we will use yarn serve directly in the client folder)
-//if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(indexPath));
-  let indexFile = path.resolve(indexPath+clientFile);
-  console.log(indexFile);
-  app.get('/', function (req, res) {
-    res.sendFile(indexFile);
-  });
-  app.get('/play', function (req, res) {
-    res.sendFile(indexFile);
-  });
-
-  const server = require('http').createServer(app);
-  server.listen(PORT, function () {
-    console.log('Socket Server started on port '+PORT);
-  });
-
-//}
 
 ////////////////////////////////////////////////////////////////////
 ////////////////  INITIALIZE NENGI SERVER  /////////////////////////

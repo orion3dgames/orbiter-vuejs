@@ -6880,10 +6880,10 @@ negotiator@0.6.3:
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.3.tgz#58e323a72fedc0d6f9cd4d31fe49f51479590ccd"
   integrity sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==
 
-nengi@^1.26.0:
-  version "1.26.0"
-  resolved "https://registry.yarnpkg.com/nengi/-/nengi-1.26.0.tgz#f7860d3c45557e16f3de18524284db6fedaed373"
-  integrity sha512-2X3edRz9eN1KO6grkCBy50bQb7tgKvOrJFMDBa1zsKphhmHIBTcQn7D5MrqR5TY1V8LJfRpn0aK6CXKvn4Ws1g==
+nengi@^1.27.0:
+  version "1.27.0"
+  resolved "https://registry.yarnpkg.com/nengi/-/nengi-1.27.0.tgz#10ab40d7e5ea990571a2fcf9f0626de6cfc3f7f9"
+  integrity sha512-rhasPjwtLGYthTRXazDLnwUxLfxc0islTl0GNQj0rFQuMPJmXwbJKlTWoY17wfPWuqCgcPfuuO63Lvz+TLziaw==
   dependencies:
     "@clusterws/cws" "^3.0.0"
     esm "^3.2.22"
