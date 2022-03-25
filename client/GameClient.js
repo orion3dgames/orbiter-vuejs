@@ -34,6 +34,9 @@ class GameClient {
     })
 
     var HOST = location.origin.replace(/^http/, 'ws')
+    if(location.origin.includes("https")){
+      HOST = location.origin.replace(/^https/, 'ws')
+    }
     this.client.connect(HOST)
 
     // ADD EVENT
