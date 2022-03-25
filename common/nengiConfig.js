@@ -12,7 +12,7 @@ import FireCommand from './command/FireCommand'
 import MsgCommand from './command/MsgCommand'
 
 const config = {
-    UPDATE_RATE: 6,
+    UPDATE_RATE: 20,
 
     ID_BINARY_TYPE: nengi.UInt16,
     TYPE_BINARY_TYPE: nengi.UInt8, 

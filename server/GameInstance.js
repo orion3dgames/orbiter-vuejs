@@ -49,9 +49,8 @@ class GameInstance {
 
       // set default stats
       let defaultPlayer = {
-        x: Math.random() * 2,
-        y: 1,
-        z: Math.random() * 1,
+        x: Math.random() * 5,
+        z: Math.random() * 5,
         rotation: 0,
         color: "#"+Math.floor(Math.random()*16777215).toString(16),
         name: "loading..."
@@ -70,6 +69,13 @@ class GameInstance {
       // establish a relation between this entity and the client
       entity.client = client
       client.entity = entity
+
+      client.view = {
+        x: entity.x,
+        y: entity.y,
+        halfWidth: 10,
+        halfHeight: 10
+      }
 
       this.entities.set(entity.nid, entity)
 
@@ -129,7 +135,14 @@ class GameInstance {
 
     // TODO: the rest of the game logic
     this.instance.clients.forEach(client => {
-      client.entity.move(delta)
+
+      //
+      client.entity.move(delta);
+
+      // update view
+      client.view.x = client.entity.x
+      client.view.y = client.entity.y
+
     })
 
     // when instance.updates, nengi sends out snapshots to every client

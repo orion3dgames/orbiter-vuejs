@@ -9,11 +9,19 @@
                    geometry="primitive: box; height: 0.5; width: 0.5; depth: 0.5"
                    material="shader: standard"
                    snap="offset: 0.25 0.25 0.25; snap: 0.5 0.5 0.5"
+                   shadow="receive: true; cast:true;"
           ></a-mixin>
         </a-assets>
 
+        <a-entity light="type: ambient; intensity: 0.5;"></a-entity>
+        <a-entity light="type: directional;
+                   castShadow: true;
+                   intensity: 0.4;
+                   shadowCameraVisible: true;"
+                  position="-5 3 1.5"></a-entity>
+
         <a-sky color="#CCC"></a-sky>
-        <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color="#EEE" src="#groundTexture" repeat="1 1"></a-plane>
+        <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color="#EEE" src="#groundTexture" repeat="1 1" shadow="receive: true"></a-plane>
 
       </a-scene>
     </div>

@@ -6,7 +6,7 @@ class PlayerCharacter {
 
         this.nid = 0;
         this.x = 0
-        this.y = 1
+        this.y = 0
         this.z = 0
         this.rotation = 0
         this.color = '#FFFFFF';
@@ -16,7 +16,7 @@ class PlayerCharacter {
         this.moveRotation = 0;
         this.moveDirection = {
             x: 0,
-            y: 1,
+            y: 0,
             z: 0,
         }
 
@@ -41,11 +41,14 @@ class PlayerCharacter {
             color: this.color
         }
 
+        this.shadow = {
+            receive: true,
+            cast: true,
+        }
+
         this.geometry = {
-            primitive: 'box',
-            height: 1,
-            width: 1,
-            depth: 1,
+            primitive: 'sphere',
+            radius: 0.5,
         };
     }
 
@@ -53,7 +56,7 @@ class PlayerCharacter {
 
         let velocityX = 0
         let velocityZ = 0
-        let velocityY = 1
+        let velocityY = 0.25
 
         // create forces from input
         if (command.forward) { velocityZ -= 1 }
@@ -82,7 +85,7 @@ class PlayerCharacter {
     move(delta) {
         this.x += this.moveDirection.x * this.speed * delta
         this.z += this.moveDirection.z * this.speed * delta
-        this.y = 1;
+        this.y = this.moveDirection.y;
         this.rotation = this.moveRotation;
     }
 
@@ -93,6 +96,7 @@ PlayerCharacter.protocol = {
     y: { type: nengi.Float32, interp: true },
     z: { type: nengi.Float32, interp: true },
     rotation: { type: nengi.Float32, interp: true },
+    //rotation: { type: nengi.RotationFloat32, interp: true },
     color: nengi.UTF8String,
     name: nengi.UTF8String,
 }

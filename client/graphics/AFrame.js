@@ -53,7 +53,7 @@ class AFRAMERenderer {
 
       // if that entity is ours, save it to myEntity
       if (entity.nid === this.myId) {
-        //clientEntity.name = user.displayName;
+        clientEntity.name = user.displayName;
         this.myEntity = clientEntity
       }
 
@@ -63,8 +63,9 @@ class AFRAMERenderer {
       entityEl.setAttribute('id', 'nid-'+ clientEntity.nid);
       entityEl.setAttribute('position', clientEntity.position);
       entityEl.setAttribute('rotation', clientEntity.rotation);
-      entityEl.setAttribute('geometry', clientEntity.geometry);
       entityEl.setAttribute('material', clientEntity.material);
+      entityEl.setAttribute('geometry', clientEntity.geometry);
+      entityEl.setAttribute('shadow', clientEntity.geometry);
 
       // add username (not multiplayer yet)
       var nameEl = document.createElement('a-text');
@@ -147,6 +148,7 @@ class AFRAMERenderer {
   deleteEntity(nid) {
     // remove an entity from the renderer
     const entity = this.entities.get(nid)
+    console.log('DELETE ENTITY',entity);
     let entityEl = document.querySelector('#nid-'+entity.nid);
     if (entity && entityEl) {
       entityEl.parentNode.removeChild(entityEl);

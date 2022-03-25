@@ -23,8 +23,14 @@ class GameClient {
       this.client.addCommand(new MsgCommand('name', this.user));
     })
 
+    this.client.on('disconnected', () => {
+      console.log('connection closed');
+      window.location = '/';
+    })
+
     this.client.onClose(() => {
-      console.log('connection closed')
+      console.log('connection closed');
+      window.location = '/';
     })
 
     this.client.connect('ws://localhost:8079')
@@ -64,13 +70,15 @@ class GameClient {
       this.renderer.processLocalMessage(localMessage)
     })
 
-    const input = this.input.frameState
+    // IF MOVING
+    let input = this.input.frameState
     const rotation = this.renderer.cameraEl ? this.renderer.cameraEl.getAttribute('rotation').y : 0;
     this.client.addCommand(new MoveCommand(input.w, input.a, input.s, input.d, input.space, rotation, delta))
 
-    if (input.mouseDown) {
+    // IF SPACE BUTTON PRESSED
+    if (input.space) {
       var thisClickTime = new Date().getTime();
-      if (thisClickTime - this.latestCubePlacedTime > 1000 && this.cubeAdded) {
+      if (thisClickTime - this.latestCubePlacedTime > 500 && this.cubeAdded) {
         this.latestCubePlacedTime = thisClickTime;
         console.log('FireCommand', 'Click event fired...', this.cubeAdded);
         this.client.addCommand(new FireCommand(this.cubeAdded.x, this.cubeAdded.y,this.cubeAdded.z));
