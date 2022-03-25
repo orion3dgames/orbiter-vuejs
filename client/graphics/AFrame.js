@@ -83,7 +83,7 @@ class AFRAMERenderer {
         // add camera to entity
         var cameraEl = document.createElement('a-entity');
         cameraEl.setAttribute('camera', 'active', true);
-        cameraEl.setAttribute('position', {x:0, y:1, z:1.50});
+        cameraEl.setAttribute('position', {x:0, y:1, z:0});
         cameraEl.setAttribute('player-head');
         cameraEl.setAttribute('look-controls', {
           'enabled': true,
