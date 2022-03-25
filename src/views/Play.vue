@@ -4,8 +4,8 @@
       <a-scene class="aframe-scene" embedded>
 
         <a-assets>
-          <a-asset-item id="leftHand" src="../../client/assets/leftHandLow.glb"></a-asset-item>
-          <a-asset-item id="rightHand" src="../../client/assets/rightHandLow.glb"></a-asset-item>
+          <!--<a-asset-item id="leftHand" src="../../client/assets/leftHandLow.glb"></a-asset-item>
+          <a-asset-item id="rightHand" src="../../client/assets/rightHandLow.glb"></a-asset-item>-->
           <img id="groundTexture" src="/assets/floor_grid.jpg" crossorigin="anonymous" />
           <a-mixin id="voxel"
                    geometry="primitive: box; height: 0.5; width: 0.5; depth: 0.5"

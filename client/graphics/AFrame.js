@@ -33,7 +33,7 @@ class AFRAMERenderer {
       this.entities.set(entity.nid, cubeIdentity)
 
       let cubeEl = document.createElement('a-entity');
-      cubeEl.setAttribute('id', 'nid-'+ cubeIdentity.nid);
+      cubeEl.setAttribute('id', 'nid-' + cubeIdentity.nid);
       cubeEl.setAttribute('position', cubeIdentity.position);
       cubeEl.setAttribute('rotation', cubeIdentity.rotation);
       cubeEl.setAttribute('material', cubeIdentity.material);
@@ -60,7 +60,7 @@ class AFRAMERenderer {
       // create entity
       console.log('CREATE CLIENT', clientEntity)
       var entityEl = document.createElement('a-entity');
-      entityEl.setAttribute('id', 'nid-'+ clientEntity.nid);
+      entityEl.setAttribute('id', 'nid-' + clientEntity.nid);
       entityEl.setAttribute('position', clientEntity.position);
       entityEl.setAttribute('rotation', clientEntity.rotation);
       entityEl.setAttribute('material', clientEntity.material);
@@ -69,8 +69,8 @@ class AFRAMERenderer {
 
       // add username (not multiplayer yet)
       var nameEl = document.createElement('a-text');
-      nameEl.setAttribute('text', 'value', clientEntity.name+"\n"+clientEntity.nid);
-      nameEl.setAttribute('position', {x:-0.5, y:1.25, z:0});
+      nameEl.setAttribute('text', 'color: #000; align: left; value: ' + clientEntity.name + "\n" + clientEntity.nid + '; width: 2; side: double');
+      nameEl.setAttribute('position', { x: -0.5, y: 1.25, z: 0 });
       entityEl.appendChild(nameEl);
 
       // if myself
@@ -78,12 +78,12 @@ class AFRAMERenderer {
 
         // add cursor
         var cursorEl = document.createElement('a-cursor');
-        cursorEl.setAttribute('intersection-spawn', {event: 'click', mixin: 'voxel'});
+        cursorEl.setAttribute('intersection-spawn', { event: 'click', mixin: 'voxel' });
 
         // add camera to entity
         var cameraEl = document.createElement('a-entity');
         cameraEl.setAttribute('camera', 'active', true);
-        cameraEl.setAttribute('position', {x:0, y:1, z:0});
+        cameraEl.setAttribute('position', { x: 0, y: 1, z: 0 });
         cameraEl.setAttribute('player-head');
         cameraEl.setAttribute('look-controls', {
           'enabled': true,
@@ -92,15 +92,25 @@ class AFRAMERenderer {
         cameraEl.appendChild(cursorEl);
         entityEl.appendChild(cameraEl);
 
-        // add right hand
-        var rightHand = document.createElement('a-entity');
-        rightHand.setAttribute('hand-controls', {'hand': 'right', 'handModelStyle':'lowPoly'});
-        cameraEl.appendChild(rightHand);
+        // // add left hand
+        // var leftHand = document.createElement('a-entity');
+        // leftHand.setAttribute('oculus-touch-controls', { 'hand': 'left' });
+        // leftHand.setAttribute('thumbstick-logging');
+        // entityEl.appendChild(leftHand);
 
-        // add left hand
-        var leftHand = document.createElement('a-entity');
-        leftHand.setAttribute('hand-controls', {'hand': 'left', 'handModelStyle':'lowPoly'});
-        cameraEl.appendChild(leftHand);
+        // // add right hand
+        // var rightHand = document.createElement('a-entity');
+        // rightHand.setAttribute('oculus-touch-controls', { 'hand': 'right' });
+        // rightHand.setAttribute('thumbstick-logging');
+        // entityEl.appendChild(rightHand);
+
+        // debug
+        const debug = document.createElement('a-entity');
+        debug.setAttribute('id', 'debug');
+        debug.setAttribute('position', '1 2 0');
+        debug.setAttribute('geometry', 'primitive: plane; width: 2; height: 2;');
+        debug.setAttribute('text', 'color: #000; align: left; value: "debug"; width: 2; side: double');
+        this.sceneEl.appendChild(debug);
 
         //<a-entity sphere-collider="objects: a-box" super-hands hand-controls="hand: left"></a-entity>
         //<a-entity sphere-collider="objects: a-box" super-hands hand-controls="hand: right"></a-entity>
@@ -124,10 +134,10 @@ class AFRAMERenderer {
   updateEntity(update) {
 
     // get entity el
-    let entity = document.querySelector('#nid-'+update.nid);
+    let entity = document.querySelector('#nid-' + update.nid);
 
     // if entity found
-    if(entity) {
+    if (entity) {
 
       //console.log('[updateEntity]', update, entity);
 
@@ -159,8 +169,8 @@ class AFRAMERenderer {
   deleteEntity(nid) {
     // remove an entity from the renderer
     const entity = this.entities.get(nid)
-    console.log('DELETE ENTITY',entity);
-    let entityEl = document.querySelector('#nid-'+entity.nid);
+    console.log('DELETE ENTITY', entity);
+    let entityEl = document.querySelector('#nid-' + entity.nid);
     if (entity && entityEl) {
       entityEl.parentNode.removeChild(entityEl);
     }
