@@ -8,6 +8,7 @@ import AFRAMERenderer from './graphics/AFrame'
 
 import MoveCommand from '../common/command/MoveCommand'
 import FireCommand from '../common/command/FireCommand'
+import MsgCommand from '../common/command/MsgCommand'
 
 class GameClient {
   constructor() {
@@ -15,9 +16,11 @@ class GameClient {
     this.renderer = new AFRAMERenderer()
     this.input = new InputSystem()
     this.latestCubePlacedTime = 0;
+    this.user = store.getters.user.displayName;
 
     this.client.onConnect(res => {
-      console.log('onConnect response:', res)
+      console.log('onConnect response:', res, this.user);
+      this.client.addCommand(new MsgCommand('name', this.user));
     })
 
     this.client.onClose(() => {
@@ -37,7 +40,7 @@ class GameClient {
 
   update(delta, tick, now) {
     /* receiving */
-    const network = this.client.readNetwork()
+    const network = this.client.readNetwork();
 
     network.entities.forEach(snapshot => {
       snapshot.createEntities.forEach(entity => {

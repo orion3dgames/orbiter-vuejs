@@ -5,12 +5,14 @@ import Cube from './entity/Cube'
 
 import Identity from './message/Identity'
 import PlaceCube from './message/PlaceCube'
+import Message from './message/Message'
 
 import MoveCommand from './command/MoveCommand'
 import FireCommand from './command/FireCommand'
+import MsgCommand from './command/MsgCommand'
 
 const config = {
-    UPDATE_RATE: 10,
+    UPDATE_RATE: 6,
 
     ID_BINARY_TYPE: nengi.UInt16,
     TYPE_BINARY_TYPE: nengi.UInt8, 
@@ -30,9 +32,11 @@ const config = {
         messages: [
             ['Identity', Identity],
             ['PlaceCube', PlaceCube],
+            ['Message', Message],
         ],
         commands: [
             ['MoveCommand', MoveCommand],
+            ['MsgCommand', MsgCommand],
             ['FireCommand', FireCommand],
         ],
         basics: []

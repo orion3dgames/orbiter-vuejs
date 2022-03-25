@@ -18,18 +18,20 @@ const app = express();
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(indexPath));
   let indexFile = path.resolve(indexPath+clientFile);
+  console.log(indexFile);
   app.get('/', function (req, res) {
     res.sendFile(indexFile);
   });
   app.get('/play', function (req, res) {
     res.sendFile(indexFile);
   });
-}
 
-const server = require('http').createServer(app);
-server.listen(PORT, function () {
-  console.log('Socket Server started on port '+PORT);
-});
+  const server = require('http').createServer(app);
+  server.listen(PORT, function () {
+    console.log('Socket Server started on port '+PORT);
+  });
+
+}
 
 ////////////////////////////////////////////////////////////////////
 ////////////////  INITIALIZE NENGI SERVER  /////////////////////////

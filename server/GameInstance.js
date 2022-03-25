@@ -2,8 +2,40 @@ import nengi from 'nengi'
 import nengiConfig from '../common/nengiConfig'
 import PlayerCharacter from '../common/entity/PlayerCharacter'
 import Identity from '../common/message/Identity'
-import PlaceCube from '../common/message/PlaceCube'
 import Cube from "../common/entity/Cube";
+
+////////////////////////////////////////////////////////////////////
+////////////////  INITIALIZE FIREBASE  /////////////////////////
+
+// Your web app's Firebase configuration
+var admin = require("firebase-admin");
+var serviceAccount = require("../service_firebase.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  project_id: "orbiter-8f3ef",
+  databaseURL: "https://orbiter-8f3ef-default-rtdb.firebaseio.com"
+});
+
+let firebaseDB = admin.database();
+
+var players = [];
+firebaseDB.ref('sessions').once("value", function(snapshot) {
+  snapshot.forEach(function (child) {
+    players.push(child.val());
+  });
+});
+
+var findPlayer = (hash, username) => {
+  let foundUserIndex = players.findIndex(player => player.name === username);
+  if(!players[foundUserIndex]){
+    return false;
+  }
+  return players[foundUserIndex]
+}
+
+////////////////////////////////////////////////////////////////////
+////////////////  GAME INSTANCE ////////////////////////////////////
 
 class GameInstance {
   constructor() {
@@ -12,6 +44,8 @@ class GameInstance {
     this.instance = new nengi.Instance(nengiConfig, { port: 8079 })
 
     this.instance.onConnect((client, clientData, callback) => {
+
+      console.log(players);
 
       // set default stats
       let defaultPlayer = {
@@ -65,6 +99,12 @@ class GameInstance {
 
         if (command.protocol.name === 'MoveCommand') {
           entity.processMove(command)
+        }
+
+        if (command.protocol.name === 'MsgCommand') {
+          if(command.type === 'name'){
+            entity.name = command.message;
+          }
         }
 
         if (command.protocol.name === 'FireCommand') {

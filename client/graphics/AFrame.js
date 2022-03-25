@@ -47,13 +47,13 @@ class AFRAMERenderer {
       let user = store.getters.user;
 
       const clientEntity = new PlayerCharacter(entity)
-      clientEntity.name = user.displayName;
+      //clientEntity.name = user.displayName;
 
       this.entities.set(entity.nid, clientEntity)
 
       // if that entity is ours, save it to myEntity
       if (entity.nid === this.myId) {
-        clientEntity.name = user.displayName;
+        //clientEntity.name = user.displayName;
         this.myEntity = clientEntity
       }
 
@@ -117,7 +117,7 @@ class AFRAMERenderer {
     // if entity found
     if(entity) {
 
-      console.log('[updateEntity]', update, entity);
+      //console.log('[updateEntity]', update, entity);
 
       // update pos todo: to be improved
       let position = ['x', 'y', 'z'];
