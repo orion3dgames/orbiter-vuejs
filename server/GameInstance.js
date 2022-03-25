@@ -45,7 +45,7 @@ class GameInstance {
   constructor() {
     this.entities = new Map()
 
-    this.instance = new nengi.Instance(nengiConfig, { port: 8079 })
+    this.instance = new nengi.Instance(nengiConfig, { port: nengiConfig.PORT })
 
     this.instance.onConnect((client, clientData, callback) => {
 

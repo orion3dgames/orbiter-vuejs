@@ -1,4 +1,5 @@
 import nengi from 'nengi'
+require('dotenv').config();
 
 import PlayerCharacter from './entity/PlayerCharacter'
 import Cube from './entity/Cube'
@@ -12,6 +13,8 @@ import FireCommand from './command/FireCommand'
 import MsgCommand from './command/MsgCommand'
 
 const config = {
+
+    PORT: process.env.VUE_APP_NENGI_PORT ? process.env.VUE_APP_NENGI_PORT : process.env.NENGI_PORT,
     UPDATE_RATE: 20,
 
     ID_BINARY_TYPE: nengi.UInt16,
@@ -42,5 +45,7 @@ const config = {
         basics: []
     }
 }
+
+console.log(config);
 
 export default config

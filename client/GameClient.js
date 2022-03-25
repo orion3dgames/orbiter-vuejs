@@ -33,7 +33,7 @@ class GameClient {
       window.location = '/';
     })
 
-    this.client.connect('ws://localhost:8079')
+    this.client.connect('ws://localhost:'+nengiConfig.PORT)
 
     // ADD EVENT
     this.cubeAdded = null;
