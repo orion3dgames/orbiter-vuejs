@@ -36,25 +36,25 @@ class InputSystem {
       if (event.keyCode === 87 || event.keyCode === 38) {
         this.currentState.w = true
         this.frameState.w = true
-        global.app.debug('up')
+        window.app.debug('up')
       }
       // a or left arrow
       if (event.keyCode === 65 || event.keyCode === 37) {
         this.currentState.a = true
         this.frameState.a = true
-        global.app.debug('left')
+        window.app.debug('left')
       }
       // s or down arrow
       if (event.keyCode === 83 || event.keyCode === 40) {
         this.currentState.s = true
         this.frameState.s = true
-        global.app.debug('down')
+        window.app.debug('down')
       }
       // d or right arrow
       if (event.keyCode === 68 || event.keyCode === 39) {
         this.currentState.d = true
         this.frameState.d = true
-        global.app.debug('right')
+        window.app.debug('right')
       }
       // space
       if (event.keyCode === 32) {

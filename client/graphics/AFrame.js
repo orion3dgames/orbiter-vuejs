@@ -108,7 +108,7 @@ class AFRAMERenderer {
         // debug
         const debug = document.createElement('a-entity');
         debug.setAttribute('id', 'debug');
-        debug.setAttribute('position', '1 2 0');
+        debug.setAttribute('position', '0 2 -5');
         debug.setAttribute('geometry', 'primitive: plane; width: 2; height: 2;');
         debug.setAttribute('text', 'color: #000; align: left; value: "DEBUG"; width: 2; side: double');
         this.sceneEl.appendChild(debug);
