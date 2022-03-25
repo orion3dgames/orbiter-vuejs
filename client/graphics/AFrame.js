@@ -96,13 +96,13 @@ class AFRAMERenderer {
         // add left hand
         var leftHand = document.createElement('a-entity');
         leftHand.setAttribute('oculus-touch-controls', { 'hand': 'left' });
-        leftHand.setAttribute('thumbstick-logging');
+        leftHand.setAttribute('thumbstick-logging', '');
         entityEl.appendChild(leftHand);
 
         // add right hand
         var rightHand = document.createElement('a-entity');
         rightHand.setAttribute('oculus-touch-controls', { 'hand': 'right' });
-        rightHand.setAttribute('thumbstick-logging');
+        rightHand.setAttribute('thumbstick-logging', '');
         entityEl.appendChild(rightHand);
 
         // debug

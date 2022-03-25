@@ -1,5 +1,6 @@
 window.AFRAME.registerComponent('thumbstick-logging', {
     init: function () {
+        console.log('thumbstick-logging init')
         this.el.addEventListener('thumbstickmoved', this.logThumbstick);
     },
     logThumbstick: function (evt) {
