@@ -127,7 +127,7 @@ class AFRAMERenderer {
       }
 
       this.sceneEl.appendChild(entityEl);
-
+      console.log("entity added")
     }
   }
 
