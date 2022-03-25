@@ -78,7 +78,7 @@ class AFRAMERenderer {
 
         // add cursor
         var cursorEl = document.createElement('a-cursor');
-        //cursorEl.setAttribute('intersection-spawn', {event: 'click', mixin: 'voxel'});
+        cursorEl.setAttribute('intersection-spawn', {event: 'click', mixin: 'voxel'});
 
         // add camera to entity
         var cameraEl = document.createElement('a-entity');
@@ -92,12 +92,15 @@ class AFRAMERenderer {
         cameraEl.appendChild(cursorEl);
         entityEl.appendChild(cameraEl);
 
-        // add hands
+        // add right hand
         var rightHand = document.createElement('a-entity');
-        rightHand.setAttribute('super-hands');
         rightHand.setAttribute('hand-controls', 'hand', 'right');
-        rightHand.setAttribute('sphere-collider', 'objects', '#voxel');
-        entityEl.appendChild(rightHand);
+        cameraEl.appendChild(rightHand);
+
+        // add left hand
+        var leftHand = document.createElement('a-entity');
+        leftHand.setAttribute('hand-controls', 'hand', 'left');
+        cameraEl.appendChild(leftHand);
 
         //<a-entity sphere-collider="objects: a-box" super-hands hand-controls="hand: left"></a-entity>
         //<a-entity sphere-collider="objects: a-box" super-hands hand-controls="hand: right"></a-entity>
