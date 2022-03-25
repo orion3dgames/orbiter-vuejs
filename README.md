@@ -14,5 +14,5 @@ IMPORTANT: NODE V14- (any higher version are not compatible with NENGI yet)
 - Open a terminal and launch these commands from the root folder
 - ```yarn install``` (install client dependencies)
 - ```yarn serve``` (launch a client)
-- ```yarn daemon``` (launch a server)
+- ```yarn start``` (launch a server)
 - go to "localhost:8080" to view the game.
