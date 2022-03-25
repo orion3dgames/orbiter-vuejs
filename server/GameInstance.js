@@ -63,7 +63,7 @@ app.get('/play', function (req, res) {
 const server = require('http').createServer(app);
 
 server.listen(PORT, function () {
-  console.log('Socket Server started on port '+PORT);
+  console.log('Server started on port '+PORT);
 });
 
 ////////////////////////////////////////////////////////////////////

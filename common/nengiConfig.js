@@ -14,7 +14,7 @@ import MsgCommand from './command/MsgCommand'
 
 const config = {
 
-    PORT: process.env.VUE_APP_NENGI_PORT ? process.env.VUE_APP_NENGI_PORT : process.env.NENGI_PORT,
+    PORT: process.env.VUE_APP_PORT || process.env.PORT || 8080,
     UPDATE_RATE: 20,
 
     ID_BINARY_TYPE: nengi.UInt16,
