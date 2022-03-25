@@ -74,7 +74,7 @@ class PlayerCharacter {
         this.moveRotation = command.rotation
 
         // DONT GO BELOW GROUND
-        if(velocityY < 1){
+        if (velocityY < 1) {
             this.y = 0;
         }
 
@@ -83,8 +83,8 @@ class PlayerCharacter {
     }
 
     move(delta) {
-        this.x += this.moveDirection.x * this.speed * delta
-        this.z += this.moveDirection.z * this.speed * delta
+        this.x += (this.moveDirection.x * Math.cos(this.rotation)) * (this.speed * delta)
+        this.z += (this.moveDirection.z * Math.sin(this.rotation)) * (this.speed * delta)
         this.y = this.moveDirection.y;
         this.rotation = this.moveRotation;
     }

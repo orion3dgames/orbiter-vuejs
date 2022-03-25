@@ -132,7 +132,7 @@ class GameInstance {
         const command = cmd.commands[i]
         const entity = client.entity
 
-        console.log('COMMAND', command, entity.nid);
+        // console.log('COMMAND', command, entity.nid);
 
         if (command.protocol.name === 'MoveCommand') {
           entity.processMove(command)
