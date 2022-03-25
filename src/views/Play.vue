@@ -10,6 +10,7 @@
                    material="shader: standard"
                    snap="offset: 0.25 0.25 0.25; snap: 0.5 0.5 0.5"
                    shadow="receive: true; cast:true;"
+                   grabbable stretchable draggable dropppable
           ></a-mixin>
         </a-assets>
 
