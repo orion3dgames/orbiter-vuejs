@@ -25,12 +25,12 @@ class GameClient {
 
     this.client.on('disconnected', () => {
       console.log('connection closed');
-      window.location = '/';
+      //window.location = '/';
     })
 
     this.client.onClose(() => {
       console.log('connection closed');
-      window.location = '/';
+      //window.location = '/';
     })
 
     this.client.connect('ws://localhost:'+nengiConfig.PORT)
