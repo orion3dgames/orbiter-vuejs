@@ -100,35 +100,35 @@ class InputSystem {
       this.currentState.mouseDown = false
     })
 
-    // const ctx = this;
-    // window.AFRAME.registerComponent('thumbstick-logging', {
-    //   init: function () {
-    //     this.el.addEventListener('thumbstickmoved', this.logThumbstick);
-    //   },
-    //   logThumbstick: function (evt) {
-    //     if (evt.detail.y > 0.95) {
-    //       console.log("DOWN");
-    //       ctx.debug('DOWN')
-    //       ctx.frameState.s = true
-    //     }
-    //     if (evt.detail.y < -0.95) {
-    //       console.log("UP");
-    //       ctx.debug('UP')
-    //       window.location.reload()
-    //       ctx.frameState.w = true
-    //     }
-    //     if (evt.detail.x < -0.95) {
-    //       console.log("LEFT");
-    //       ctx.debug('LEFT')
-    //       ctx.frameState.a = true
-    //     }
-    //     if (evt.detail.x > 0.95) {
-    //       console.log("RIGHT");
-    //       ctx.debug('RIGHT')
-    //       ctx.frameState.d = true
-    //     }
-    //   }
-    // });
+    const ctx = this;
+    window.AFRAME.registerComponent('thumbstick-logging', {
+      init: function () {
+        this.el.addEventListener('thumbstickmoved', this.logThumbstick);
+      },
+      logThumbstick: function (evt) {
+        if (evt.detail.y > 0.95) {
+          console.log("DOWN");
+          ctx.debug('DOWN')
+          ctx.frameState.s = true
+        }
+        if (evt.detail.y < -0.95) {
+          console.log("UP");
+          ctx.debug('UP')
+          window.location.reload()
+          ctx.frameState.w = true
+        }
+        if (evt.detail.x < -0.95) {
+          console.log("LEFT");
+          ctx.debug('LEFT')
+          ctx.frameState.a = true
+        }
+        if (evt.detail.x > 0.95) {
+          console.log("RIGHT");
+          ctx.debug('RIGHT')
+          ctx.frameState.d = true
+        }
+      }
+    });
   }
 
   releaseKeys() {

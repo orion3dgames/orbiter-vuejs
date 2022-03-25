@@ -92,17 +92,17 @@ class AFRAMERenderer {
         cameraEl.appendChild(cursorEl);
         entityEl.appendChild(cameraEl);
 
-        // // add left hand
-        // var leftHand = document.createElement('a-entity');
-        // leftHand.setAttribute('oculus-touch-controls', { 'hand': 'left' });
-        // leftHand.setAttribute('thumbstick-logging');
-        // entityEl.appendChild(leftHand);
+        // add left hand
+        var leftHand = document.createElement('a-entity');
+        leftHand.setAttribute('oculus-touch-controls', { 'hand': 'left' });
+        leftHand.setAttribute('thumbstick-logging');
+        entityEl.appendChild(leftHand);
 
-        // // add right hand
-        // var rightHand = document.createElement('a-entity');
-        // rightHand.setAttribute('oculus-touch-controls', { 'hand': 'right' });
-        // rightHand.setAttribute('thumbstick-logging');
-        // entityEl.appendChild(rightHand);
+        // add right hand
+        var rightHand = document.createElement('a-entity');
+        rightHand.setAttribute('oculus-touch-controls', { 'hand': 'right' });
+        rightHand.setAttribute('thumbstick-logging');
+        entityEl.appendChild(rightHand);
 
         // debug
         const debug = document.createElement('a-entity');
