@@ -33,7 +33,8 @@ class GameClient {
       //window.location = '/';
     })
 
-    this.client.connect('ws://localhost:'+nengiConfig.PORT)
+    var HOST = location.origin.replace(/^http/, 'ws')
+    this.client.connect(HOST)
 
     // ADD EVENT
     this.cubeAdded = null;
