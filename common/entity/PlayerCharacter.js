@@ -68,8 +68,8 @@ class PlayerCharacter {
         //let z = velocityZ * Math.sin(command.rotation + Math.PI / 2);
 
         // add values
-        this.moveDirection.x = velocityX
-        this.moveDirection.z = velocityZ
+        this.moveDirection.x = velocityZ * Math.sin(command.rotation / 180 * Math.PI * 2) + velocityX * Math.cos((-command.rotation / 180 * Math.PI * 2));
+        this.moveDirection.z = velocityZ * Math.cos(command.rotation / 180 * Math.PI * 2) + velocityX * Math.sin((-command.rotation / 180 * Math.PI * 2));
         this.moveDirection.y = velocityY
         this.moveRotation = command.rotation
 
@@ -83,8 +83,8 @@ class PlayerCharacter {
     }
 
     move(delta) {
-        this.x += (this.moveDirection.x * Math.cos(this.rotation)) * (this.speed * delta)
-        this.z += (this.moveDirection.z * Math.sin(this.rotation)) * (this.speed * delta)
+        this.x += this.moveDirection.x * this.speed * delta
+        this.z += this.moveDirection.z * this.speed * delta
         this.y = this.moveDirection.y;
         this.rotation = this.moveRotation;
     }
