@@ -81,6 +81,7 @@ export default new Vuex.Store({
     appVersion: process.env.VUE_APP_VERSION || 'NO VERSION FOUND IN MANIFEST.JSON',
     user: false,
     sessions: [],
+    session_id: false,
     players: [],
     MAX_PLAYERS: 2,
     DEFAULT_BOARD: ["", "", "", "", "", "", "", "", ""],
@@ -120,7 +121,11 @@ export default new Vuex.Store({
     allsessions(state) {
       return state.sessions.filter(session => (session.creator.uid !== state.user.uid));
     },
+    session_id(state){
+      return state.session_id;
+    },
     session: (state) => (id) => {
+      state.session_id = id;
       return state.sessions.find(session => session.uid == id);
     },
     isUserInSession: (state) => (session_id) => {

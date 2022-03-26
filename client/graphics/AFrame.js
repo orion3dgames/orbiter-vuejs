@@ -73,7 +73,7 @@ class AFRAMERenderer {
       }
 
       // spawn player / client
-      this.playerEl = playerEntity.spawn(this.sceneEl, entity);
+      this.playerEl = playerEntity.spawn(this.sceneEl, entity, this.myId);
     }
   }
 

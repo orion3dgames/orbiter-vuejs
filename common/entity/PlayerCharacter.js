@@ -52,7 +52,7 @@ class PlayerCharacter {
         };
     }
 
-    spawn(targetEl, entity){
+    spawn(targetEl, entity, myId){
 
         var entityEl = document.createElement('a-entity');
         entityEl.setAttribute('id', 'nid-' + this.nid);
@@ -62,14 +62,14 @@ class PlayerCharacter {
         entityEl.setAttribute('geometry', this.geometry);
         entityEl.setAttribute('shadow', this.geometry);
 
-        // add username (not multiplayer yet)
+        // add username
         var nameEl = document.createElement('a-text');
         nameEl.setAttribute('text', 'color: #000; align: left; value: ' + this.name + "\n" + this.nid + '; width: 2; side: double');
         nameEl.setAttribute('position', { x: -0.5, y: 1.25, z: 0 });
         entityEl.appendChild(nameEl);
 
-        // if myself
-        if (entity.nid === this.nid) {
+        // if myself, add all player related stuff
+        if (entity.nid === myId) {
 
             // add cursor
             var cursorEl = document.createElement('a-cursor');

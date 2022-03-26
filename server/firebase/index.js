@@ -1,15 +1,69 @@
-var admin = require('firebase-admin');
-require('dotenv').config();
+import firebaseDB from "./firebaseDB";
 
-admin.initializeApp({
-  credential: admin.credential.cert({
-    "projectId": process.env.FIREBASE_PROJECT_ID,
-    "private_key": process.env.FIREBASE_PRIVATE_KEY,
-    "client_email": process.env.FIREBASE_CLIENT_EMAIL,
-  }),
-  project_id: process.env.FIREBASE_PROJECT_ID,
-  databaseURL: "https://orbiter-8f3ef-default-rtdb.firebaseio.com"
-});
+import {
+  signOut,
+  updateProfile,
+} from 'firebase/auth'
+import {
+  ref,
+  set,
+  push,
+  onValue,
+  remove,
+  update,
+  increment,
+  orderByChild,
+  query,
+  limitToLast
+} from 'firebase/database'
 
-var db = admin.database();
-module.exports = db;
+class firebaseInstance {
+
+  constructor() {
+      this.db = firebaseDB;
+      this.session_id = false;
+      console.log('[firebaseInstance]', 'initialized');
+  }
+
+  setSession(uid) {
+    this.session_id = uid;
+  }
+
+  loadSessions() {
+    return new Promise((resolve) => {
+      console.log('[firebaseInstance]', 'loadSessions');
+      this.db.ref('sessions').once("value", function (snapshot) {
+        var sessions = [];
+        snapshot.forEach(function (child) {
+          sessions.push(child.val());
+        });
+        resolve(sessions);
+      });
+    });
+  }
+
+  loadSession() {
+    return new Promise((resolve) => {
+      this.db.ref('sessions/'+this.session_id).once("value", function (snapshot) {
+        resolve(snapshot.val());
+      });
+    });
+  }
+
+  addCube(data) {
+    return new Promise((resolve) => {
+      if(this.session_id === false){
+        return false;
+      }
+      const dbRef = ref(this.db, 'sessions/'+ this.session_id+'/cubes');
+      const newSessionRef = push(dbRef);
+      data.uid = newSessionRef.key;
+      set(newSessionRef, data).then(() => {
+        resolve(data);
+      });
+    })
+  }
+
+}
+
+export default firebaseInstance

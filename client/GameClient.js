@@ -17,6 +17,7 @@ class GameClient {
     this.input = new InputSystem()
     this.latestCubePlacedTime = 0;
     this.user = store.getters.user.displayName;
+    this.session = store.getters.session_id;
 
     this.client.onConnect(res => {
       console.log('onConnect response:', res);
@@ -27,6 +28,8 @@ class GameClient {
 
       // send server client name
       this.client.addCommand(new MsgCommand('name', this.user));
+      console.log(this.session);
+      this.client.addCommand(new MsgCommand('session_id',  this.session));
     })
 
     this.client.on('disconnected', () => {

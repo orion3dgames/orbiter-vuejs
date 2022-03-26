@@ -1,5 +1,8 @@
 import nengi from 'nengi'
 import nengiConfig from '../common/nengiConfig'
+
+import firebaseInstance from './firebase'
+
 import PlayerCharacter from '../common/entity/PlayerCharacter'
 import Identity from '../common/message/Identity'
 import Cube from "../common/entity/Cube";
@@ -7,29 +10,13 @@ import Cube from "../common/entity/Cube";
 ////////////////////////////////////////////////////////////////////
 ////////////////  INITIALIZE FIREBASE  /////////////////////////
 
-/*
+
 // Your web app's Firebase configuration
-var admin = require("firebase-admin");
-require('dotenv').config();
-admin.initializeApp({
-  credential: admin.credential.cert({
-    "projectId": process.env.FIREBASE_PROJECT_ID,
-    "private_key": process.env.FIREBASE_PRIVATE_KEY,
-    "client_email": process.env.FIREBASE_CLIENT_EMAIL,
-  }),
-  project_id: process.env.FIREBASE_PROJECT_ID,
-  databaseURL: "https://orbiter-8f3ef-default-rtdb.firebaseio.com"
-});
+import firebaseDB from "./firebase";
 
-let firebaseDB = admin.database();
 
-var players = [];
-firebaseDB.ref('sessions').once("value", function(snapshot) {
-  snapshot.forEach(function (child) {
-    players.push(child.val());
-  });
-});
 
+/*
 var findPlayer = (hash, username) => {
   let foundUserIndex = players.findIndex(player => player.name === username);
   if(!players[foundUserIndex]){
@@ -77,6 +64,10 @@ class GameInstance {
     //this.instance = new nengi.Instance(nengiConfig, { port: nengiConfig.PORT })
     this.instance = new nengi.Instance(nengiConfig, { httpServer: server })
 
+    this.database = new firebaseInstance();
+    this.session_id = false;
+    this.session = false;
+
     this.instance.onConnect((client, clientData, callback) => {
 
       // set default stats
@@ -122,6 +113,28 @@ class GameInstance {
 
   }
 
+  initializeWorld(){
+    this.database.loadSession().then( session => {
+      console.log('initializeWorld()', session.cubes);
+      for (let c in session.cubes) {
+        let cubeDb = session.cubes[c];
+
+        const cube = new Cube({
+          x: cubeDb.x,
+          y: cubeDb.y,
+          z: cubeDb.z,
+          color: cubeDb.color,
+        })
+
+        // Order is important for the next two lines
+        this.instance.addEntity(cube) // assigns an `nid` to green
+        this.entities.set(cube.nid, cube) // uses the `nid` as a key
+
+      }
+    });
+
+  }
+
   update(delta, tick, now) {
     let cmd = null
 
@@ -143,6 +156,10 @@ class GameInstance {
           if(command.type === 'name'){
             entity.name = command.message;
           }
+          if(command.type === 'session_id'){
+            this.database.setSession(command.message);
+            this.initializeWorld();
+          }
         }
 
         if (command.protocol.name === 'FireCommand') {
@@ -158,6 +175,11 @@ class GameInstance {
           // Order is important for the next two lines
           this.instance.addEntity(cube) // assigns an `nid` to green
           this.entities.set(cube.nid, cube) // uses the `nid` as a key
+
+          this.database.addCube(cube).then( data => {
+            console.log(data);
+          });
+
           console.log('new [Cube]', cube);
         }
 
