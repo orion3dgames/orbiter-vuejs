@@ -1,7 +1,13 @@
 <template>
   <div class="game-area">
-    <div class="game-loading" id="screen-connecting">Connecting to server...</div>
-    <a-scene class="aframe-scene" loading-screen="dotsColor: red; backgroundColor: black" embedded>
+    <div class="game-loading" id="screen-connecting">
+      Connecting to server...
+    </div>
+    <a-scene
+      class="aframe-scene"
+      loading-screen="dotsColor: red; backgroundColor: black"
+      embedded
+    >
       <a-assets>
         <!--<a-asset-item id="leftHand" src="../../client/assets/leftHandLow.glb"></a-asset-item>
         <a-asset-item id="rightHand" src="../../client/assets/rightHandLow.glb"></a-asset-item>-->
@@ -72,18 +78,20 @@ export default {
     setTimeout(function () {
       // run game server
       window.app.gameClient = new GameClient();
-      let tick = 0;
-      let previous = performance.now();
-      const loop = function () {
-        window.requestAnimationFrame(loop);
-        const now = performance.now();
-        const delta = (now - previous) / 1000;
-        previous = now;
-        tick++;
-        window.app.gameClient.update(delta, tick, now);
-      };
+      if (!window.app.gameClient.playerLoaded) {
+        let tick = 0;
+        let previous = performance.now();
+        const loop = function () {
+          window.requestAnimationFrame(loop);
+          const now = performance.now();
+          const delta = (now - previous) / 1000;
+          previous = now;
+          tick++;
+          window.app.gameClient.update(delta, tick, now);
+        };
 
-      loop();
+        loop();
+      }
     }, 5000); // ah ouais quand même
   },
 
