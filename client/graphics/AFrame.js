@@ -75,6 +75,10 @@ class AFRAMERenderer {
 
       // spawn player / client
       this.playerEl = playerEntity.spawn(this.sceneEl, entity, this.myId);
+
+      // add camera el
+      this.cameraEl = document.querySelector('#camera');
+
     }
   }
 

@@ -77,6 +77,7 @@ class PlayerCharacter {
 
             // add camera to entity
             var cameraEl = document.createElement('a-entity');
+            cameraEl.setAttribute('id', 'camera');
             cameraEl.setAttribute('camera', 'active', true);
             cameraEl.setAttribute('position', { x: 0, y: 1, z: 0 });
             cameraEl.setAttribute('player-head');
