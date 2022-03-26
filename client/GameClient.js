@@ -45,7 +45,7 @@ class GameClient {
 
     // if local dev server, connect to correct serve
     var HOST = location.origin.replace(/^http/, 'ws')
-    if(location.origin.includes('localhost')){
+    if (location.origin.includes('localhost')) {
       HOST = "ws://localhost:8080";
     }
     this.client.connect(HOST, {
@@ -89,12 +89,13 @@ class GameClient {
       this.renderer.processLocalMessage(localMessage)
     })
 
-    if(this.isloaded) {
+    if (this.isloaded) {
 
       // IF MOVING
       let input = this.input.frameState
-      const rotation = this.renderer.cameraEl ? this.renderer.cameraEl.getAttribute('rotation').y : 0;
-      this.client.addCommand(new MoveCommand(input.w, input.a, input.s, input.d, input.space, rotation, delta))
+      // moved in 'player-body' component, work in progress
+      // const rotation = this.renderer.cameraEl ? this.renderer.cameraEl.getAttribute('rotation').y : 0;
+      // this.client.addCommand(new MoveCommand(input.w, input.a, input.s, input.d, input.space, rotation, delta))
 
       // IF SPACE BUTTON PRESSED
       if (input.space) {

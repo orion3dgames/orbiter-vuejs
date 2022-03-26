@@ -36,6 +36,7 @@ class Cube {
   spawn(targetEl){
     let cubeEl = document.createElement('a-entity');
     cubeEl.setAttribute('id', 'nid-' + this.nid);
+    cubeEl.setAttribute('cube', '');
     cubeEl.setAttribute('position', this.position);
     cubeEl.setAttribute('rotation', this.rotation);
     cubeEl.setAttribute('material', this.material);

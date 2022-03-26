@@ -7,17 +7,17 @@ window.AFRAME.registerComponent('thumbstick-logging', {
         if (evt.detail.y > 0.95) {
             console.log("DOWN");
             window.app.debug('DOWN')
-            window.app.gameClient.frameState.s = true
+            window.app.gameClient.input.frameState.s = true
         }
         if (evt.detail.y < -0.95) {
             console.log("UP");
             window.app.debug('UP')
-            window.app.gameClient.frameState.w = true
+            window.app.gameClient.input.frameState.w = true
         }
         if (evt.detail.x < -0.95) {
             console.log("LEFT");
             window.app.debug('LEFT')
-            window.app.gameClient.frameState.a = true
+            window.app.gameClient.input.frameState.a = true
         }
         if (evt.detail.x > 0.95) {
             console.log("RIGHT");

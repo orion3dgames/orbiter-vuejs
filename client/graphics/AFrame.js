@@ -5,6 +5,7 @@ import store from '../../src/store'; // path to your Vuex store
 // import aframe components
 import intersectionSpawn from './components/intersection-spawn';
 import './components/touch';
+import './components/player';
 //import randomColor from './components/random-color';
 import snap from './components/snap';
 import CubeCommand from "../../common/command/CubeCommand";
@@ -25,7 +26,7 @@ class AFRAMERenderer {
 
   }
 
-  init(){
+  init() {
 
     // debug
     const debug = document.createElement('a-entity');

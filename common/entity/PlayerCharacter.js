@@ -50,10 +50,11 @@ class PlayerCharacter {
         }
     }
 
-    spawn(targetEl, entity, myId){
+    spawn(targetEl, entity, myId) {
 
         var entityEl = document.createElement('a-entity');
         entityEl.setAttribute('id', 'nid-' + this.nid);
+        entityEl.setAttribute('player-body', '');
         entityEl.setAttribute('position', this.position);
         entityEl.setAttribute('rotation', this.rotation);
         entityEl.setAttribute('material', this.material);
@@ -78,7 +79,7 @@ class PlayerCharacter {
             cameraEl.setAttribute('id', 'camera');
             cameraEl.setAttribute('camera', 'active', true);
             cameraEl.setAttribute('position', { x: 0, y: 1, z: 0 });
-            cameraEl.setAttribute('player-head');
+            cameraEl.setAttribute('player-head', '');
             cameraEl.setAttribute('look-controls', {
                 'enabled': true,
                 'pointerLockEnabled': false
