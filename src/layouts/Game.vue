@@ -2,7 +2,7 @@
   <div class="game-container">
     <div class="game-header">
       <div class="float-end">
-        <router-link to="/" class="btn btn-sm btn-secondary">Quit Game</router-link>
+        <a href="/" class="btn btn-sm btn-secondary">Quit Game</a>
       </div>
       HEADER AREA
     </div>

@@ -111,6 +111,7 @@ class GameInstance {
 
     // ON CLIENT DISCONNECT
     this.instance.onDisconnect(client => {
+      console.log('[SERVER][onDisconnect]', client.nid);
       this.entities.delete(client.entity.nid)
       this.instance.removeEntity(client.entity)
     })
