@@ -68,8 +68,10 @@ export default {
     },
   },
   mounted: function () {
+
     // WAIT FOR LOADING
     setTimeout(function () {
+
       // run game server
       window.app.gameClient = new GameClient();
       let tick = 0;
@@ -84,7 +86,9 @@ export default {
       };
 
       loop();
+
     }, 5000); // ah ouais quand même
+
   },
 
   methods: {

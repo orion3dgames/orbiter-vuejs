@@ -48,13 +48,9 @@ class PlayerCharacter {
         this.material = {
             color: this.color
         }
-
-        console.log(this);
     }
 
     spawn(targetEl, entity, myId){
-
-        console.log(this);
 
         var entityEl = document.createElement('a-entity');
         entityEl.setAttribute('id', 'nid-' + this.nid);
@@ -162,6 +158,8 @@ PlayerCharacter.protocol = {
     y: { type: nengi.Float32, interp: true },
     z: { type: nengi.Float32, interp: true },
     rotation: { type: nengi.Float32, interp: true },
+    color: nengi.UTF8String,
+    displayName: nengi.UTF8String,
     //rotation: { type: nengi.RotationFloat32, interp: true },
 }
 
