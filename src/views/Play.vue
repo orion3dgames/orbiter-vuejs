@@ -1,7 +1,8 @@
 <template>
   <div v-if="session">
     <div class="game-area">
-      <a-scene class="aframe-scene" embedded>
+      <div class="game-loading" id="screen-connecting">Connecting to server...</div>
+      <a-scene class="aframe-scene" loading-screen="dotsColor: red; backgroundColor: black" embedded>
         <a-assets>
           <!--<a-asset-item id="leftHand" src="../../client/assets/leftHandLow.glb"></a-asset-item>
           <a-asset-item id="rightHand" src="../../client/assets/rightHandLow.glb"></a-asset-item>-->

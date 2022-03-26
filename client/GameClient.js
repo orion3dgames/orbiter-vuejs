@@ -19,21 +19,31 @@ class GameClient {
     this.user = store.getters.user.displayName;
 
     this.client.onConnect(res => {
-      console.log('onConnect response:', res, this.user);
+      console.log('onConnect response:', res);
+
+      // showing loading screen
+      let connectingScreen = document.querySelector('#screen-connecting');
+      connectingScreen.style.display = 'none';
+
+      // send server client name
       this.client.addCommand(new MsgCommand('name', this.user));
     })
 
     this.client.on('disconnected', () => {
-      console.log('connection closed');
-      //window.location = '/';
+      console.log('connection disconnected');
+      alert('connection disconnected');
     })
 
     this.client.onClose(() => {
       console.log('connection closed');
-      //window.location = '/';
+      alert('connection closed');
     })
 
+    // if local dev server, connect to correct serve
     var HOST = location.origin.replace(/^http/, 'ws')
+    if(location.origin.includes('localhost')){
+      HOST = "ws://localhost:8080";
+    }
     this.client.connect(HOST)
 
     // ADD EVENT

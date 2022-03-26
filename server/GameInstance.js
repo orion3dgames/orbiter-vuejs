@@ -50,8 +50,9 @@ let indexPath = "dist/";
 let clientFile = "index.html";
 
 const app = express();
+
 app.use(express.static(indexPath));
-let indexFile = path.resolve(indexPath+clientFile);
+let indexFile = path.resolve(indexPath + clientFile);
 
 app.get('/', function (req, res) {
   res.sendFile(indexFile);

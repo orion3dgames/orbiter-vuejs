@@ -37,6 +37,21 @@ $header-height: 56px;
     height: 100%;
   }
 
+  .game-loading{
+    position: absolute;
+    left: 0;
+    right: 0px;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 1);
+    bottom: 0px;
+    top: 0px;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 20px;
+    color: #FFF;
+    padding: 10%;
+  }
+
   .game-header{
     position:absolute;
     width: 100%;
