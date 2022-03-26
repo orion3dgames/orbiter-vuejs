@@ -18,9 +18,9 @@
         />
         <a-mixin
           id="voxel"
-          geometry="primitive: box; height: 0.5; width: 0.5; depth: 0.5"
+          geometry="primitive: box; height: 1; width: 1; depth: 1"
           material="shader: standard"
-          snap="offset: 0.25 0.25 0.25; snap: 0.5 0.5 0.5"
+          snap="offset: 0.50 0.50 0.50; snap: 1 1 1"
           shadow="receive: true; cast:true;"
           grabbable
           stretchable
@@ -35,7 +35,7 @@
                  castShadow: true;
                  intensity: 0.4;
                  shadowCameraVisible: true;"
-        position="-5 3 1.5"
+        position="-5 20 1.5"
       ></a-entity>
 
       <a-sky color="#CCC"></a-sky>
