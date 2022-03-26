@@ -1,13 +1,7 @@
 <template>
   <div class="game-area">
-    <div class="game-loading" id="screen-connecting">
-      Connecting to server...
-    </div>
-    <a-scene
-      class="aframe-scene"
-      loading-screen="dotsColor: red; backgroundColor: black"
-      embedded
-    >
+    <div class="game-loading" id="screen-connecting">Connecting to server...</div>
+    <a-scene class="aframe-scene" loading-screen="dotsColor: red; backgroundColor: black" embedded>
       <a-assets>
         <!--<a-asset-item id="leftHand" src="../../client/assets/leftHandLow.glb"></a-asset-item>
         <a-asset-item id="rightHand" src="../../client/assets/rightHandLow.glb"></a-asset-item>-->
@@ -80,62 +74,16 @@ export default {
       window.app.gameClient = new GameClient();
       let tick = 0;
       let previous = performance.now();
-
-      // const loop = function () {
-      //   window.requestAnimationFrame(loop);
-      //   const now = performance.now();
-      //   const delta = (now - previous) / 1000;
-      //   previous = now;
-      //   tick++;
-      //   window.app.gameClient.update(delta, tick, now);
-      // };
-
-      // loop();
-
-      let xrSession = null;
-
-      function onWindowAnimationFrame(time) {
-        window.requestAnimationFrame(onWindowAnimationFrame);
-
-        // This may be called while an immersive session is running on some devices,
-        // such as a desktop with a tethered headset. To prevent two loops from
-        // rendering in parallel, skip drawing in this one until the session ends.
-        if (!xrSession) {
-          renderFrame(time, null);
-        }
-      }
-
-      // The window animation loop can be started immediately upon the page loading.
-      window.requestAnimationFrame(onWindowAnimationFrame);
-
-      function onXRAnimationFrame(time, xrFrame) {
-        xrSession.requestAnimationFrame(onXRAnimationFrame);
-        renderFrame(time, xrFrame);
-      }
-
-      function renderFrame(time, xrFrame) {
-        // Shared rendering logic.
+      const loop = function () {
+        window.requestAnimationFrame(loop);
         const now = performance.now();
         const delta = (now - previous) / 1000;
         previous = now;
         tick++;
         window.app.gameClient.update(delta, tick, now);
-      }
+      };
 
-      // Assumed to be called by a user gesture event elsewhere in code.
-      function startXRSession() {
-        navigator.xr.requestSession("immersive-vr").then((session) => {
-          xrSession = session;
-          xrSession.addEventListener("end", onXRSessionEnded);
-          // Do necessary session setup here.
-          // Begin the session's animation loop.
-          xrSession.requestAnimationFrame(onXRAnimationFrame);
-        });
-      }
-
-      function onXRSessionEnded() {
-        xrSession = null;
-      }
+      loop();
     }, 5000); // ah ouais quand même
   },
 
