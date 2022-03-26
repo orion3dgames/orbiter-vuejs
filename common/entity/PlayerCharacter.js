@@ -54,6 +54,8 @@ class PlayerCharacter {
 
     spawn(targetEl, entity, myId){
 
+        console.log(this);
+
         var entityEl = document.createElement('a-entity');
         entityEl.setAttribute('id', 'nid-' + this.nid);
         entityEl.setAttribute('position', this.position);
