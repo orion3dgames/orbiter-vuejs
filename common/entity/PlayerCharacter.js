@@ -21,7 +21,7 @@ class PlayerCharacter {
         }
 
         if (entity) {
-            console.log('new [PlayerCharacter]', entity);
+            //console.log('new [PlayerCharacter]', entity);
             Object.assign(this, entity)
         }
 
@@ -128,9 +128,6 @@ class PlayerCharacter {
         if (command.left) { velocityX -= 1 }
         if (command.right) { velocityX += 1 }
 
-        //let x = velocityX * Math.cos(command.rotation + Math.PI / 2);
-        //let z = velocityZ * Math.sin(command.rotation + Math.PI / 2);
-
         // add values
         this.moveDirection.x = velocityZ * Math.sin(command.rotation / 180 * Math.PI * 2) + velocityX * Math.cos((-command.rotation / 180 * Math.PI * 2));
         this.moveDirection.z = velocityZ * Math.cos(command.rotation / 180 * Math.PI * 2) + velocityX * Math.sin((-command.rotation / 180 * Math.PI * 2));
@@ -143,7 +140,6 @@ class PlayerCharacter {
         }
 
         //console.log(command.rotation, radian, x, y, unitZ, unitX, unitY);
-
     }
 
     move(delta) {

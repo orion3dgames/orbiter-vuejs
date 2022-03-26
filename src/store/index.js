@@ -268,8 +268,7 @@ export default new Vuex.Store({
     },
 
     joinSession ({ commit, state }, session_id) {
-      state.user.symbol = state.SYMBOL_O;
-      set(ref(database, 'sessions/' +session_id+"/challenger"), formatSessionPlayer(state.user));
+      //set(ref(database, 'sessions/' +session_id+"/challenger"), formatSessionPlayer(state.user));
       return true;
     },
 

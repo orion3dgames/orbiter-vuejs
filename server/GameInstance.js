@@ -61,19 +61,22 @@ class GameInstance {
   constructor() {
     this.entities = new Map()
 
-    //this.instance = new nengi.Instance(nengiConfig, { port: nengiConfig.PORT })
+    // START NENGI GAME SERVER
     this.instance = new nengi.Instance(nengiConfig, { httpServer: server })
 
+    // INITIALIZE FIREBASE
     this.database = new firebaseInstance();
-    this.session_id = false;
-    this.session = false;
 
+    // INITIALIZE WORLD
+    this.initializeWorld();
+
+    // ON CLIENT CONNECT
     this.instance.onConnect((client, clientData, callback) => {
 
       // set default stats
       let defaultPlayer = {
-        x: Math.random() * 5,
-        z: Math.random() * 5,
+        x: 0,
+        z: 0,
         rotation: 0,
         color: "#"+Math.floor(Math.random()*16777215).toString(16),
         name: "loading..."
@@ -102,10 +105,11 @@ class GameInstance {
 
       this.entities.set(entity.nid, entity)
 
+      //
       callback({ accepted: true, text: 'Welcome!' })
-
     })
 
+    // ON CLIENT DISCONNECT
     this.instance.onDisconnect(client => {
       this.entities.delete(client.entity.nid)
       this.instance.removeEntity(client.entity)
@@ -114,22 +118,23 @@ class GameInstance {
   }
 
   initializeWorld(){
-    this.database.loadSession().then( session => {
-      console.log('initializeWorld()', session.cubes);
-      for (let c in session.cubes) {
-        let cubeDb = session.cubes[c];
 
+    console.log('initializeWorldFromDB');
+
+    ////////////////////////////////////////////////////////
+    // ADD EXISTING CUBES
+    this.database.loadCubes().then( cubes => {
+      for (let c in cubes) {
+        let cubeDb = cubes[c];
         const cube = new Cube({
           x: cubeDb.x,
           y: cubeDb.y,
           z: cubeDb.z,
           color: cubeDb.color,
         })
-
-        // Order is important for the next two lines
         this.instance.addEntity(cube) // assigns an `nid` to green
         this.entities.set(cube.nid, cube) // uses the `nid` as a key
-
+        console.log('---> [ADDED CUBE]', cube.x, cube.y, cube.z);
       }
     });
 
@@ -146,24 +151,22 @@ class GameInstance {
         const command = cmd.commands[i]
         const entity = client.entity
 
-        // console.log('COMMAND', command, entity.nid);
+        if (command.protocol.name === 'MsgCommand') {
+          let message = JSON.parse(command.message);
+          if(command.type === 'newUser'){
+            entity.name = message.displayName;
+            entity.firebaseUID = message.uid;
+            console.log(message);
+          }
+        }
 
         if (command.protocol.name === 'MoveCommand') {
           entity.processMove(command)
         }
 
-        if (command.protocol.name === 'MsgCommand') {
-          if(command.type === 'name'){
-            entity.name = command.message;
-          }
-          if(command.type === 'session_id'){
-            this.database.setSession(command.message);
-            this.initializeWorld();
-          }
-        }
+        if (command.protocol.name === 'CubeCommand') {
 
-        if (command.protocol.name === 'FireCommand') {
-
+          // create cube identity
           const cube = new Cube({
             sourceId: entity.nid,
             x: command.x,
@@ -171,11 +174,10 @@ class GameInstance {
             z: command.z,
             color: "#"+Math.floor(Math.random()*16777215).toString(16),
           })
-
-          // Order is important for the next two lines
           this.instance.addEntity(cube) // assigns an `nid` to green
           this.entities.set(cube.nid, cube) // uses the `nid` as a key
 
+          // add cube to DB
           this.database.addCube(cube).then( data => {
             console.log(data);
           });
@@ -190,7 +192,7 @@ class GameInstance {
     // TODO: the rest of the game logic
     this.instance.clients.forEach(client => {
 
-      //
+      // move client
       client.entity.move(delta);
 
       // update view

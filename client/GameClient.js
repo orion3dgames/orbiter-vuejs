@@ -7,7 +7,7 @@ import InputSystem from './InputSystem'
 import AFRAMERenderer from './graphics/AFrame'
 
 import MoveCommand from '../common/command/MoveCommand'
-import FireCommand from '../common/command/FireCommand'
+import CubeCommand from '../common/command/CubeCommand'
 import MsgCommand from '../common/command/MsgCommand'
 
 class GameClient {
@@ -16,8 +16,7 @@ class GameClient {
     this.renderer = new AFRAMERenderer()
     this.input = new InputSystem()
     this.latestCubePlacedTime = 0;
-    this.user = store.getters.user.displayName;
-    this.session = store.getters.session_id;
+    this.user = store.getters.user;
 
     this.client.onConnect(res => {
       console.log('onConnect response:', res);
@@ -27,9 +26,7 @@ class GameClient {
       connectingScreen.style.display = 'none';
 
       // send server client name
-      this.client.addCommand(new MsgCommand('name', this.user));
-      console.log(this.session);
-      this.client.addCommand(new MsgCommand('session_id',  this.session));
+      this.client.addCommand(new MsgCommand('newUser', this.user));
     })
 
     this.client.on('disconnected', () => {
@@ -94,8 +91,8 @@ class GameClient {
       var thisClickTime = new Date().getTime();
       if (thisClickTime - this.latestCubePlacedTime > 500 && this.cubeAdded) {
         this.latestCubePlacedTime = thisClickTime;
-        console.log('FireCommand', 'Click event fired...', this.cubeAdded);
-        this.client.addCommand(new FireCommand(this.cubeAdded.x, this.cubeAdded.y,this.cubeAdded.z));
+        console.log('CubeCommand', 'Click event fired...', this.cubeAdded);
+        this.client.addCommand(new CubeCommand(this.cubeAdded.x, this.cubeAdded.y,this.cubeAdded.z));
         this.cubeAdded = null;
       }
 

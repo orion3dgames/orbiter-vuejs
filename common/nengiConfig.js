@@ -9,7 +9,7 @@ import PlaceCube from './message/PlaceCube'
 import Message from './message/Message'
 
 import MoveCommand from './command/MoveCommand'
-import FireCommand from './command/FireCommand'
+import CubeCommand from './command/CubeCommand'
 import MsgCommand from './command/MsgCommand'
 
 const config = {
@@ -40,7 +40,7 @@ const config = {
         commands: [
             ['MoveCommand', MoveCommand],
             ['MsgCommand', MsgCommand],
-            ['FireCommand', FireCommand],
+            ['CubeCommand', CubeCommand],
         ],
         basics: []
     }

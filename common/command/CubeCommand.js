@@ -1,6 +1,6 @@
 import nengi from 'nengi'
 
-class FireCommand {
+class CubeCommand {
   constructor(x, y, z) {
     this.x = x
     this.y = y
@@ -8,10 +8,10 @@ class FireCommand {
   }
 }
 
-FireCommand.protocol = {
+CubeCommand.protocol = {
   x: nengi.Int32,
   y: nengi.Int32,
   z: nengi.Int32
 }
 
-export default FireCommand
+export default CubeCommand

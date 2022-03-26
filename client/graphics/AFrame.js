@@ -7,7 +7,7 @@ import intersectionSpawn from './components/intersection-spawn';
 import './components/touch';
 //import randomColor from './components/random-color';
 import snap from './components/snap';
-import FireCommand from "../../common/command/FireCommand";
+import CubeCommand from "../../common/command/CubeCommand";
 
 class AFRAMERenderer {
 

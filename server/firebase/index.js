@@ -21,30 +21,20 @@ class firebaseInstance {
 
   constructor() {
       this.db = firebaseDB;
-      this.session_id = false;
       console.log('[firebaseInstance]', 'initialized');
   }
 
-  setSession(uid) {
-    this.session_id = uid;
-  }
-
-  loadSessions() {
+  loadCubes() {
     return new Promise((resolve) => {
-      console.log('[firebaseInstance]', 'loadSessions');
-      this.db.ref('sessions').once("value", function (snapshot) {
-        var sessions = [];
-        snapshot.forEach(function (child) {
-          sessions.push(child.val());
-        });
-        resolve(sessions);
+      this.db.ref('cubes').once("value", function (snapshot) {
+        resolve(snapshot.val());
       });
     });
   }
 
-  loadSession() {
+  getPlayer(UID) {
     return new Promise((resolve) => {
-      this.db.ref('sessions/'+this.session_id).once("value", function (snapshot) {
+      this.db.ref('players/'+UID).once("value", function (snapshot) {
         resolve(snapshot.val());
       });
     });
@@ -52,13 +42,16 @@ class firebaseInstance {
 
   addCube(data) {
     return new Promise((resolve) => {
-      if(this.session_id === false){
-        return false;
-      }
-      const dbRef = ref(this.db, 'sessions/'+ this.session_id+'/cubes');
+      const dbRef = ref(this.db, 'cubes');
       const newSessionRef = push(dbRef);
-      data.uid = newSessionRef.key;
-      set(newSessionRef, data).then(() => {
+      let cube = {
+        uid: newSessionRef.key,
+        x: data.x,
+        y: data.y,
+        z: data.z,
+        color: data.color,
+      }
+      set(newSessionRef, cube).then(() => {
         resolve(data);
       });
     })
