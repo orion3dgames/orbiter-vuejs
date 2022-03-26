@@ -12,7 +12,7 @@
             <div class="col text-end">
               <div class="p-2">
                 Hi <router-link to="/profile"><b>{{ user.displayName}}</b></router-link>
-                <!--<button @click="logout()" class="btn btn-sm btn-secondary">Logout</button>-->
+                <br><small>{{ user.uid}}</small>
               </div>
             </div>
           </div>

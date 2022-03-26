@@ -220,7 +220,7 @@ export default new Vuex.Store({
         let player = formatSessionPlayer(auth.currentUser);
 
         commit('SET_USER', player);
-
+        console.log('save player', player);
         set(ref(database, 'players/' + player.uid), player);
 
         router.push('/')
@@ -234,9 +234,8 @@ export default new Vuex.Store({
       updateProfile(auth.currentUser, {
         displayName: newName,
       }).then(() => {
-        update(ref(database, 'players/' +auth.currentUser.uid+"/"), {
-          'name': auth.currentUser.displayName,
-        });
+        let player = formatSessionPlayer(auth.currentUser);
+        update(ref(database, 'players/' +auth.currentUser.uid+"/"), player);
         alert('Profile updated successfully');
       }).catch((error) => {
 

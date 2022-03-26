@@ -72,41 +72,11 @@ class GameInstance {
 
     // ON CLIENT CONNECT
     this.instance.onConnect((client, clientData, callback) => {
-
-      // set default stats
-      let defaultPlayer = {
-        x: 0,
-        z: 0,
-        rotation: 0,
-        color: "#"+Math.floor(Math.random()*16777215).toString(16),
-        name: "loading..."
-      }
-
-      // create a entity for this client
-      const entity = new PlayerCharacter(defaultPlayer)
-
-      this.instance.addEntity(entity) // adding an entity to a nengi instance assigns it an id
-
-      // tell the client which entity it controls (the client will use this to follow it with the camera)
-      this.instance.message(new Identity(entity.nid), client)
-
-      console.log(entity);
-
-      // establish a relation between this entity and the client
-      entity.client = client
-      client.entity = entity
-
-      client.view = {
-        x: entity.x,
-        y: entity.y,
-        halfWidth: 10,
-        halfHeight: 10
-      }
-
-      this.entities.set(entity.nid, entity)
-
-      //
-      callback({ accepted: true, text: 'Welcome!' })
+      this.client = client;
+      console.log(clientData, 'is connecting')
+      this.addPlayer(clientData.fromClient).then(() => {
+        callback({ accepted: true, text: 'Welcome!' })
+      });
     })
 
     // ON CLIENT DISCONNECT
@@ -116,6 +86,58 @@ class GameInstance {
       this.instance.removeEntity(client.entity)
     })
 
+  }
+
+  addPlayer(user){
+    return new Promise((resolve) => {
+      console.log('[SERVER][addPlayer]', user);
+      this.database.getPlayer(user.uid).then(data => {
+
+        // set default stats
+        console.log('player found', data);
+
+        // set default stats
+        let defaultPlayer = {
+          x: 0,
+          z: 0,
+          rotation: 0,
+          color: "#" + Math.floor(Math.random() * 16777215).toString(16),
+          displayName: "loading..."
+        }
+
+        // if found in database
+        if (data) {
+          defaultPlayer.color = data.color;
+          defaultPlayer.displayName = data.displayName;
+          defaultPlayer.x = data.position.x;
+          defaultPlayer.z = data.position.z;
+        }
+
+        // create a entity for this client
+        const entity = new PlayerCharacter(defaultPlayer)
+
+        this.instance.addEntity(entity) // adding an entity to a nengi instance assigns it an id
+
+        // tell the client which entity it controls (the client will use this to follow it with the camera)
+        this.instance.message(new Identity(entity.nid), this.client)
+
+        // establish a relation between this entity and the client
+        entity.client = this.client
+        this.client.entity = entity
+
+        this.client.view = {
+          x: entity.x,
+          y: entity.y,
+          halfWidth: 10,
+          halfHeight: 10
+        }
+
+        this.entities.set(entity.nid, entity)
+
+        resolve(true);
+
+      });
+    });
   }
 
   initializeWorld(){
@@ -154,11 +176,13 @@ class GameInstance {
 
         if (command.protocol.name === 'MsgCommand') {
           let message = JSON.parse(command.message);
+          //example of how to use it.
+          /*
           if(command.type === 'newUser'){
             entity.name = message.displayName;
             entity.firebaseUID = message.uid;
             console.log(message);
-          }
+          }*/
         }
 
         if (command.protocol.name === 'MoveCommand') {
@@ -193,12 +217,16 @@ class GameInstance {
     // TODO: the rest of the game logic
     this.instance.clients.forEach(client => {
 
-      // move client
-      client.entity.move(delta);
+      if(client.entity) {
 
-      // update view
-      client.view.x = client.entity.x
-      client.view.y = client.entity.y
+        // move client
+        client.entity.move(delta);
+
+        // update view
+        client.view.x = client.entity.x
+        client.view.y = client.entity.y
+
+      }
 
     })
 

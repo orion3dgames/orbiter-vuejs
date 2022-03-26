@@ -32,6 +32,7 @@ class AFRAMERenderer {
     debug.setAttribute('id', 'debug');
     debug.setAttribute('position', '0 2 -5');
     debug.setAttribute('geometry', 'primitive: plane; width: 2; height: 2;');
+    debug.setAttribute('material', 'color: #FFF;');
     debug.setAttribute('text', 'color: #000; align: left; value: "DEBUG"; width: 2; side: double');
     this.sceneEl.appendChild(debug);
 

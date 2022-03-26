@@ -11,7 +11,7 @@ class PlayerCharacter {
         this.rotation = 0
         this.color = '#FFFFFF';
         this.speed = 2;
-        this.name = '...loading';
+        this.displayName = '...loading';
 
         this.moveRotation = 0;
         this.moveDirection = {
@@ -64,7 +64,7 @@ class PlayerCharacter {
 
         // add username
         var nameEl = document.createElement('a-text');
-        nameEl.setAttribute('text', 'color: #000; align: left; value: ' + this.name + "\n" + this.nid + '; width: 2; side: double');
+        nameEl.setAttribute('text', 'color: #000; align: left; value: ' + this.displayName + "\n" + this.nid + '; width: 2; side: double');
         nameEl.setAttribute('position', { x: -0.5, y: 1.25, z: 0 });
         entityEl.appendChild(nameEl);
 
@@ -113,7 +113,9 @@ class PlayerCharacter {
             //this.cameraEl = cameraEl;
         }
 
-        return targetEl.appendChild(entityEl);
+        targetEl.appendChild(entityEl);
+
+        return entityEl;
     }
 
     processMove(command) {

@@ -10,6 +10,10 @@
 
     <button @click="updateProfileName()" class="btn btn-primary">Update Profile</button>
 
+    <hr>
+
+    <button @click="logout()" class="btn btn-sm btn-secondary">Logout</button>
+
   </div>
 </template>
 
@@ -41,6 +45,11 @@ export default {
     updateProfileName(name){
       if(this.user.displayName.length < 1) return false;
       this.$store.dispatch('updateProfileName', this.user.displayName);
+      //this.$store.dispatch('updateProfile', this.user);
+    },
+
+    logout() {
+      this.$store.dispatch('logout');
     },
 
   },

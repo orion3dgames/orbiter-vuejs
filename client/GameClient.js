@@ -17,26 +17,30 @@ class GameClient {
     this.input = new InputSystem()
     this.latestCubePlacedTime = 0;
     this.user = store.getters.user;
+    this.isloaded = false;
 
     this.client.onConnect(res => {
       console.log('onConnect response:', res);
+
+      // server is ready
+      this.isloaded = true;
 
       // showing loading screen
       let connectingScreen = document.querySelector('#screen-connecting');
       connectingScreen.style.display = 'none';
 
-      // send server client name
-      this.client.addCommand(new MsgCommand('newUser', this.user));
     })
 
     this.client.on('disconnected', () => {
       console.log('connection disconnected');
       alert('connection disconnected');
+      window.location = '/';
     })
 
     this.client.onClose(() => {
-      console.log('connection closed');
-      alert('connection closed');
+      console.log('server is down');
+      alert('server is down');
+      window.location = '/';
     })
 
     // if local dev server, connect to correct serve
@@ -44,9 +48,12 @@ class GameClient {
     if(location.origin.includes('localhost')){
       HOST = "ws://localhost:8080";
     }
-    this.client.connect(HOST)
+    this.client.connect(HOST, {
+      uid: this.user.uid,
+      name: this.user.displayName
+    })
 
-    // ADD EVENT
+    // REGISTER CUSTOM EVENT
     this.cubeAdded = null;
     this.renderer.sceneEl.addEventListener('cube_added', (data) => {
       console.log(data);
@@ -56,6 +63,7 @@ class GameClient {
   }
 
   update(delta, tick, now) {
+
     /* receiving */
     const network = this.client.readNetwork();
 
@@ -81,19 +89,22 @@ class GameClient {
       this.renderer.processLocalMessage(localMessage)
     })
 
-    // IF MOVING
-    let input = this.input.frameState
-    const rotation = this.renderer.cameraEl ? this.renderer.cameraEl.getAttribute('rotation').y : 0;
-    this.client.addCommand(new MoveCommand(input.w, input.a, input.s, input.d, input.space, rotation, delta))
+    if(this.isloaded) {
 
-    // IF SPACE BUTTON PRESSED
-    if (input.space) {
-      var thisClickTime = new Date().getTime();
-      if (thisClickTime - this.latestCubePlacedTime > 500 && this.cubeAdded) {
-        this.latestCubePlacedTime = thisClickTime;
-        console.log('CubeCommand', 'Click event fired...', this.cubeAdded);
-        this.client.addCommand(new CubeCommand(this.cubeAdded.x, this.cubeAdded.y,this.cubeAdded.z));
-        this.cubeAdded = null;
+      // IF MOVING
+      let input = this.input.frameState
+      const rotation = this.renderer.cameraEl ? this.renderer.cameraEl.getAttribute('rotation').y : 0;
+      this.client.addCommand(new MoveCommand(input.w, input.a, input.s, input.d, input.space, rotation, delta))
+
+      // IF SPACE BUTTON PRESSED
+      if (input.space) {
+        var thisClickTime = new Date().getTime();
+        if (thisClickTime - this.latestCubePlacedTime > 500 && this.cubeAdded) {
+          this.latestCubePlacedTime = thisClickTime;
+          console.log('CubeCommand', 'Click event fired...', this.cubeAdded);
+          this.client.addCommand(new CubeCommand(this.cubeAdded.x, this.cubeAdded.y, this.cubeAdded.z));
+          this.cubeAdded = null;
+        }
       }
 
     }

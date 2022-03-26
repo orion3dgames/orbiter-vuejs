@@ -34,6 +34,7 @@ class firebaseInstance {
 
   getPlayer(UID) {
     return new Promise((resolve) => {
+      console.log('players/'+UID);
       this.db.ref('players/'+UID).once("value", function (snapshot) {
         resolve(snapshot.val());
       });
