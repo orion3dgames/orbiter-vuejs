@@ -52,6 +52,70 @@ class PlayerCharacter {
         };
     }
 
+    spawn(targetEl, entity){
+
+        var entityEl = document.createElement('a-entity');
+        entityEl.setAttribute('id', 'nid-' + this.nid);
+        entityEl.setAttribute('position', this.position);
+        entityEl.setAttribute('rotation', this.rotation);
+        entityEl.setAttribute('material', this.material);
+        entityEl.setAttribute('geometry', this.geometry);
+        entityEl.setAttribute('shadow', this.geometry);
+
+        // add username (not multiplayer yet)
+        var nameEl = document.createElement('a-text');
+        nameEl.setAttribute('text', 'color: #000; align: left; value: ' + this.name + "\n" + this.nid + '; width: 2; side: double');
+        nameEl.setAttribute('position', { x: -0.5, y: 1.25, z: 0 });
+        entityEl.appendChild(nameEl);
+
+        // if myself
+        if (entity.nid === this.nid) {
+
+            // add cursor
+            var cursorEl = document.createElement('a-cursor');
+            cursorEl.setAttribute('intersection-spawn', { event: 'click', mixin: 'voxel' });
+
+            // add camera to entity
+            var cameraEl = document.createElement('a-entity');
+            cameraEl.setAttribute('camera', 'active', true);
+            cameraEl.setAttribute('position', { x: 0, y: 1, z: 0 });
+            cameraEl.setAttribute('player-head');
+            cameraEl.setAttribute('look-controls', {
+                'enabled': true,
+                'pointerLockEnabled': false
+            });
+            cameraEl.appendChild(cursorEl);
+            entityEl.appendChild(cameraEl);
+
+            // add left hand
+            var leftHand = document.createElement('a-entity');
+            leftHand.setAttribute('oculus-touch-controls', { 'hand': 'left' });
+            leftHand.setAttribute('thumbstick-logging', '');
+            entityEl.appendChild(leftHand);
+
+            // add right hand
+            var rightHand = document.createElement('a-entity');
+            rightHand.setAttribute('oculus-touch-controls', { 'hand': 'right' });
+            rightHand.setAttribute('thumbstick-logging', '');
+            entityEl.appendChild(rightHand);
+
+            //<a-entity sphere-collider="objects: a-box" super-hands hand-controls="hand: left"></a-entity>
+            //<a-entity sphere-collider="objects: a-box" super-hands hand-controls="hand: right"></a-entity>
+            /*
+            var rightHandEl = document.createElement('a-entity');
+            rightHandEl.setAttribute('hand-controls', 'right');
+            rightHandEl.setAttribute('controller-cursor');
+            rightHandEl.setAttribute('intersection-spawn', {event: 'click', mixin: 'voxel'});
+            entityEl.appendChild(rightHandEl);
+             */
+
+            //this.playerEl = entityEl;
+            //this.cameraEl = cameraEl;
+        }
+
+        return targetEl.appendChild(entityEl);
+    }
+
     processMove(command) {
 
         let velocityX = 0
@@ -88,8 +152,9 @@ class PlayerCharacter {
         this.y = this.moveDirection.y;
         this.rotation = this.moveRotation;
     }
-
 }
+
+
 
 PlayerCharacter.protocol = {
     x: { type: nengi.Float32, interp: true },

@@ -21,114 +21,59 @@ class AFRAMERenderer {
     this.myEntity = null
     this.entities = new Map();
 
+    this.init();
+
+  }
+
+  init(){
+
+    // debug
+    const debug = document.createElement('a-entity');
+    debug.setAttribute('id', 'debug');
+    debug.setAttribute('position', '0 2 -5');
+    debug.setAttribute('geometry', 'primitive: plane; width: 2; height: 2;');
+    debug.setAttribute('text', 'color: #000; align: left; value: "DEBUG"; width: 2; side: double');
+    this.sceneEl.appendChild(debug);
+
   }
 
   createEntity(entity) {
 
-    // create and add an entity to the renderer
+    //////////// CUBES /////////////////
     if (entity.protocol.name === 'Cube') {
+
+      // dont add client own cubes
       if (entity.sourceId === this.myId) {
         //return false;
       }
-      const cubeIdentity = new Cube(entity)
-      this.entities.set(entity.nid, cubeIdentity)
 
-      let cubeEl = document.createElement('a-entity');
-      cubeEl.setAttribute('id', 'nid-' + cubeIdentity.nid);
-      cubeEl.setAttribute('position', cubeIdentity.position);
-      cubeEl.setAttribute('rotation', cubeIdentity.rotation);
-      cubeEl.setAttribute('material', cubeIdentity.material);
-      cubeEl.setAttribute('mixin', cubeIdentity.mixin);
-      this.sceneEl.appendChild(cubeEl);
+      // create cube
+      const cubeIdentity = new Cube(entity)
+
+      // add to local entities
+      this.entities.set(entity.nid, cubeIdentity);
+
+      // spawn cube
+      cubeIdentity.spawn(this.sceneEl)
     }
 
-    // create and add an entity to the renderer
+    //////////// PLAYER CHARACTER /////////////////
     if (entity.protocol.name === 'PlayerCharacter') {
 
       let user = store.getters.user;
 
-      const clientEntity = new PlayerCharacter(entity)
-      //clientEntity.name = user.displayName;
+      const playerEntity = new PlayerCharacter(entity)
 
-      this.entities.set(entity.nid, clientEntity)
+      this.entities.set(entity.nid, playerEntity)
 
       // if that entity is ours, save it to myEntity
       if (entity.nid === this.myId) {
-        clientEntity.name = user.displayName;
-        this.myEntity = clientEntity
+        playerEntity.name = user.displayName;
+        this.myEntity = playerEntity
       }
 
-      // create entity
-      console.log('CREATE CLIENT', clientEntity)
-      var entityEl = document.createElement('a-entity');
-      entityEl.setAttribute('id', 'nid-' + clientEntity.nid);
-      entityEl.setAttribute('position', clientEntity.position);
-      entityEl.setAttribute('rotation', clientEntity.rotation);
-      entityEl.setAttribute('material', clientEntity.material);
-      entityEl.setAttribute('geometry', clientEntity.geometry);
-      entityEl.setAttribute('shadow', clientEntity.geometry);
-
-      // add username (not multiplayer yet)
-      var nameEl = document.createElement('a-text');
-      nameEl.setAttribute('text', 'color: #000; align: left; value: ' + clientEntity.name + "\n" + clientEntity.nid + '; width: 2; side: double');
-      nameEl.setAttribute('position', { x: -0.5, y: 1.25, z: 0 });
-      entityEl.appendChild(nameEl);
-
-      // if myself
-      if (entity.nid === this.myId) {
-
-        // add cursor
-        var cursorEl = document.createElement('a-cursor');
-        cursorEl.setAttribute('intersection-spawn', { event: 'click', mixin: 'voxel' });
-
-        // add camera to entity
-        var cameraEl = document.createElement('a-entity');
-        cameraEl.setAttribute('camera', 'active', true);
-        cameraEl.setAttribute('position', { x: 0, y: 1, z: 0 });
-        cameraEl.setAttribute('player-head');
-        cameraEl.setAttribute('look-controls', {
-          'enabled': true,
-          'pointerLockEnabled': false
-        });
-        cameraEl.appendChild(cursorEl);
-        entityEl.appendChild(cameraEl);
-
-        // add left hand
-        var leftHand = document.createElement('a-entity');
-        leftHand.setAttribute('oculus-touch-controls', { 'hand': 'left' });
-        leftHand.setAttribute('thumbstick-logging', '');
-        entityEl.appendChild(leftHand);
-
-        // add right hand
-        var rightHand = document.createElement('a-entity');
-        rightHand.setAttribute('oculus-touch-controls', { 'hand': 'right' });
-        rightHand.setAttribute('thumbstick-logging', '');
-        entityEl.appendChild(rightHand);
-
-        // debug
-        const debug = document.createElement('a-entity');
-        debug.setAttribute('id', 'debug');
-        debug.setAttribute('position', '0 2 -5');
-        debug.setAttribute('geometry', 'primitive: plane; width: 2; height: 2;');
-        debug.setAttribute('text', 'color: #000; align: left; value: "DEBUG"; width: 2; side: double');
-        this.sceneEl.appendChild(debug);
-
-        //<a-entity sphere-collider="objects: a-box" super-hands hand-controls="hand: left"></a-entity>
-        //<a-entity sphere-collider="objects: a-box" super-hands hand-controls="hand: right"></a-entity>
-        /*
-        var rightHandEl = document.createElement('a-entity');
-        rightHandEl.setAttribute('hand-controls', 'right');
-        rightHandEl.setAttribute('controller-cursor');
-        rightHandEl.setAttribute('intersection-spawn', {event: 'click', mixin: 'voxel'});
-        entityEl.appendChild(rightHandEl);
-         */
-
-        this.playerEl = entityEl;
-        this.cameraEl = cameraEl;
-      }
-
-      this.sceneEl.appendChild(entityEl);
-      console.log("entity added")
+      // spawn player / client
+      this.playerEl = playerEntity.spawn(this.sceneEl, entity);
     }
   }
 

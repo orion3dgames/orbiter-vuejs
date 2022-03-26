@@ -32,6 +32,17 @@ class Cube {
 
     this.mixin = 'voxel'
   }
+
+  spawn(targetEl){
+    let cubeEl = document.createElement('a-entity');
+    cubeEl.setAttribute('id', 'nid-' + this.nid);
+    cubeEl.setAttribute('position', this.position);
+    cubeEl.setAttribute('rotation', this.rotation);
+    cubeEl.setAttribute('material', this.material);
+    cubeEl.setAttribute('mixin', this.mixin);
+    targetEl.appendChild(cubeEl);
+  }
+
 }
 
 Cube.protocol = {
