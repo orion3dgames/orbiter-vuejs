@@ -94,9 +94,6 @@ class GameInstance {
       this.database.getPlayer(user.uid).then(data => {
 
         // set default stats
-        console.log('player found', data);
-
-        // set default stats
         let defaultPlayer = {
           x: 0,
           z: 0,
@@ -109,6 +106,7 @@ class GameInstance {
         if (data) {
           defaultPlayer.color = data.color;
           defaultPlayer.displayName = data.displayName;
+          defaultPlayer.rotation = data.rotation.y;
           defaultPlayer.x = data.position.x;
           defaultPlayer.z = data.position.z;
         }

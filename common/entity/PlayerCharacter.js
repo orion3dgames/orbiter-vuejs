@@ -12,7 +12,6 @@ class PlayerCharacter {
         this.color = '#FFFFFF';
         this.speed = 2;
         this.displayName = '...loading';
-
         this.moveRotation = 0;
         this.moveDirection = {
             x: 0,
@@ -20,8 +19,17 @@ class PlayerCharacter {
             z: 0,
         }
 
+        this.shadow = {
+            receive: true,
+            cast: true,
+        }
+
+        this.geometry = {
+            primitive: 'sphere',
+            radius: 0.5,
+        };
+
         if (entity) {
-            //console.log('new [PlayerCharacter]', entity);
             Object.assign(this, entity)
         }
 
@@ -41,15 +49,7 @@ class PlayerCharacter {
             color: this.color
         }
 
-        this.shadow = {
-            receive: true,
-            cast: true,
-        }
-
-        this.geometry = {
-            primitive: 'sphere',
-            radius: 0.5,
-        };
+        console.log(this);
     }
 
     spawn(targetEl, entity, myId){
@@ -160,8 +160,6 @@ PlayerCharacter.protocol = {
     z: { type: nengi.Float32, interp: true },
     rotation: { type: nengi.Float32, interp: true },
     //rotation: { type: nengi.RotationFloat32, interp: true },
-    color: nengi.UTF8String,
-    name: nengi.UTF8String,
 }
 
 export default PlayerCharacter
