@@ -89,28 +89,6 @@ class GameClient {
       this.renderer.processLocalMessage(localMessage)
     })
 
-    if (this.isloaded) {
-
-      // IF MOVING
-      let input = this.input.frameState
-      // moved in 'player-body' component, work in progress
-      // const rotation = this.renderer.cameraEl ? this.renderer.cameraEl.getAttribute('rotation').y : 0;
-      // this.client.addCommand(new MoveCommand(input.w, input.a, input.s, input.d, input.space, rotation, delta))
-
-      // IF SPACE BUTTON PRESSED
-      if (input.space) {
-        var thisClickTime = new Date().getTime();
-        if (thisClickTime - this.latestCubePlacedTime > 500 && this.cubeAdded) {
-          this.latestCubePlacedTime = thisClickTime;
-          console.log('CubeCommand', 'Click event fired...', this.cubeAdded);
-          this.client.addCommand(new CubeCommand(this.cubeAdded.x, this.cubeAdded.y, this.cubeAdded.z));
-          this.cubeAdded = null;
-        }
-      }
-
-    }
-
-    this.input.releaseKeys()
     this.client.update()
     /* * */
 

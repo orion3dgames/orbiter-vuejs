@@ -74,7 +74,7 @@ class PlayerCharacter {
 
             // add cursor
             var cursorEl = document.createElement('a-cursor');
-            cursorEl.setAttribute('intersection-spawn', { event: 'click', mixin: 'voxel' });
+            cursorEl.setAttribute('intersection-spawn', { mixin: 'voxel' });
 
             // add camera to entity
             var cameraEl = document.createElement('a-entity');
@@ -100,19 +100,6 @@ class PlayerCharacter {
             rightHand.setAttribute('oculus-touch-controls', { 'hand': 'right' });
             rightHand.setAttribute('thumbstick-logging', '');
             entityEl.appendChild(rightHand);
-
-            //<a-entity sphere-collider="objects: a-box" super-hands hand-controls="hand: left"></a-entity>
-            //<a-entity sphere-collider="objects: a-box" super-hands hand-controls="hand: right"></a-entity>
-            /*
-            var rightHandEl = document.createElement('a-entity');
-            rightHandEl.setAttribute('hand-controls', 'right');
-            rightHandEl.setAttribute('controller-cursor');
-            rightHandEl.setAttribute('intersection-spawn', {event: 'click', mixin: 'voxel'});
-            entityEl.appendChild(rightHandEl);
-             */
-
-            //this.playerEl = entityEl;
-            //this.cameraEl = cameraEl;
         }
 
         targetEl.appendChild(entityEl);

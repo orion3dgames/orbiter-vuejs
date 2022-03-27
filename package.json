@@ -1,6 +1,6 @@
 {
   "name": "orbiter-client",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "displayName": "Orbiter Client",
   "private": true,
   "scripts": {

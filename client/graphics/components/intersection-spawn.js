@@ -1,13 +1,20 @@
+import { log } from "aframe";
+
 window.AFRAME.registerComponent('intersection-spawn', {
   schema: {
     default: '',
     parse: window.AFRAME.utils.styleParser.parse
   },
   init: function () {
-    const data = this.data;
     const el = this.el;
-    el.addEventListener(data.event, evt => {
-      el.emit('cube_added', evt.detail.intersection.point)
+    let down = false;
+    el.addEventListener('mousedown', e => {
+      console.log(e);
+      down = new Date().getTime();
+    });
+    el.addEventListener('mouseup', e => {
+      if (new Date().getTime() - down < 200)
+        el.emit('cube_added', e.detail.intersection.point)
     });
   }
 });

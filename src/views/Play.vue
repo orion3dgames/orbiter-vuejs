@@ -16,6 +16,7 @@
           src="/assets/floor_grid.jpg"
           crossorigin="anonymous"
         />
+
       </a-assets>
 
       <a-entity light="type: ambient; intensity: 0.5;"></a-entity>
@@ -64,12 +65,15 @@ export default {
   },
   mounted: function () {
     // WAIT FOR LOADING
+
     setTimeout(function () {
       // run game server
       window.app.gameClient = new GameClient();
       if (!window.app.gameClient.playerLoaded) {
         let tick = 0;
         let previous = performance.now();
+
+        // loop
         const loop = function () {
           window.requestAnimationFrame(loop);
           const now = performance.now();
