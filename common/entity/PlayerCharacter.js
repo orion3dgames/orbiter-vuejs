@@ -54,7 +54,6 @@ class PlayerCharacter {
 
         var entityEl = document.createElement('a-entity');
         entityEl.setAttribute('id', 'nid-' + this.nid);
-        entityEl.setAttribute('player-body', '');
         entityEl.setAttribute('position', this.position);
         entityEl.setAttribute('rotation', this.rotation);
         entityEl.setAttribute('material', this.material);
@@ -69,6 +68,9 @@ class PlayerCharacter {
 
         // if myself, add all player related stuff
         if (entity.nid === myId) {
+
+            // add player specific component
+            entityEl.setAttribute('player-body', ''); // uniquement sur le joueur?
 
             // add cursor
             var cursorEl = document.createElement('a-cursor');

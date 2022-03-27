@@ -10,7 +10,6 @@ window.AFRAME.registerComponent('player-body', {
     tick(time, timeDelta) {
         this.do(timeDelta);
     },
-
     do(time, delta) {
         const input = this.game.input.frameState;
         const rotation = this.game.renderer.cameraEl ? this.game.renderer.cameraEl.getAttribute('rotation').y : 0;

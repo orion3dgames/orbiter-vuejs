@@ -6,6 +6,7 @@ import store from '../../src/store'; // path to your Vuex store
 import intersectionSpawn from './components/intersection-spawn';
 import './components/touch';
 import './components/player';
+import './components/cube';
 //import randomColor from './components/random-color';
 import snap from './components/snap';
 import CubeCommand from "../../common/command/CubeCommand";

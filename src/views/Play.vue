@@ -16,17 +16,6 @@
           src="/assets/floor_grid.jpg"
           crossorigin="anonymous"
         />
-        <a-mixin
-          id="voxel"
-          geometry="primitive: box; height: 1; width: 1; depth: 1"
-          material="shader: standard"
-          snap="offset: 0.50 0.50 0.50; snap: 1 1 1"
-          shadow="receive: true; cast:true;"
-          grabbable
-          stretchable
-          draggable
-          dropppable
-        ></a-mixin>
       </a-assets>
 
       <a-entity light="type: ambient; intensity: 0.5;"></a-entity>
@@ -89,7 +78,6 @@ export default {
           tick++;
           window.app.gameClient.update(delta, tick, now);
         };
-
         loop();
       }
     }, 5000); // ah ouais quand même

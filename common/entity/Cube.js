@@ -26,8 +26,27 @@ class Cube {
       z: 0,
     }
 
+    this.geometry = {
+      primitive: 'box',
+      height: 1,
+      width: 1,
+      depth: 1,
+      buffer: true
+    }
+
     this.material = {
+      shader: 'standard',
       color: this.color
+    }
+
+    this.shadow = {
+      receive: true,
+      cast:true
+    }
+
+    this.snap = {
+      offset: '0.50 0.50 0.50',
+      snap: '1 1 1',
     }
 
     this.mixin = 'voxel'
@@ -40,7 +59,9 @@ class Cube {
     cubeEl.setAttribute('position', this.position);
     cubeEl.setAttribute('rotation', this.rotation);
     cubeEl.setAttribute('material', this.material);
-    cubeEl.setAttribute('mixin', this.mixin);
+    cubeEl.setAttribute('geometry', this.geometry);
+    cubeEl.setAttribute('shadow', this.shadow);
+    cubeEl.setAttribute('snap', this.snap);
     targetEl.appendChild(cubeEl);
   }
 
