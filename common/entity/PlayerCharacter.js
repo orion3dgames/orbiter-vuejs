@@ -74,7 +74,7 @@ class PlayerCharacter {
 
             // add cursor
             var cursorEl = document.createElement('a-cursor');
-            cursorEl.setAttribute('intersection-spawn', { mixin: 'voxel' });
+            cursorEl.setAttribute('intersection-spawn', '');
 
             // add camera to entity
             var cameraEl = document.createElement('a-entity');
