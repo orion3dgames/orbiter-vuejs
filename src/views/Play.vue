@@ -33,16 +33,7 @@
       ></a-entity>
 
       <a-sky color="#CCC"></a-sky>
-      <a-plane
-        position="0 0 0"
-        rotation="-90 0 0"
-        width="100"
-        height="100"
-        color="#EEE"
-        src="#groundTexture"
-        repeat="1 1"
-        shadow="receive: true"
-      ></a-plane>
+
     </a-scene>
   </div>
 </template>
