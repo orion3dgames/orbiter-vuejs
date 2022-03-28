@@ -12,7 +12,7 @@ I will be using
 IMPORTANT: NODE V14- (any higher version are not compatible with NENGI yet)
 - Clone the repository
 - Open a terminal and launch these commands from the root folder
-- ```yarn install``` (install client dependencies)
+- ```yarn install``` (install client and server dependencies)
 
 # production process
 - ```yarn build``` (build a client)
