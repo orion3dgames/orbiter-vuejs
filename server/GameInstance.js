@@ -165,15 +165,15 @@ class GameInstance {
 
       /////////////////////////////////////////////////////////
       // GENERATE MAIN WORLD
-      var grid_x = 25;
-      var grid_z = 25;
+      var grid_x = 15;
+      var grid_z = 15;
       for (var x = -grid_x; x < grid_x; x++){
         for (var z = -grid_z; z < grid_z; z++){
           const cube = new Cube({
-            x: grid_x,
-            y: 1,
-            z: grid_z,
-            color: '#000000',
+            x: x,
+            y: -1,
+            z: z,
+            color: '#EEEEEE',
           })
           this.instance.addEntity(cube) // assigns an `nid` to green
           this.entities.set(cube.nid, cube) // uses the `nid` as a key

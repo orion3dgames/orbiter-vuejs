@@ -6,7 +6,7 @@ class Cube {
     this.nid = 0;
     this.sourceId = 0;
     this.x = 0
-    this.y = 1
+    this.y = 0
     this.z = 0
     this.color = '#FFFFFF';
 
@@ -16,7 +16,7 @@ class Cube {
 
     this.position = {
       x: this.x,
-      y: 0,
+      y: this.y,
       z: this.z,
     };
 
