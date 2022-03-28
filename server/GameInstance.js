@@ -103,13 +103,14 @@ class GameInstance {
         }
 
         // if found in database
+        /*
         if (data) {
           defaultPlayer.color = data.color;
           defaultPlayer.displayName = data.displayName;
           defaultPlayer.rotation = data.rotation.y;
           defaultPlayer.x = data.position.x;
           defaultPlayer.z = data.position.z;
-        }
+        }*/
 
         // create a entity for this client
         const entity = new PlayerCharacter(defaultPlayer)
@@ -125,9 +126,11 @@ class GameInstance {
 
         this.client.view = {
           x: entity.x,
+          z: entity.z,
           y: entity.y,
-          halfWidth: 10,
-          halfHeight: 10
+          halfWidth: 20,
+          halfHeight: 20,
+          halfDepth: 20,
         }
 
         this.entities.set(entity.nid, entity)
@@ -143,9 +146,11 @@ class GameInstance {
     console.log('initializeWorldFromDB');
 
     ////////////////////////////////////////////////////////
-    // ADD EXISTING CUBES
+    // ADD USER ADDED CUBES
     this.database.loadCubes().then( cubes => {
+      let count = 0;
       for (let c in cubes) {
+        count++;
         let cubeDb = cubes[c];
         const cube = new Cube({
           x: cubeDb.x,
@@ -155,8 +160,27 @@ class GameInstance {
         })
         this.instance.addEntity(cube) // assigns an `nid` to green
         this.entities.set(cube.nid, cube) // uses the `nid` as a key
-        console.log('---> [ADDED CUBE]', cube.x, cube.y, cube.z);
       }
+      console.log("Added User Generated Cubes ( "+count+" ) ");
+
+      /////////////////////////////////////////////////////////
+      // GENERATE MAIN WORLD
+      var grid_x = 25;
+      var grid_z = 25;
+      for (var x = -grid_x; x < grid_x; x++){
+        for (var z = -grid_z; z < grid_z; z++){
+          const cube = new Cube({
+            x: grid_x,
+            y: 1,
+            z: grid_z,
+            color: '#000000',
+          })
+          this.instance.addEntity(cube) // assigns an `nid` to green
+          this.entities.set(cube.nid, cube) // uses the `nid` as a key
+        }
+      }
+      console.log("Generated Main World ( "+(grid_x*grid_z)+" cubes ) ");
+
     });
 
   }
@@ -222,6 +246,7 @@ class GameInstance {
 
         // update view
         client.view.x = client.entity.x
+        client.view.z = client.entity.z
         client.view.y = client.entity.y
 
       }
