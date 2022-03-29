@@ -59,6 +59,8 @@ server.listen(PORT, function () {
 
 class GameInstance {
   constructor() {
+
+    // INIT VAR
     this.entities = new Map()
 
     // START NENGI GAME SERVER
@@ -88,6 +90,33 @@ class GameInstance {
 
   }
 
+  addCube(command, entity){
+
+    this.database.canCreateCube(command).then( data => {
+
+      if(!data) {
+        // create cube identity
+        const cube = new Cube({
+          player_uid: entity.uid,
+          x: command.x,
+          y: command.y,
+          z: command.z,
+          color: "#" + Math.floor(Math.random() * 16777215).toString(16),
+        })
+        this.instance.addEntity(cube) // assigns an `nid` to green
+        this.entities.set(cube.nid, cube) // uses the `nid` as a key
+
+        // add cube to DB
+        this.database.addCube(cube).then(data => {
+          console.log(data);
+        });
+
+        console.log('new [Cube]', cube);
+      }
+    });
+
+  }
+
   addPlayer(user){
     return new Promise((resolve) => {
       console.log('[SERVER][addPlayer]', user);
@@ -95,24 +124,27 @@ class GameInstance {
 
         // set default stats
         let defaultPlayer = {
+          uid: false,
           x: 0,
           z: 0,
+          y: 0,
           rotation: 0,
           color: "#" + Math.floor(Math.random() * 16777215).toString(16),
           displayName: "loading..."
         }
 
         // if found in database
-        /*
         if (data) {
+          defaultPlayer.uid = user.uid;
           defaultPlayer.color = data.color;
           defaultPlayer.displayName = data.displayName;
           defaultPlayer.rotation = data.rotation.y;
           defaultPlayer.x = data.position.x;
           defaultPlayer.z = data.position.z;
-        }*/
+          defaultPlayer.y = data.position.y;
+        }
 
-        // create a entity for this client
+        // create an entity for this client
         const entity = new PlayerCharacter(defaultPlayer)
 
         this.instance.addEntity(entity) // adding an entity to a nengi instance assigns it an id
@@ -212,26 +244,8 @@ class GameInstance {
         }
 
         if (command.protocol.name === 'CubeCommand') {
-
-          // create cube identity
-          const cube = new Cube({
-            sourceId: entity.nid,
-            x: command.x,
-            y: command.y,
-            z: command.z,
-            color: "#"+Math.floor(Math.random()*16777215).toString(16),
-          })
-          this.instance.addEntity(cube) // assigns an `nid` to green
-          this.entities.set(cube.nid, cube) // uses the `nid` as a key
-
-          // add cube to DB
-          this.database.addCube(cube).then( data => {
-            console.log(data);
-          });
-
-          console.log('new [Cube]', cube);
+          this.addCube(command, entity);
         }
-
 
       }
     }

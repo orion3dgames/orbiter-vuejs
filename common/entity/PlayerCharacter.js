@@ -48,6 +48,8 @@ class PlayerCharacter {
         this.material = {
             color: this.color
         }
+
+        console.log(this);
     }
 
     spawn(targetEl, entity, myId) {
