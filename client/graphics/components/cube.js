@@ -30,6 +30,9 @@ window.AFRAME.registerComponent("cube", {
         var color = false;
         var faceIndex = 0;
         el.addEventListener("mouseenter", function(evt) {
+
+            if(evt.target.getAttribute("type") === 'crate') return false;
+
             var mesh = el.getObject3D('mesh');
             color = el.getAttribute('material').color;
             faceIndex = evt.detail.intersection.face.materialIndex;

@@ -90,31 +90,48 @@ class GameInstance {
 
   }
 
-  addCube(command, entity){
+  spawnCube(cubeData) {
+    const cube = new Cube({
+      player_uid: cubeData.player_uid,
+      x: cubeData.x,
+      y: cubeData.y,
+      z: cubeData.z,
+      color: cubeData.color,
+      type: cubeData.type
+    })
+    this.instance.addEntity(cube) // assigns an `nid` to green
+    this.entities.set(cube.nid, cube) // uses the `nid` as a key
+    return cube;
+  }
+
+  addCube(command, player_uid){
 
     this.database.canCreateCube(command).then( data => {
 
-      if(!data) {
-        // create cube identity
-        const cube = new Cube({
-          player_uid: entity.uid,
+      if(data === true){
+
+        let cube = this.spawnCube({
+          player_uid: player_uid,
           x: command.x,
           y: command.y,
           z: command.z,
           color: "#" + Math.floor(Math.random() * 16777215).toString(16),
-        })
-        this.instance.addEntity(cube) // assigns an `nid` to green
-        this.entities.set(cube.nid, cube) // uses the `nid` as a key
+        });
 
         // add cube to DB
         this.database.addCube(cube).then(data => {
-          console.log(data);
+          // cube saved to DB
+
+          console.log('new [Cube]', cube);
         });
 
-        console.log('new [Cube]', cube);
-      }
-    });
 
+
+      }else{
+        console.log('cannot create new cube at: ', data);
+      }
+
+    });
   }
 
   addPlayer(user){
@@ -183,32 +200,34 @@ class GameInstance {
       let count = 0;
       for (let c in cubes) {
         count++;
-        let cubeDb = cubes[c];
-        const cube = new Cube({
-          x: cubeDb.x,
-          y: cubeDb.y,
-          z: cubeDb.z,
-          color: cubeDb.color,
-        })
-        this.instance.addEntity(cube) // assigns an `nid` to green
-        this.entities.set(cube.nid, cube) // uses the `nid` as a key
+        let cubeData = cubes[c];
+        this.spawnCube(cubeData);
       }
       console.log("Added User Generated Cubes ( "+count+" ) ");
 
       /////////////////////////////////////////////////////////
       // GENERATE MAIN WORLD
-      var grid_x = 15;
-      var grid_z = 15;
-      for (var x = -grid_x; x < grid_x; x++){
-        for (var z = -grid_z; z < grid_z; z++){
-          const cube = new Cube({
+      var grid_x = 10;
+      var grid_z = 10;
+      for (var x = -grid_x; x <= grid_x; x++){
+        for (var z = -grid_z; z <= grid_z; z++){
+          let cubeData = {
+            'player_id': 'SERVER',
             x: x,
             y: -1,
             z: z,
             color: '#EEEEEE',
-          })
-          this.instance.addEntity(cube) // assigns an `nid` to green
-          this.entities.set(cube.nid, cube) // uses the `nid` as a key
+            type: 'crate'
+          }
+          this.spawnCube(cubeData);
+
+          // ADD A BORDER TO THE MAIN WORLD
+          cubeData.y = 0;
+          if(z === -grid_x){this.spawnCube(cubeData);}
+          if(x === -grid_z){this.spawnCube(cubeData);}
+          if(x === grid_x){this.spawnCube(cubeData);}
+          if(z === grid_z){this.spawnCube(cubeData);}
+
         }
       }
       console.log("Generated Main World ( "+(grid_x*grid_z)+" cubes ) ");
@@ -244,7 +263,7 @@ class GameInstance {
         }
 
         if (command.protocol.name === 'CubeCommand') {
-          this.addCube(command, entity);
+          this.addCube(command, entity.player_uid);
         }
 
       }

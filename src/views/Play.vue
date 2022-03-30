@@ -1,5 +1,11 @@
 <template>
   <div class="game-area">
+    <div class="game-header">
+      <div class="float-end">
+        <a href="/" class="btn btn-sm btn-secondary">Quit Game</a>
+      </div>
+      Logged in as {{user.displayName}}
+    </div>
     <div class="game-loading" id="screen-connecting">
       Connecting to server...
     </div>
@@ -10,13 +16,13 @@
     >
       <a-assets>
         <!--<a-asset-item id="leftHand" src="../../client/assets/leftHandLow.glb"></a-asset-item>
-        <a-asset-item id="rightHand" src="../../client/assets/rightHandLow.glb"></a-asset-item>-->
+        <a-asset-item id="rightHand" src="../../client/assets/rightHandLow.glb"></a-asset-item>-
+        -->
         <img
-          id="groundTexture"
-          src="/assets/floor_grid.jpg"
-          crossorigin="anonymous"
+            id="crateTexture"
+            src="../../client/assets/crate.jpg"
+            crossorigin="anonymous"
         />
-
       </a-assets>
 
       <a-entity light="type: ambient; intensity: 0.5;"></a-entity>
@@ -40,7 +46,7 @@ import GameClient from "../../client/GameClient";
 export default {
   name: "Play",
   components: {
-    //GameSidebar,
+
   },
   data() {
     return {
@@ -50,6 +56,15 @@ export default {
     };
   },
   computed: {
+    appTitle() {
+      return this.$store.getters.appTitle;
+    },
+    appDescription() {
+      return this.$store.getters.appDescription;
+    },
+    appVersion() {
+      return this.$store.getters.appVersion;
+    },
     user() {
       return this.$store.getters.user;
     },
@@ -76,6 +91,7 @@ export default {
         loop();
       }
     }, 5000); // ah ouais quand même
+
   },
 
   methods: {

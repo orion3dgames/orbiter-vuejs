@@ -58,16 +58,18 @@ $header-height: 56px;
     height: $header-height;
     left: 0px;
     top: 0px;
-    border-bottom: 1px solid #EEE;
+    //border-bottom: 1px solid #EEE;
     padding: 12px;
+    background: rgba(255,255,255, .0);
+    z-index: 1000;
   }
 
   .game-area{
     position:absolute;
     width: 100%;
-    height: calc(100% - #{$header-height});
+    height: 100%;
     left: 0px;
-    top: $header-height;
+    top: 0;
     border: 1px solid #EEE;
   }
 

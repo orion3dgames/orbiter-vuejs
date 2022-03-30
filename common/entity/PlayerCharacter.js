@@ -4,7 +4,8 @@ import nengi from 'nengi'
 class PlayerCharacter {
     constructor(entity) {
 
-        this.nid = 0;
+        this.nid = 0; // nengi uid
+        this.player_uid = false // firebase uid
         this.x = 0
         this.y = 0
         this.z = 0
@@ -143,16 +144,15 @@ class PlayerCharacter {
     }
 }
 
-
-
+// list of all vars to keep sync with all clients
 PlayerCharacter.protocol = {
     x: { type: nengi.Float32, interp: true },
     y: { type: nengi.Float32, interp: true },
     z: { type: nengi.Float32, interp: true },
-    rotation: { type: nengi.Float32, interp: true },
+    rotation: { type: nengi.Float32, interp: true }, // should we use nengi.RotationFloat32 as suggested by DOC ?
     color: nengi.UTF8String,
     displayName: nengi.UTF8String,
-    //rotation: { type: nengi.RotationFloat32, interp: true },
+    player_uid: nengi.UTF8String,
 }
 
 export default PlayerCharacter

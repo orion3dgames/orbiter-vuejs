@@ -9,8 +9,10 @@ class Cube {
     this.y = 0
     this.z = 0
     this.color = '#FFFFFF';
+    this.type = 'cube';
 
     if (entity) {
+      console.log('CREATE CRATE', entity.type);
       Object.assign(this, entity)
     }
 
@@ -34,9 +36,17 @@ class Cube {
       buffer: true
     }
 
-    this.material = {
-      shader: 'standard',
-      color: this.color
+    if(this.type === 'crate') {
+      this.material = {
+        shader: 'standard',
+        color: this.color,
+        src: "#crateTexture"
+      }
+    }else{
+      this.material = {
+        shader: 'standard',
+        color: this.color,
+      }
     }
 
     this.shadow = {
@@ -45,17 +55,17 @@ class Cube {
     }
 
     this.snap = {
-      offset: '0.50 0.50 0.50',
+      offset: '0 0 0',
       snap: '1 1 1',
     }
 
-    this.mixin = 'voxel'
   }
 
   spawn(targetEl){
     let cubeEl = document.createElement('a-entity');
     cubeEl.setAttribute('id', 'nid-' + this.nid);
     cubeEl.setAttribute('cube', '');
+    cubeEl.setAttribute('type', this.type);
     cubeEl.setAttribute('position', this.position);
     cubeEl.setAttribute('rotation', this.rotation);
     cubeEl.setAttribute('material', this.material);
@@ -72,6 +82,7 @@ Cube.protocol = {
   x: { type: nengi.Float32, interp: true },
   y: { type: nengi.Float32, interp: true },
   z: { type: nengi.Float32, interp: true },
+  type: nengi.UTF8String,
   color: nengi.UTF8String,
 }
 

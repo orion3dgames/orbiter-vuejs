@@ -49,10 +49,10 @@ class firebaseInstance {
       const q = query(ref(this.db, 'cubes/'), orderByChild('position_ref'), equalTo(pos));
       get(q).then(snapshot => {
         if (snapshot.exists()){
-          const cubeData = snapshot.val();
-          console.log("exists!", cubeData);
+          console.log("exists!", pos);
           resolve(false);
         }
+        console.log("does not exists!", pos);
         resolve(true);
       });
     })
