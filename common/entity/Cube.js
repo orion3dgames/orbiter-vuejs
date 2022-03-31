@@ -3,16 +3,16 @@ import nengi from 'nengi'
 class Cube {
   constructor(entity) {
 
-    this.nid = 0;
-    this.sourceId = 0;
+    this.nid = 0; // nengi id
+    this.cube_uid = 0; // firebase cube id
+    this.player_uid = 0; // firebase player nid
     this.x = 0
     this.y = 0
     this.z = 0
     this.color = '#FFFFFF';
-    this.type = 'cube';
+    this.type = 'standard'; // 2 types available: standard, crate
 
     if (entity) {
-      console.log('CREATE CRATE', entity.type);
       Object.assign(this, entity)
     }
 
@@ -36,19 +36,6 @@ class Cube {
       buffer: true
     }
 
-    if(this.type === 'crate') {
-      this.material = {
-        shader: 'standard',
-        color: this.color,
-        src: "#crateTexture"
-      }
-    }else{
-      this.material = {
-        shader: 'standard',
-        color: this.color,
-      }
-    }
-
     this.shadow = {
       receive: true,
       cast:true
@@ -59,12 +46,39 @@ class Cube {
       snap: '1 1 1',
     }
 
+    this._loadMaterial(this.type);
+
+  }
+
+  _loadMaterial(type){
+
+    let material;
+
+    switch(type) {
+
+      case "standard":
+        material = {
+          shader: 'standard',
+          color: this.color,
+        }
+        break;
+
+      case "crate":
+        material = {
+          shader: 'standard',
+          color: this.color,
+          src: "#crateTexture"
+        }
+        break;
+    }
+
+    this.material = material;
+
   }
 
   spawn(targetEl){
     let cubeEl = document.createElement('a-entity');
     cubeEl.setAttribute('id', 'nid-' + this.nid);
-    cubeEl.setAttribute('cube', '');
     cubeEl.setAttribute('type', this.type);
     cubeEl.setAttribute('position', this.position);
     cubeEl.setAttribute('rotation', this.rotation);
@@ -72,16 +86,17 @@ class Cube {
     cubeEl.setAttribute('geometry', this.geometry);
     cubeEl.setAttribute('shadow', this.shadow);
     cubeEl.setAttribute('snap', this.snap);
+    cubeEl.setAttribute('cube', ''); // CUSTOM AFRAME COMPONENT
     targetEl.appendChild(cubeEl);
   }
 
 }
 
 Cube.protocol = {
-  sourceId: { type: nengi.UInt16, interp: false },
-  x: { type: nengi.Float32, interp: true },
-  y: { type: nengi.Float32, interp: true },
-  z: { type: nengi.Float32, interp: true },
+  player_uid: nengi.UTF8String,
+  x: { type: nengi.Float32, false: true },
+  y: { type: nengi.Float32, false: true },
+  z: { type: nengi.Float32, false: true },
   type: nengi.UTF8String,
   color: nengi.UTF8String,
 }

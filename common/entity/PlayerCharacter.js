@@ -4,8 +4,8 @@ import nengi from 'nengi'
 class PlayerCharacter {
     constructor(entity) {
 
-        this.nid = 0; // nengi uid
-        this.player_uid = false // firebase uid
+        this.nid = 0; // nengi id
+        this.player_uid = false // firebase id
         this.x = 0
         this.y = 0
         this.z = 0
@@ -13,6 +13,11 @@ class PlayerCharacter {
         this.color = '#FFFFFF';
         this.speed = 2;
         this.displayName = '...loading';
+
+        if (entity) {
+            Object.assign(this, entity)
+        }
+
         this.moveRotation = 0;
         this.moveDirection = {
             x: 0,
@@ -29,10 +34,6 @@ class PlayerCharacter {
             primitive: 'sphere',
             radius: 0.5,
         };
-
-        if (entity) {
-            Object.assign(this, entity)
-        }
 
         this.position = {
             x: this.x,

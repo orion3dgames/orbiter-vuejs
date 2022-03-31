@@ -115,17 +115,15 @@ class GameInstance {
           x: command.x,
           y: command.y,
           z: command.z,
+          type: 'standard',
           color: "#" + Math.floor(Math.random() * 16777215).toString(16),
         });
 
         // add cube to DB
         this.database.addCube(cube).then(data => {
           // cube saved to DB
-
           console.log('new [Cube]', cube);
         });
-
-
 
       }else{
         console.log('cannot create new cube at: ', data);
@@ -207,12 +205,12 @@ class GameInstance {
 
       /////////////////////////////////////////////////////////
       // GENERATE MAIN WORLD
-      var grid_x = 10;
-      var grid_z = 10;
+      var grid_x = 50;
+      var grid_z = 50;
       for (var x = -grid_x; x <= grid_x; x++){
         for (var z = -grid_z; z <= grid_z; z++){
           let cubeData = {
-            'player_id': 'SERVER',
+            player_id: 'SERVER',
             x: x,
             y: -1,
             z: z,
