@@ -5,7 +5,6 @@ import PlayerCharacter from './entity/PlayerCharacter'
 import Cube from './entity/Cube'
 
 import Identity from './message/Identity'
-import PlaceCube from './message/PlaceCube'
 import Message from './message/Message'
 
 import MoveCommand from './command/MoveCommand'
@@ -34,7 +33,6 @@ const config = {
         localMessages: [],
         messages: [
             ['Identity', Identity],
-            ['PlaceCube', PlaceCube],
             ['Message', Message],
         ],
         commands: [

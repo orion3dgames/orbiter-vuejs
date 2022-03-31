@@ -254,7 +254,7 @@ class GameInstance {
         }
 
         if (command.protocol.name === 'CubeCommand') {
-          console.log(entity.player_uid, command);
+          //console.log(entity.player_uid, command);
           this.addCube(command, entity.player_uid);
         }
 
