@@ -91,14 +91,7 @@ class GameInstance {
   }
 
   spawnCube(cubeData) {
-    const cube = new Cube({
-      player_uid: cubeData.player_uid,
-      x: cubeData.x,
-      y: cubeData.y,
-      z: cubeData.z,
-      color: cubeData.color,
-      type: cubeData.type
-    })
+    const cube = new Cube(cubeData)
     this.instance.addEntity(cube) // assigns an `nid` to green
     this.entities.set(cube.nid, cube) // uses the `nid` as a key
     return cube;
@@ -150,7 +143,7 @@ class GameInstance {
 
         // if found in database
         if (data) {
-          defaultPlayer.uid = user.uid;
+          defaultPlayer.player_uid = user.uid;
           defaultPlayer.color = data.color;
           defaultPlayer.displayName = data.displayName;
           defaultPlayer.rotation = data.rotation.y;
@@ -205,12 +198,12 @@ class GameInstance {
 
       /////////////////////////////////////////////////////////
       // GENERATE MAIN WORLD
-      var grid_x = 50;
-      var grid_z = 50;
+      var grid_x = 5;
+      var grid_z = 5;
       for (var x = -grid_x; x <= grid_x; x++){
         for (var z = -grid_z; z <= grid_z; z++){
           let cubeData = {
-            player_id: 'SERVER',
+            player_uid: 'SERVER',
             x: x,
             y: -1,
             z: z,
@@ -261,6 +254,7 @@ class GameInstance {
         }
 
         if (command.protocol.name === 'CubeCommand') {
+          console.log(entity.player_uid, command);
           this.addCube(command, entity.player_uid);
         }
 

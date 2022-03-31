@@ -4,8 +4,8 @@ class Cube {
   constructor(entity) {
 
     this.nid = 0; // nengi id
-    this.cube_uid = 0; // firebase cube id
-    this.player_uid = 0; // firebase player nid
+    this.cube_uid = ''; // firebase cube id
+    this.player_uid = ''; // firebase player id
     this.x = 0
     this.y = 0
     this.z = 0

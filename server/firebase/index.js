@@ -49,10 +49,8 @@ class firebaseInstance {
       const q = query(ref(this.db, 'cubes/'), orderByChild('position_ref'), equalTo(pos));
       get(q).then(snapshot => {
         if (snapshot.exists()){
-          console.log("exists!", pos);
           resolve(false);
         }
-        console.log("does not exists!", pos);
         resolve(true);
       });
     })
@@ -67,13 +65,14 @@ class firebaseInstance {
       const dbRef = ref(this.db, 'cubes');
       const newSessionRef = push(dbRef);
       let cube = {
-        uid: newSessionRef.key,
         player_uid: data.player_uid,
+        cube_uid: newSessionRef.key,
         position_ref: this.generatePositionRef(data),
         x: data.x,
         y: data.y,
         z: data.z,
         color: data.color,
+        type: data.type,
       }
       set(newSessionRef, cube).then(() => {
         resolve(data);
