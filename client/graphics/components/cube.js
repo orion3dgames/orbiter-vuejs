@@ -31,6 +31,8 @@ window.AFRAME.registerComponent("cube", {
         if (el.getAttribute("type") === 'crate') return false;
 
         const mesh = el.getObject3D('mesh');
+        let color = el.getAttribute('material').color;
+
         mesh.material = [
             new window.THREE.MeshLambertMaterial({ color: new window.THREE.Color(color) }),
             new window.THREE.MeshLambertMaterial({ color: new window.THREE.Color(color) }),
@@ -40,7 +42,6 @@ window.AFRAME.registerComponent("cube", {
             new window.THREE.MeshLambertMaterial({ color: new window.THREE.Color(color) }),
         ];
 
-        let color = el.getAttribute('material').color;
         let faceIndex = 0;
 
         el.addEventListener("mouseenter", function (evt) {
