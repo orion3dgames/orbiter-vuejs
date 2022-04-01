@@ -13,10 +13,10 @@ class MoveCommand {
 }
 
 MoveCommand.protocol = {
-  forward: nengi.Boolean,
-  left: nengi.Boolean,
-  backward: nengi.Boolean,
-  right: nengi.Boolean,
+  forward: nengi.Float32,
+  left: nengi.Float32,
+  backward: nengi.Float32,
+  right: nengi.Float32,
   jump: nengi.Boolean,
   rotation: nengi.Float32,
   delta: nengi.Float32

@@ -118,10 +118,8 @@ class PlayerCharacter {
         let velocityY = 0.25
 
         // create forces from input
-        if (command.forward) { velocityZ -= 1 }
-        if (command.backward) { velocityZ += 1 }
-        if (command.left) { velocityX -= 1 }
-        if (command.right) { velocityX += 1 }
+        velocityZ = command.backward - command.forward
+        velocityX = command.right - command.left
 
         // add values
         this.moveDirection.x = velocityZ * Math.sin(command.rotation / 180 * Math.PI * 2) + velocityX * Math.cos((-command.rotation / 180 * Math.PI * 2));
