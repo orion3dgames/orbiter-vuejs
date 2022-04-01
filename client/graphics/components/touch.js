@@ -4,7 +4,7 @@ window.AFRAME.registerComponent('thumbstick-logging', {
         this.el.addEventListener('thumbstickmoved', this.logThumbstick);
     },
     logThumbstick: function (e) {
-        const limite = 0.5;
+        const limite = 0.1;
         window.app.gameClient.input.keyState.up = e.detail.y < -limite ? e.detail.y : 0;
         window.app.gameClient.input.keyState.down = e.detail.y > limite ? e.detail.y : 0;
         window.app.gameClient.input.keyState.left = e.detail.x < -limite ? e.detail.x : 0;
