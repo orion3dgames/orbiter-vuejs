@@ -15,7 +15,7 @@ window.AFRAME.registerComponent('player-body', {
             const keyState = this.game.input.keyState;
             const rotation = this.game.renderer.cameraEl ? this.game.renderer.cameraEl.getAttribute('rotation').y : 0;
             this.nengiClient.addCommand(new MoveCommand(keyState.up, keyState.left, keyState.down, keyState.right, keyState.space, rotation, timeDelta))
-            // this.game.update(timeDelta);
+            this.game.update(timeDelta);
 
             // IF MOUSE PRESSED
             if (keyState.mouseDown) {

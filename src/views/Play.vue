@@ -4,7 +4,7 @@
       <div class="float-end">
         <a href="/" class="btn btn-sm btn-secondary">Quit Game</a>
       </div>
-      Logged in as {{user.displayName}}
+      Logged in as {{ user.displayName }}
     </div>
     <div class="game-loading" id="screen-connecting">
       Connecting to server...
@@ -19,9 +19,9 @@
         <a-asset-item id="rightHand" src="../../client/assets/rightHandLow.glb"></a-asset-item>-
         -->
         <img
-            id="crateTexture"
-            src="../../client/assets/crate.jpg"
-            crossorigin="anonymous"
+          id="crateTexture"
+          src="../../client/assets/crate.jpg"
+          crossorigin="anonymous"
         />
       </a-assets>
 
@@ -35,7 +35,6 @@
       ></a-entity>
 
       <a-sky color="#CCC"></a-sky>
-
     </a-scene>
   </div>
 </template>
@@ -45,9 +44,7 @@ import GameClient from "../../client/GameClient";
 
 export default {
   name: "Play",
-  components: {
-
-  },
+  components: {},
   data() {
     return {
       chat_message: "",
@@ -88,10 +85,10 @@ export default {
           tick++;
           window.app.gameClient.update(delta, tick, now);
         };
-        loop();
+        // when the player is loaded, its tick takes over form the update
+        if (!window.app.gameClient.playerLoaded) loop();
       }
     }, 5000); // ah ouais quand même
-
   },
 
   methods: {
