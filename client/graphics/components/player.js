@@ -10,15 +10,12 @@ window.AFRAME.registerComponent('player-body', {
         this.latestCubePlacedTime = new Date().getTime();
     },
     tick(time, timeDelta) {
-        this.do(timeDelta);
-    },
-    do(time, delta) {
         if (this.game.isloaded) {
 
             const input = this.game.input;
             const rotation = this.game.renderer.cameraEl ? this.game.renderer.cameraEl.getAttribute('rotation').y : 0;
-            this.nengiClient.addCommand(new MoveCommand(input.frameState.w, input.frameState.a, input.frameState.s, input.frameState.d, input.frameState.space, rotation, delta))
-            // this.game.update(delta);
+            this.nengiClient.addCommand(new MoveCommand(input.frameState.w, input.frameState.a, input.frameState.s, input.frameState.d, input.frameState.space, rotation, timeDelta))
+            // this.game.update(timeDelta);
 
             // IF MOUSE PRESSED
             if (input.frameState.mouseDown) {
@@ -34,5 +31,6 @@ window.AFRAME.registerComponent('player-body', {
             input.releaseKeys()
         }
 
-    }
+    },
+
 });
