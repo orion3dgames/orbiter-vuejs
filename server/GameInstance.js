@@ -51,7 +51,7 @@ app.get('/play', function (req, res) {
 const server = require('http').createServer(app);
 
 server.listen(PORT, function () {
-  console.log('Server started on port '+PORT);
+  console.log('Server started on port ' + PORT);
 });
 
 ////////////////////////////////////////////////////////////////////
@@ -97,11 +97,11 @@ class GameInstance {
     return cube;
   }
 
-  addCube(command, player_uid){
+  addCube(command, player_uid) {
+    console.log(command)
+    this.database.canCreateCube(command).then(data => {
 
-    this.database.canCreateCube(command).then( data => {
-
-      if(data === true){
+      if (data === true) {
 
         let cube = this.spawnCube({
           player_uid: player_uid,
@@ -118,14 +118,28 @@ class GameInstance {
           console.log('new [Cube]', cube);
         });
 
-      }else{
-        console.log('cannot create new cube at: ', data);
+      } else {
+        console.log('cannot create new cube at: ', command.x + " " + command.y + " " + command.z);
+        // remove if cube already exists
+        this.removeCube(command, player_uid);
       }
 
     });
   }
 
-  addPlayer(user){
+  removeCube(command, player_uid) {
+    // const cube = this.entities.get(command.nid);
+    return // WIP
+    this.instance.removeEntity(cube) // assigns an `nid` to green
+
+    // remove cube from DB
+    this.database.removeCube(cube).then(data => {
+      // cube saved to DB
+      console.log('remove [Cube]', cube);
+    });
+  }
+
+  addPlayer(user) {
     return new Promise((resolve) => {
       console.log('[SERVER][addPlayer]', user);
       this.database.getPlayer(user.uid).then(data => {
@@ -181,27 +195,27 @@ class GameInstance {
     });
   }
 
-  initializeWorld(){
+  initializeWorld() {
 
     console.log('initializeWorldFromDB');
 
     ////////////////////////////////////////////////////////
     // ADD USER ADDED CUBES
-    this.database.loadCubes().then( cubes => {
+    this.database.loadCubes().then(cubes => {
       let count = 0;
       for (let c in cubes) {
         count++;
         let cubeData = cubes[c];
         this.spawnCube(cubeData);
       }
-      console.log("Added User Generated Cubes ( "+count+" ) ");
+      console.log("Added User Generated Cubes ( " + count + " ) ");
 
       /////////////////////////////////////////////////////////
       // GENERATE MAIN WORLD
       var grid_x = 5;
       var grid_z = 5;
-      for (var x = -grid_x; x <= grid_x; x++){
-        for (var z = -grid_z; z <= grid_z; z++){
+      for (var x = -grid_x; x <= grid_x; x++) {
+        for (var z = -grid_z; z <= grid_z; z++) {
           let cubeData = {
             player_uid: 'SERVER',
             x: x,
@@ -214,14 +228,14 @@ class GameInstance {
 
           // ADD A BORDER TO THE MAIN WORLD
           cubeData.y = 0;
-          if(z === -grid_x){this.spawnCube(cubeData);}
-          if(x === -grid_z){this.spawnCube(cubeData);}
-          if(x === grid_x){this.spawnCube(cubeData);}
-          if(z === grid_z){this.spawnCube(cubeData);}
+          if (z === -grid_x) { this.spawnCube(cubeData); }
+          if (x === -grid_z) { this.spawnCube(cubeData); }
+          if (x === grid_x) { this.spawnCube(cubeData); }
+          if (z === grid_z) { this.spawnCube(cubeData); }
 
         }
       }
-      console.log("Generated Main World ( "+(grid_x*grid_z)+" cubes ) ");
+      console.log("Generated Main World ( " + (grid_x * grid_z) + " cubes ) ");
 
     });
 
@@ -264,7 +278,7 @@ class GameInstance {
     // TODO: the rest of the game logic
     this.instance.clients.forEach(client => {
 
-      if(client.entity) {
+      if (client.entity) {
 
         // move client
         client.entity.move(delta);
