@@ -3,26 +3,27 @@ window.AFRAME.registerComponent('thumbstick-logging', {
         console.log('thumbstick-logging init')
         this.el.addEventListener('thumbstickmoved', this.logThumbstick);
     },
-    logThumbstick: function (evt) {
-        if (evt.detail.y > 0.95) {
+    logThumbstick: function (e) {
+        window.app.gameClient.input.keyState.down = e.detail.y > 0.95;
+        window.app.gameClient.input.keyState.up = e.detail.y < -0.95;
+        window.app.gameClient.input.keyState.left = e.detail.x < -0.95;
+        window.app.gameClient.input.keyState.right = e.detail.x > 0.95;
+
+        if (e.detail.y > 0.95) {
             console.log("DOWN");
             window.app.debug('DOWN')
-            window.app.gameClient.input.frameState.s = true
         }
-        if (evt.detail.y < -0.95) {
+        if (e.detail.y < -0.95) {
             console.log("UP");
             window.app.debug('UP')
-            window.app.gameClient.input.frameState.w = true
         }
-        if (evt.detail.x < -0.95) {
+        if (e.detail.x < -0.95) {
             console.log("LEFT");
             window.app.debug('LEFT')
-            window.app.gameClient.input.frameState.a = true
         }
-        if (evt.detail.x > 0.95) {
+        if (e.detail.x > 0.95) {
             console.log("RIGHT");
             window.app.debug('RIGHT')
-            window.app.gameClient.input.frameState.d = true
         }
     }
 });

@@ -3,113 +3,94 @@ class InputSystem {
     this.canvasEle = document.getElementById('main-canvas')
     this.onmousemove = null
 
-    this.currentState = {
-      w: false,
-      s: false,
-      a: false,
-      d: false,
-      r: false,
-      space: false,
-      mx: 0,
-      my: 0,
-      mouseDown: false
+    // default key mapping, compatible with qwerty and azerty
+    const keyMapping = {
+      up: "KeyW",
+      down: "KeyS",
+      left: "KeyA",
+      right: "KeyD",
     }
 
-    this.frameState = {
-      w: false,
-      s: false,
-      a: false,
-      d: false,
-      r: false,
+    this.keyState = {
+      up: false,
+      down: false,
+      left: false,
+      right: false,
       space: false,
-      mouseDown: false
-    }
+      mouseDown: false,
+    };
 
     // disable right click
-    document.addEventListener('contextmenu', event =>
-      event.preventDefault()
+    document.addEventListener('contextmenu', e =>
+      e.preventDefault()
     )
 
-    document.addEventListener('keydown', event => {
-      //console.log('keydown', event)
-      // w or up arrow
-      if (event.keyCode === 87 || event.keyCode === 38) {
-        this.currentState.w = true
-        this.frameState.w = true
+    document.addEventListener('keydown', e => {
+      //console.log('keydown', e)
+      // w,z or up arrow
+      console.log(e)
+      if (e.code === keyMapping.up || e.keyCode === 38) {
+        this.keyState.up = true
         window.app.debug('up')
       }
-      // a or left arrow
-      if (event.keyCode === 65 || event.keyCode === 37) {
-        this.currentState.a = true
-        this.frameState.a = true
-        window.app.debug('left')
-      }
       // s or down arrow
-      if (event.keyCode === 83 || event.keyCode === 40) {
-        this.currentState.s = true
-        this.frameState.s = true
+      if (e.code === keyMapping.down || e.keyCode === 40) {
+        this.keyState.down = true
         window.app.debug('down')
       }
+      // a,q or left arrow
+      if (e.code === keyMapping.left || e.keyCode === 37) {
+        this.keyState.left = true
+        window.app.debug('left')
+      }
       // d or right arrow
-      if (event.keyCode === 68 || event.keyCode === 39) {
-        this.currentState.d = true
-        this.frameState.d = true
+      if (e.code === keyMapping.right || e.keyCode === 39) {
+        this.keyState.right = true
         window.app.debug('right')
       }
       // space
-      if (event.keyCode === 32) {
-        this.currentState.space = true
-        this.frameState.space = true
+      if (eval.keyCode === 32) {
+        this.keyState.space = true
       }
     })
 
-    document.addEventListener('keyup', event => {
+    document.addEventListener('keyup', e => {
       //console.log('keyup', event)
-      if (event.keyCode === 87 || event.keyCode === 38) {
-        this.currentState.w = false
+      if (e.code === keyMapping.up || e.keyCode === 38) {
+        this.keyState.up = false
       }
-      if (event.keyCode === 65 || event.keyCode === 37) {
-        this.currentState.a = false
+      if (e.code === keyMapping.down || e.keyCode === 40) {
+        this.keyState.down = false
       }
-      if (event.keyCode === 83 || event.keyCode === 40) {
-        this.currentState.s = false
+      if (e.code === keyMapping.left || e.keyCode === 37) {
+        this.keyState.left = false
       }
-      if (event.keyCode === 68 || event.keyCode === 39) {
-        this.currentState.d = false
+      if (e.code === keyMapping.right || e.keyCode === 39) {
+        this.keyState.right = false
       }
-      if (event.keyCode === 32) {
-        this.currentState.space = false
+      if (e.keyCode === 32) {
+        this.keyState.space = false
       }
     })
 
-    document.addEventListener('mousemove', event => {
-      this.currentState.mx = event.clientX
-      this.currentState.my = event.clientY
+    document.addEventListener('mousemove', e => {
+      this.keyState.mx = e.clientX
+      this.keyState.my = e.clientY
       if (this.onmousemove) {
-        this.onmousemove(event)
+        this.onmousemove(e)
       }
     })
 
-    document.addEventListener('pointerdown', event => {
-      this.currentState.mouseDown = true
-      this.frameState.mouseDown = true
+    document.addEventListener('pointerdown', e => {
+      this.keyState.mouseDown = true
     })
 
 
-    document.addEventListener('mouseup', event => {
-      this.currentState.mouseDown = false
+    document.addEventListener('mouseup', e => {
+      this.keyState.mouseDown = false
     })
   }
 
-  releaseKeys() {
-    this.frameState.w = this.currentState.w
-    this.frameState.a = this.currentState.a
-    this.frameState.s = this.currentState.s
-    this.frameState.d = this.currentState.d
-    this.frameState.r = this.currentState.r
-    this.frameState.space = this.currentState.space
-    this.frameState.mouseDown = this.currentState.mouseDown
-  }
 }
 
 export default InputSystem
