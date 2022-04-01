@@ -30,22 +30,22 @@ class InputSystem {
       // w,z or up arrow
       console.log(e)
       if (e.code === keyMapping.up || e.keyCode === 38) {
-        this.keyState.up = true
+        this.keyState.up = 1
         window.app.debug('up')
       }
       // s or down arrow
       if (e.code === keyMapping.down || e.keyCode === 40) {
-        this.keyState.down = true
+        this.keyState.down = 1
         window.app.debug('down')
       }
       // a,q or left arrow
       if (e.code === keyMapping.left || e.keyCode === 37) {
-        this.keyState.left = true
+        this.keyState.left = 1
         window.app.debug('left')
       }
       // d or right arrow
       if (e.code === keyMapping.right || e.keyCode === 39) {
-        this.keyState.right = true
+        this.keyState.right = 1
         window.app.debug('right')
       }
       // space
@@ -57,19 +57,19 @@ class InputSystem {
     document.addEventListener('keyup', e => {
       //console.log('keyup', event)
       if (e.code === keyMapping.up || e.keyCode === 38) {
-        this.keyState.up = false
+        this.keyState.up = 0
       }
       if (e.code === keyMapping.down || e.keyCode === 40) {
-        this.keyState.down = false
+        this.keyState.down = 0
       }
       if (e.code === keyMapping.left || e.keyCode === 37) {
-        this.keyState.left = false
+        this.keyState.left = 0
       }
       if (e.code === keyMapping.right || e.keyCode === 39) {
-        this.keyState.right = false
+        this.keyState.right = 0
       }
       if (e.keyCode === 32) {
-        this.keyState.space = false
+        this.keyState.space = 0
       }
     })
 

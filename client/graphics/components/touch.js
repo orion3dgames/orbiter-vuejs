@@ -4,29 +4,27 @@ window.AFRAME.registerComponent('thumbstick-logging', {
         this.el.addEventListener('thumbstickmoved', this.logThumbstick);
     },
     logThumbstick: function (e) {
-        // window.app.gameClient.input.keyState.down = e.detail.y > 0.95;
-        window.app.gameClient.input.keyState.up = e.detail.y < -0.95;
-        window.app.gameClient.input.keyState.left = e.detail.x < -0.95;
-        window.app.gameClient.input.keyState.right = e.detail.x > 0.95;
+        const limite = 0.5;
+        window.app.gameClient.input.keyState.up = e.detail.y < -limite ? 1 : 0;
+        window.app.gameClient.input.keyState.down = e.detail.y > limite ? 1 : 0;
+        window.app.gameClient.input.keyState.left = e.detail.x < -limite ? 1 : 0;
+        window.app.gameClient.input.keyState.right = e.detail.x > limite ? 1 : 0;
 
-        if (e.detail.y > 0.95) {
-            console.log("DOWN");
-            window.app.debug('DOWN')
-            window.app.gameClient.input.keyState.down = true
+        if (e.detail.y > limite) {
+            console.log("DOWN " + e.detail.y);
+            window.app.debug("DOWN " + e.detail.y)
         }
-        else
-            window.app.gameClient.input.keyState.down = false
-        if (e.detail.y < -0.95) {
-            console.log("UP");
-            window.app.debug('UP')
+        if (e.detail.y < -limite) {
+            console.log("UP" + e.detail.y);
+            window.app.debug('UP' + e.detail.y)
         }
-        if (e.detail.x < -0.95) {
-            console.log("LEFT");
-            window.app.debug('LEFT')
+        if (e.detail.x < -limite) {
+            console.log("LEFT" + e.detail.x);
+            window.app.debug('LEFT' + e.detail.x)
         }
-        if (e.detail.x > 0.95) {
-            console.log("RIGHT");
-            window.app.debug('RIGHT')
+        if (e.detail.x > limite) {
+            console.log("RIGHT" + e.detail.x);
+            window.app.debug('RIGHT' + e.detail.x)
         }
     }
 });
