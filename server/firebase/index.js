@@ -80,28 +80,14 @@ class firebaseInstance {
     })
   }
 
-  
-
   removeCube(data) {
-    // WIP
     return new Promise((resolve) => {
-      const dbRef = ref(this.db, 'cubes');
-      const newSessionRef = push(dbRef);
-      let cube = {
-        player_uid: data.player_uid,
-        cube_uid: newSessionRef.key,
-        position_ref: this.generatePositionRef(data),
-        x: data.x,
-        y: data.y,
-        z: data.z,
-        color: data.color,
-        type: data.type,
-      }
-      set(newSessionRef, cube).then(() => {
-        resolve(data);
+      remove(ref(this.db, 'cubes/'+data.cube_uid)).then(snapshot => {
+        resolve(true);
       });
-    })
+    });
   }
+
 }
 
 export default firebaseInstance

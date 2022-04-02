@@ -9,7 +9,6 @@ window.AFRAME.registerComponent('intersection-spawn', {
     const el = this.el;
     let down = false;
     el.addEventListener('mousedown', e => {
-      console.log(e);
       down = new Date().getTime();
     });
     el.addEventListener('mouseup', e => {

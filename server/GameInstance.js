@@ -98,7 +98,7 @@ class GameInstance {
   }
 
   addCube(command, player_uid) {
-    console.log(command)
+
     this.database.canCreateCube(command).then(data => {
 
       if (data === true) {
@@ -118,24 +118,20 @@ class GameInstance {
           console.log('new [Cube]', cube);
         });
 
-      } else {
-        console.log('cannot create new cube at: ', command.x + " " + command.y + " " + command.z);
-        // remove if cube already exists
-        this.removeCube(command, player_uid);
       }
-
     });
   }
 
-  removeCube(command, player_uid) {
-    // const cube = this.entities.get(command.nid);
-    return // WIP
-    this.instance.removeEntity(cube) // assigns an `nid` to green
+  removeCube(nid) {
 
-    // remove cube from DB
+    let id = parseInt(nid, 10);
+
+    const cube = this.entities.get(id);
+
+    this.instance.removeEntity(cube)
+
     this.database.removeCube(cube).then(data => {
-      // cube saved to DB
-      console.log('remove [Cube]', cube);
+      console.log('removed [Cube]', cube);
     });
   }
 
@@ -254,13 +250,9 @@ class GameInstance {
 
         if (command.protocol.name === 'MsgCommand') {
           let message = JSON.parse(command.message);
-          //example of how to use it.
-          /*
-          if(command.type === 'newUser'){
-            entity.name = message.displayName;
-            entity.firebaseUID = message.uid;
-            console.log(message);
-          }*/
+          if(command.type === 'remove_cube'){
+            this.removeCube(message.nid)
+          }
         }
 
         if (command.protocol.name === 'MoveCommand') {

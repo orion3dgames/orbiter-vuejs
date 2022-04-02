@@ -18,7 +18,7 @@ window.AFRAME.registerComponent('player-body', {
             this.game.update(timeDelta);
 
             // IF MOUSE PRESSED
-            if (keyState.mouseDown) {
+            if (keyState.mouseDown && keyState.mouseType === 'left') {
                 const clickTime = new Date().getTime();
                 if (clickTime - this.latestCubePlacedTime > 500 && this.game.cubeAdded) {
                     this.latestCubePlacedTime = clickTime;

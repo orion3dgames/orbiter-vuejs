@@ -56,7 +56,6 @@ class GameClient {
     // REGISTER CUSTOM EVENT
     this.cubeAdded = null;
     this.renderer.sceneEl.addEventListener('cube_added', (data) => {
-      console.log(data);
       this.cubeAdded = data.detail;
     });
 

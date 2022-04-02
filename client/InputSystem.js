@@ -18,6 +18,7 @@ class InputSystem {
       right: false,
       space: false,
       mouseDown: false,
+      mouseType: false,
     };
 
     // disable right click
@@ -83,8 +84,19 @@ class InputSystem {
 
     document.addEventListener('pointerdown', e => {
       this.keyState.mouseDown = true
+      if (e.which === 1 || e.button === 0) {
+        this.keyState.mouseType = 'left'
+        window.app.debug('Left mouse')
+      }
+      if (e.which === 2 || e.button === 1) {
+        this.keyState.mouseType = 'middle'
+        window.app.debug('Middle mouse')
+      }
+      if (e.which === 3 || e.button === 2) {
+        this.keyState.mouseType = 'right'
+        window.app.debug('Right mouse')
+      }
     })
-
 
     document.addEventListener('mouseup', e => {
       this.keyState.mouseDown = false
