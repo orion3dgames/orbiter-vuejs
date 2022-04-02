@@ -3,7 +3,7 @@ import Cube from '../../common/entity/Cube'
 import store from '../../src/store'; // path to your Vuex store
 
 // import aframe components
-import intersectionSpawn from './components/intersection-spawn';
+import './components/intersection-spawn';
 import './components/touch';
 import './components/player';
 import './components/cube';

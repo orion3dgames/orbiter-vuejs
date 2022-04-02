@@ -20,6 +20,8 @@ export default {
     window.app.version = this.$store.getters.appVersion;
     this.$store.dispatch("fetchUser");
     this.$store.dispatch("fetchSessions");
+
+    window.app.debug("version " + window.app.version);
   },
 };
 </script>

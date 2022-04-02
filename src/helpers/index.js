@@ -1,6 +1,6 @@
 window.app = window.app || {};
 
-window.app.debugText = ['DEBUG \n version ' + window.app.version];
+window.app.debugText = ['DEBUG\n'];
 window.app.debug = function (str) {
     window.app.debugText.push(' \n ' + str);
     if (window.app.debugText.length > 21) window.app.debugText.shift();

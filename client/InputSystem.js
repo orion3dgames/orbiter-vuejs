@@ -29,7 +29,7 @@ class InputSystem {
     document.addEventListener('keydown', e => {
       //console.log('keydown', e)
       // w,z or up arrow
-      console.log(e)
+      // console.log(e)
       if (e.code === keyMapping.up || e.keyCode === 38) {
         this.keyState.up = 1
         window.app.debug('up')

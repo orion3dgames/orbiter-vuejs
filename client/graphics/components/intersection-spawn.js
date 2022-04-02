@@ -6,14 +6,31 @@ window.AFRAME.registerComponent('intersection-spawn', {
     parse: window.AFRAME.utils.styleParser.parse
   },
   init: function () {
-    const el = this.el;
+    const cursor = this.el;
+    let intersected = null;
     let down = false;
-    el.addEventListener('mousedown', e => {
+    let point = {};
+    cursor.addEventListener('mousedown', e => {
       down = new Date().getTime();
+      intersected = e.detail.intersectedEl
+      const faceIndex = e.detail.intersection.face?.materialIndex;
+      point = e.detail.intersectedEl.object3D.position
+      if (intersected.getAttribute('type') === 'standard') {
+        if (faceIndex === 2) point.y += 1 // top
+        if (faceIndex === 1) point.x -= 1 // WEST
+        if (faceIndex === 0) point.x += 1// EST
+        if (faceIndex === 4) point.z += 1// SOUTH
+        if (faceIndex === 5) point.z -= 1 // NORTH
+      }
+      if (intersected.getAttribute('type') === 'crate') {
+        point.y += 1
+      }
     });
-    el.addEventListener('mouseup', e => {
+    cursor.addEventListener('mouseup', e => {
+      const keyState = window.app.gameClient.input.keyState;
+      if (keyState.mouseType !== 'left') return;
       if (new Date().getTime() - down < 200)
-        el.emit('cube_added', e.detail.intersection.point)
+        cursor.emit('cube_added', { x: point.x, y: point.y, z: point.z })
     });
   }
 });
