@@ -1,5 +1,3 @@
-import { log } from "aframe";
-
 window.AFRAME.registerComponent('intersection-spawn', {
   schema: {
     default: '',

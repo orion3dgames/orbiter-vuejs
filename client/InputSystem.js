@@ -50,7 +50,8 @@ class InputSystem {
         window.app.debug('right')
       }
       // space
-      if (eval.keyCode === 32) {
+      if (e.keyCode === 32) {
+        window.app.debug('space')
         this.keyState.space = true
       }
     })

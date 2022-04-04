@@ -27,6 +27,7 @@ window.AFRAME.registerComponent('player-body', {
                     this.game.cubeAdded = null;
                 }
             }
+
         }
 
     },

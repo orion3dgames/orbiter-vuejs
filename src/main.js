@@ -5,7 +5,7 @@ import router from './router'
 import Vuex from 'vuex'
 
 require('aframe');
-require('aframe-environment-component');
+require('aframe-mouse-cursor-component');
 
 Vue.config.productionTip = false;
 Vue.config.ignoredElements = [

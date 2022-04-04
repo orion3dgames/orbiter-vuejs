@@ -1,4 +1,5 @@
 import MsgCommand from "../../../common/command/MsgCommand";
+import Utils from "../../Utils";
 
 window.AFRAME.registerComponent("cube", {
     dependencies: ['material'],
@@ -29,13 +30,13 @@ window.AFRAME.registerComponent("cube", {
             ];
             let faceIndex = 0;
             el.addEventListener("mouseenter", function (evt) {
-                // faceIndex = evt.detail.intersection.face.materialIndex;
-                // window.app.debug('faceIndex ' + faceIndex)
-                // // const darkerColor = pSBC(-0.9, color);
-                // mesh.material[faceIndex] = new window.THREE.MeshLambertMaterial({color: new window.THREE.Color(0xffffff)});
+                faceIndex = evt.detail.intersection.face.materialIndex;
+                window.app.debug('faceIndex ' + faceIndex)
+                const darkerColor = Utils.darkerColor(color, -0.9);
+                mesh.material[faceIndex] = new window.THREE.MeshLambertMaterial({color: new window.THREE.Color(0xffffff)});
             });
             el.addEventListener("mouseleave", function (evt) {
-                //    mesh.material[faceIndex] = new window.THREE.MeshLambertMaterial({color: new window.THREE.Color(color)});
+                mesh.material[faceIndex] = new window.THREE.MeshLambertMaterial({color: new window.THREE.Color(color)});
             });
         }
     }

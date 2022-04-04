@@ -86,6 +86,7 @@ class PlayerCharacter {
             cameraEl.setAttribute('camera', 'active', true);
             cameraEl.setAttribute('position', { x: 0, y: 1, z: 0 });
             cameraEl.setAttribute('player-head', '');
+            cameraEl.setAttribute('mouse-cursor', '');
             cameraEl.setAttribute('look-controls', {
                 'enabled': true,
                 'pointerLockEnabled': false
@@ -115,11 +116,12 @@ class PlayerCharacter {
 
         let velocityX = 0
         let velocityZ = 0
-        let velocityY = 0.25
+        let velocityY = 0
 
         // create forces from input
         velocityZ = command.backward - command.forward
         velocityX = command.right - command.left
+        velocityY = command.jump ? 3 : -0.10 ; // jump or keep going down
 
         // add values
         this.moveDirection.x = velocityZ * Math.sin(command.rotation / 180 * Math.PI * 2) + velocityX * Math.cos((-command.rotation / 180 * Math.PI * 2));
@@ -130,15 +132,16 @@ class PlayerCharacter {
         // DONT GO BELOW GROUND
         if (velocityY < 1) {
             this.y = 0;
+            this.moveDirection.y = 0
         }
 
-        //console.log(command.rotation, radian, x, y, unitZ, unitX, unitY);
+        console.log(command, velocityZ, velocityX, velocityY);
     }
 
     move(delta) {
         this.x += this.moveDirection.x * this.speed * delta
         this.z += this.moveDirection.z * this.speed * delta
-        this.y = this.moveDirection.y;
+        this.y += this.moveDirection.y * this.speed * delta ;
         this.rotation = this.moveRotation;
     }
 }
