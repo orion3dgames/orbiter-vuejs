@@ -16,6 +16,25 @@ const Utils = {
     const bb = (b.length < 2 ? '0' : '') + b
 
     return `#${rr}${gg}${bb}`
+  },
+
+  adjustPosition(faceIndex, currentPoint, intersectedType) {
+
+    let adjustedPoint = Object.assign({}, currentPoint); // do a real copy
+
+    if(intersectedType === 'standard') {
+      if (faceIndex === 2) adjustedPoint.y += 1 // top
+      if (faceIndex === 1) adjustedPoint.x -= 1 // WEST
+      if (faceIndex === 0) adjustedPoint.x += 1// EST
+      if (faceIndex === 4) adjustedPoint.z += 1// SOUTH
+      if (faceIndex === 5) adjustedPoint.z -= 1 // NORTH
+    }
+
+    if (intersectedType === 'crate') {
+      adjustedPoint.y += 1
+    }
+
+    return adjustedPoint;
   }
 
 }

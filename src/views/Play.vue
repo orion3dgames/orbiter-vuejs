@@ -12,6 +12,8 @@
     <a-scene
       class="aframe-scene"
       loading-screen="dotsColor: red; backgroundColor: black"
+      fog="type: linear; color: #AAA"
+      stats
       embedded
     >
       <a-assets>

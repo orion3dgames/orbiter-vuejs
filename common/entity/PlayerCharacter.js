@@ -77,8 +77,19 @@ class PlayerCharacter {
             entityEl.setAttribute('player-body', ''); // uniquement sur le joueur?
 
             // add cursor
-            var cursorEl = document.createElement('a-cursor');
+            // info: https://aframe.io/docs/1.3.0/components/cursor.html
+            var cursorEl = document.createElement('a-entity');
             cursorEl.setAttribute('intersection-spawn', '');
+            cursorEl.setAttribute('cursor', {
+                rayOrigin: 'mouse', // good for dev on keyboard and mouse, maybe we can toggle this on or off depending on device
+                //upEvents: ['mousedown', 'triggerdown'],
+                //downEvents: ['mouseup', 'triggerup'],
+            });
+            cursorEl.setAttribute('raycaster', {
+                far: 10, // 10m max
+                interval: 500, // every 1/2 second
+                //objects: '.clickable'
+            });
 
             // add camera to entity
             var cameraEl = document.createElement('a-entity');
@@ -86,7 +97,7 @@ class PlayerCharacter {
             cameraEl.setAttribute('camera', 'active', true);
             cameraEl.setAttribute('position', { x: 0, y: 1, z: 0 });
             cameraEl.setAttribute('player-head', '');
-            cameraEl.setAttribute('mouse-cursor', '');
+            //cameraEl.setAttribute('mouse-cursor', '');
             cameraEl.setAttribute('look-controls', {
                 'enabled': true,
                 'pointerLockEnabled': false
@@ -135,7 +146,7 @@ class PlayerCharacter {
             this.moveDirection.y = 0
         }
 
-        console.log(command, velocityZ, velocityX, velocityY);
+        //console.log(command, velocityZ, velocityX, velocityY);
     }
 
     move(delta) {
