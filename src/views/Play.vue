@@ -36,7 +36,7 @@
         position="-5 20 1.5"
       ></a-entity>
 
-      <a-sky color="#CCC"></a-sky>
+      <a-sky color="#222"></a-sky>
     </a-scene>
   </div>
 </template>

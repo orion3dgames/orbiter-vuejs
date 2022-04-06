@@ -86,9 +86,9 @@ class PlayerCharacter {
                 //downEvents: ['mouseup', 'triggerup'],
             });
             cursorEl.setAttribute('raycaster', {
-                far: 10, // 10m max
-                interval: 500, // every 1/2 second
-                //objects: '.clickable'
+                far: 20, // 10m max
+                interval: 100, // every 1/2 second
+                objects: '.cube'
             });
 
             // add camera to entity
@@ -132,7 +132,7 @@ class PlayerCharacter {
         // create forces from input
         velocityZ = command.backward - command.forward
         velocityX = command.right - command.left
-        velocityY = command.jump ? 3 : -0.10 ; // jump or keep going down
+        velocityY = command.jump ? 3 : -0.001 ; // jump or keep going down
 
         // add values
         this.moveDirection.x = velocityZ * Math.sin(command.rotation / 180 * Math.PI * 2) + velocityX * Math.cos((-command.rotation / 180 * Math.PI * 2));
@@ -142,8 +142,8 @@ class PlayerCharacter {
 
         // DONT GO BELOW GROUND
         if (velocityY < 1) {
-            this.y = 0;
-            this.moveDirection.y = 0
+            //this.y = 0;
+            //this.moveDirection.y = 0
         }
 
         //console.log(command, velocityZ, velocityX, velocityY);
@@ -152,7 +152,7 @@ class PlayerCharacter {
     move(delta) {
         this.x += this.moveDirection.x * this.speed * delta
         this.z += this.moveDirection.z * this.speed * delta
-        this.y += this.moveDirection.y * this.speed * delta ;
+        this.y += this.moveDirection.y * this.speed * delta;
         this.rotation = this.moveRotation;
     }
 }

@@ -82,15 +82,12 @@ class firebaseInstance {
 
   removeCube(data) {
     return new Promise((resolve) => {
-      if(!data){
-        resolve(false);
+      if(data & data.cube_uid){
+        console.log(data);
+        remove(ref(this.db, 'cubes/'+data.cube_uid)).then(snapshot => {
+          resolve(true);
+        });
       }
-      if(!data.cube_uid){
-        resolve(false);
-      }
-      remove(ref(this.db, 'cubes/'+data.cube_uid)).then(snapshot => {
-        resolve(true);
-      });
     });
   }
 

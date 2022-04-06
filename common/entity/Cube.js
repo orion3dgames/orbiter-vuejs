@@ -78,6 +78,7 @@ class Cube {
 
   spawn(targetEl){
     let cubeEl = document.createElement('a-entity');
+    cubeEl.classList.add("cube");
     cubeEl.setAttribute('id', 'nid-' + this.nid);
     cubeEl.setAttribute('nid', this.nid);
     cubeEl.setAttribute('type', this.type);

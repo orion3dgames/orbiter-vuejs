@@ -7,11 +7,6 @@ window.AFRAME.registerComponent('intersection-spawn', {
 
     const cursor = this.el;
 
-    cursor.addEventListener('click', e => {
-
-      // not used yet
-
-    });
 
   }
 });

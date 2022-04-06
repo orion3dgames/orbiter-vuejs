@@ -8,15 +8,18 @@ window.AFRAME.registerComponent("cube", {
 
         const el = this.el;
         const keyState = window.app.gameClient.input.keyState;
-        this.nengiClient = window.app.gameClient.client;
 
         el.addEventListener("click", function (evt) {
 
             // REMOVE CUBE
             if (keyState.mouseType === 'right') {
                 let nid = el.getAttribute('nid');
-                window.app.gameClient.client.addCommand(new MsgCommand('remove_cube', { nid: nid }));
-                console.log('delete cube', nid)
+                let intersected = evt.target;
+                let intersectedType = intersected.getAttribute('type');
+                if (intersectedType === 'standard') {
+                    window.app.gameClient.client.addCommand(new MsgCommand('remove_cube', { nid: nid }));
+                    console.log('delete cube', nid)
+                }
             }
 
             // ADD CUBE
@@ -31,9 +34,14 @@ window.AFRAME.registerComponent("cube", {
 
         });
 
+        el.addEventListener("raycaster-intersection", function (evt) {
+            console.log('raycaster-intersection', evt);
+        });
+
         // ADD HOVER COLOR CHANGE TO CUBES
         // Not working very well ????
         // investigate
+
         const mesh = el.getObject3D('mesh');
         let color = el.getAttribute('material').color;
         mesh.material = [

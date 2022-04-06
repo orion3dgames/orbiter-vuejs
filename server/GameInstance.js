@@ -88,6 +88,8 @@ class GameInstance {
       this.instance.removeEntity(client.entity)
     })
 
+    //
+
   }
 
   spawnCube(cubeData) {
@@ -129,12 +131,15 @@ class GameInstance {
     if(!id) return false;
 
     const cube = this.entities.get(id);
+    console.log();
+    if(cube !== 'undefined'){
 
-    this.instance.removeEntity(cube)
+      this.instance.removeEntity(cube)
 
-    this.database.removeCube(cube).then(data => {
-      console.log('removed [Cube]', cube);
-    });
+      this.database.removeCube(cube).then(data => {
+        console.log('removed [Cube]', cube);
+      });
+    }
   }
 
   addPlayer(user) {
