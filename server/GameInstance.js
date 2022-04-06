@@ -126,6 +126,8 @@ class GameInstance {
 
     let id = parseInt(nid, 10);
 
+    if(!id) return false;
+
     const cube = this.entities.get(id);
 
     this.instance.removeEntity(cube)
