@@ -20,11 +20,8 @@
         <!--<a-asset-item id="leftHand" src="../../client/assets/leftHandLow.glb"></a-asset-item>
         <a-asset-item id="rightHand" src="../../client/assets/rightHandLow.glb"></a-asset-item>-
         -->
-        <img
-          id="crateTexture"
-          src="../../client/assets/crate.jpg"
-          crossorigin="anonymous"
-        />
+        <img id="crateTexture" src="/assets/crate.jpg" />
+        <img id="skyTexture" src="/assets/sechelt.jpg" />
       </a-assets>
 
       <a-entity light="type: ambient; intensity: 0.5;"></a-entity>
@@ -36,7 +33,7 @@
         position="-5 20 1.5"
       ></a-entity>
 
-      <a-sky color="#222"></a-sky>
+      <a-sky src="#skyTexture"></a-sky>
     </a-scene>
   </div>
 </template>
