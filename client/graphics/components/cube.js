@@ -34,10 +34,6 @@ window.AFRAME.registerComponent("cube", {
 
         });
 
-        el.addEventListener("raycaster-intersection", function (evt) {
-            console.log('raycaster-intersection', evt);
-        });
-
         // ADD HOVER COLOR CHANGE TO CUBES
         // Not working very well ????
         // investigate
@@ -58,11 +54,11 @@ window.AFRAME.registerComponent("cube", {
             faceIndex = evt.detail.intersection.face.materialIndex;
             window.app.debug('faceIndex ' + faceIndex)
             const darkerColor = Utils.darkerColor(color, -0.9);
-            mesh.material[faceIndex] = new window.THREE.MeshLambertMaterial({color: new window.THREE.Color(0xffffff)});
+            // mesh.material[faceIndex] = new window.THREE.MeshLambertMaterial({color: new window.THREE.Color(0xffffff)});
         });
 
         el.addEventListener("mouseleave", function (evt) {
-            mesh.material[faceIndex] = new window.THREE.MeshLambertMaterial({color: new window.THREE.Color(color)});
+            // mesh.material[faceIndex] = new window.THREE.MeshLambertMaterial({color: new window.THREE.Color(color)});
         });
 
     }

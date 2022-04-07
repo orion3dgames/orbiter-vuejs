@@ -18,6 +18,8 @@ class GameClient {
     this.latestCubePlacedTime = 0;
     this.user = store.getters.user;
     this.isloaded = false;
+    this.raycaster = new window.THREE.Raycaster();
+    this.pointer = new window.THREE.Vector2();
 
     this.client.onConnect(res => {
       console.log('onConnect response:', res);
@@ -59,6 +61,23 @@ class GameClient {
       this.cubeAdded = e.detail;
     });
 
+    this.input.onmousemove = (e) => {
+      this.pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
+      this.pointer.y = - (e.clientY / window.innerHeight) * 2 + 1;
+      const camera = window.AFRAME.scenes[0].camera
+      this.raycaster.setFromCamera(this.pointer, camera);
+
+      const scene = this.renderer.sceneEl;
+      const intersects = this.raycaster.intersectObjects(scene.object3D.children);
+      for (let i = 0; i < intersects.length; i++) {
+        const inter = intersects[i];
+        const isCube = inter.object.el.hasAttribute('cube');
+        if (isCube) {
+          // console.log(inter)
+          inter.object.material[inter.face.materialIndex].color.set(0xff0000);
+        }
+      }
+    }
   }
 
   update(delta, tick, now) {
