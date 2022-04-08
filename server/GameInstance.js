@@ -128,17 +128,21 @@ class GameInstance {
 
     let id = parseInt(nid, 10);
 
-    if(!id) return false;
+    if (!id) return false;
 
     const cube = this.entities.get(id);
     console.log();
-    if(cube !== 'undefined'){
+    if (cube !== 'undefined') {
 
-      this.instance.removeEntity(cube)
 
+      console.log('try to delete cube nid', cube.nid);
       this.database.removeCube(cube).then(data => {
         console.log('removed [Cube]', cube);
-      });
+        this.instance.removeEntity(cube)
+
+      }).catch(function (e) {
+        console.error(e);
+      })
     }
   }
 
@@ -257,7 +261,7 @@ class GameInstance {
 
         if (command.protocol.name === 'MsgCommand') {
           let message = JSON.parse(command.message);
-          if(command.type === 'remove_cube'){
+          if (command.type === 'remove_cube') {
             this.removeCube(message.nid)
           }
         }

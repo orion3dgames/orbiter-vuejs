@@ -22,8 +22,8 @@ import {
 class firebaseInstance {
 
   constructor() {
-      this.db = firebaseDB;
-      console.log('[firebaseInstance]', 'initialized');
+    this.db = firebaseDB;
+    console.log('[firebaseInstance]', 'initialized');
   }
 
   loadCubes() {
@@ -36,8 +36,8 @@ class firebaseInstance {
 
   getPlayer(UID) {
     return new Promise((resolve) => {
-      console.log('players/'+UID);
-      this.db.ref('players/'+UID).once("value", function (snapshot) {
+      console.log('players/' + UID);
+      this.db.ref('players/' + UID).once("value", function (snapshot) {
         resolve(snapshot.val());
       });
     });
@@ -48,7 +48,7 @@ class firebaseInstance {
       const pos = this.generatePositionRef(data);
       const q = query(ref(this.db, 'cubes/'), orderByChild('position_ref'), equalTo(pos));
       get(q).then(snapshot => {
-        if (snapshot.exists()){
+        if (snapshot.exists()) {
           resolve(false);
         }
         resolve(true);
@@ -57,7 +57,7 @@ class firebaseInstance {
   }
 
   generatePositionRef(data) {
-    return data.x+'_'+data.y+'_'+data.z
+    return data.x + '_' + data.y + '_' + data.z
   }
 
   addCube(data) {
@@ -81,12 +81,20 @@ class firebaseInstance {
   }
 
   removeCube(data) {
-    return new Promise((resolve) => {
-      if(data & data.cube_uid){
+    return new Promise((resolve, reject) => {
+      if (data && data.cube_uid) {
         console.log(data);
-        remove(ref(this.db, 'cubes/'+data.cube_uid)).then(snapshot => {
+        remove(ref(this.db, 'cubes/' + data.cube_uid)).then(snapshot => {
           resolve(true);
-        });
+        }).catch(error => {
+          reject(error);
+        })
+      }
+      else {
+        if (!data)
+          reject('but no data');
+        else
+          reject('but no cube_uid');
       }
     });
   }
