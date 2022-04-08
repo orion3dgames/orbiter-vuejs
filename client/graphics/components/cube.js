@@ -24,20 +24,17 @@ window.AFRAME.registerComponent("cube", {
 
             // ADD CUBE
             if (keyState.mouseType === 'left') {
-                let intersected = evt.target;
+                let intersected = window.app.gameClient.cubeHover;
                 let intersectedType = intersected.getAttribute('type');
-                let faceIndex = evt.detail.intersection.face?.materialIndex;
+                let faceIndex = window.app.gameClient.cubeFaceHover;
                 let currentPoint = Object.assign({}, intersected.object3D.position); // save original ray point just in case
                 let adjustedPoint = Utils.adjustPosition(faceIndex, currentPoint, intersectedType)
-                window.app.gameClient.client.addCommand(new CubeCommand(adjustedPoint.x,adjustedPoint.y, adjustedPoint.z));
+                window.app.gameClient.client.addCommand(new CubeCommand(adjustedPoint.x, adjustedPoint.y, adjustedPoint.z));
             }
 
         });
 
         // ADD HOVER COLOR CHANGE TO CUBES
-        // Not working very well ????
-        // investigate
-
         const mesh = el.getObject3D('mesh');
         let color = el.getAttribute('material').color;
         mesh.material = [
@@ -52,7 +49,6 @@ window.AFRAME.registerComponent("cube", {
 
         el.addEventListener("mouseenter", function (evt) {
             faceIndex = evt.detail.intersection.face.materialIndex;
-            window.app.debug('faceIndex ' + faceIndex)
             const darkerColor = Utils.darkerColor(color, -0.9);
             // mesh.material[faceIndex] = new window.THREE.MeshLambertMaterial({color: new window.THREE.Color(0xffffff)});
         });

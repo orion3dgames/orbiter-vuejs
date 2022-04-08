@@ -82,9 +82,11 @@ class GameClient {
                 this.cubeHover.getObject3D('mesh').material[this.cubeFaceHover].color.setRGB(this.cubeHoverFaceColorlBackup.r, this.cubeHoverFaceColorlBackup.g, this.cubeHoverFaceColorlBackup.b);
               // console.log(this.cubeHoverFaceColorlBackup)
               this.cubeFaceHover = inter.face.materialIndex;
-              const color = inter.object.material[inter.face.materialIndex].color;
-              this.cubeHoverFaceColorlBackup = { r: color.r, g: color.g, b: color.b };
+              this.cubeHoverFaceColorlBackup = Object.assign({}, inter.object.material[inter.face.materialIndex].color);
+              // let color = el.getAttribute('material').color;
+              // const darkerColor = Utils.darkerColor(color, -0.9);
               inter.object.material[inter.face.materialIndex].color.set(0xff0000);
+              window.app.debug('materialIndex ' + this.cubeFaceHover)
             }
             // different cube
             if (this.cubeHover !== inter.object.el) {
