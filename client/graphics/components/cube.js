@@ -25,10 +25,12 @@ window.AFRAME.registerComponent("cube", {
             // ADD CUBE
             if (keyState.mouseType === 'left') {
                 let intersected = window.app.gameClient.cubeHover;
-                let intersectedType = intersected.getAttribute('type');
+                let intersectedType = intersected?.getAttribute('type');
+                if (!intersectedType) return
                 let faceIndex = window.app.gameClient.cubeFaceHover;
                 let currentPoint = Object.assign({}, intersected.object3D.position); // save original ray point just in case
                 let adjustedPoint = Utils.adjustPosition(faceIndex, currentPoint, intersectedType)
+                console.log('adjustedPoint ', adjustedPoint)
                 window.app.gameClient.client.addCommand(new CubeCommand(adjustedPoint.x, adjustedPoint.y, adjustedPoint.z));
             }
 

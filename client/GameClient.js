@@ -75,7 +75,7 @@ class GameClient {
       for (let i = 0; i < intersects.length; i++) {
         if (i === 0) {
           const inter = intersects[i];
-          if (inter.object.el.hasAttribute('cube')) {
+          if (inter.object.el && inter.object.el.hasAttribute('cube')) {
             //different face
             if (this.cubeFaceHover !== inter.face.materialIndex || this.cubeHover !== inter.object.el) {
               if (this.cubeFaceHover !== null && this.cubeHover.getObject3D('mesh').material[this.cubeFaceHover])
