@@ -75,6 +75,7 @@ class firebaseInstance {
         type: data.type,
       }
       set(newSessionRef, cube).then(() => {
+        data.cube_uid = newSessionRef.key;
         resolve(data);
       });
     })
@@ -83,7 +84,7 @@ class firebaseInstance {
   removeCube(data) {
     return new Promise((resolve, reject) => {
       if (data && data.cube_uid) {
-        console.log(data);
+        // console.log(data);
         remove(ref(this.db, 'cubes/' + data.cube_uid)).then(snapshot => {
           resolve(true);
         }).catch(error => {
