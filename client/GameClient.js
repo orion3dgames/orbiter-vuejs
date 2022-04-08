@@ -18,8 +18,12 @@ class GameClient {
     this.latestCubePlacedTime = 0;
     this.user = store.getters.user;
     this.isloaded = false;
+    this.scene = this.renderer.sceneEl;
     this.raycaster = new window.THREE.Raycaster();
     this.pointer = new window.THREE.Vector2();
+    this.cubeHover = null;
+    this.cubeHoverMaterialBackup = null;
+    this.cubeFaceHover = null;
 
     this.client.onConnect(res => {
       console.log('onConnect response:', res);
@@ -67,14 +71,31 @@ class GameClient {
       const camera = window.AFRAME.scenes[0].camera
       this.raycaster.setFromCamera(this.pointer, camera);
 
-      const scene = this.renderer.sceneEl;
-      const intersects = this.raycaster.intersectObjects(scene.object3D.children);
+      const intersects = this.raycaster.intersectObjects(this.scene.object3D.children);
       for (let i = 0; i < intersects.length; i++) {
-        const inter = intersects[i];
-        const isCube = inter.object.el.hasAttribute('cube');
-        if (isCube) {
-          // console.log(inter)
-          inter.object.material[inter.face.materialIndex].color.set(0xff0000);
+        if (i === 0) {
+          const inter = intersects[i];
+          if (inter.object.el.hasAttribute('cube')) {
+            //different face
+            if (this.cubeFaceHover !== inter.face.materialIndex || this.cubeHover !== inter.object.el) {
+              if (this.cubeFaceHover !== null && this.cubeHover.getObject3D('mesh').material[this.cubeFaceHover])
+                this.cubeHover.getObject3D('mesh').material[this.cubeFaceHover].color.setRGB(this.cubeHoverFaceColorlBackup.r, this.cubeHoverFaceColorlBackup.g, this.cubeHoverFaceColorlBackup.b);
+              // console.log(this.cubeHoverFaceColorlBackup)
+              this.cubeFaceHover = inter.face.materialIndex;
+              const color = inter.object.material[inter.face.materialIndex].color;
+              this.cubeHoverFaceColorlBackup = { r: color.r, g: color.g, b: color.b };
+              inter.object.material[inter.face.materialIndex].color.set(0xff0000);
+            }
+            // different cube
+            if (this.cubeHover !== inter.object.el) {
+              if (this.cubeHover) {
+                // console.log('leave cube', this.cubeHover.getAttribute('nid'))
+              }
+              // console.log('enter cube', inter.object.el.getAttribute('nid'))
+              // console.log(inter)
+              this.cubeHover = inter.object.el;
+            }
+          }
         }
       }
     }
