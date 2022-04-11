@@ -13,6 +13,8 @@ class PlayerCharacter {
         this.color = '#FFFFFF';
         this.speed = 2;
         this.displayName = '...loading';
+        this.savingToDB = false;
+        this.lastSaved = new Date().getTime();
 
         if (entity) {
             Object.assign(this, entity)

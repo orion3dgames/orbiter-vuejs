@@ -60,6 +60,9 @@ server.listen(PORT, function () {
 class GameInstance {
   constructor() {
 
+    // INIT VARIABLES
+    this.savePlayerPositionEvery = 10000 // every 10 seconds
+
     // INIT VAR
     this.entities = new Map()
 
@@ -83,7 +86,7 @@ class GameInstance {
 
     // ON CLIENT DISCONNECT
     this.instance.onDisconnect(client => {
-      console.log('[SERVER][onDisconnect]', client.nid);
+      console.log('[SERVER][onDisconnect]', client.entity);
       this.entities.delete(client.entity.nid)
       this.instance.removeEntity(client.entity)
     })
@@ -290,6 +293,23 @@ class GameInstance {
         client.view.x = client.entity.x
         client.view.z = client.entity.z
         client.view.y = client.entity.y
+
+        // save player position
+        // will save to db 1 time every 10 seconds
+        let now = new Date().getTime();
+        let timeSinceSave = client.entity.lastSaved + this.savePlayerPositionEvery;
+        if(!client.entity.savingToDB && timeSinceSave < now){
+          client.entity.savingToDB = true;
+          let position = {
+            'x': client.entity.x,
+            'y': client.entity.y,
+            'z': client.entity.z,
+          }
+          this.database.savePlayerPosition(position, client.entity.player_uid).then(data => {
+            client.entity.lastSaved = new Date().getTime();
+            client.entity.savingToDB = false;
+          });
+        }
 
       }
 

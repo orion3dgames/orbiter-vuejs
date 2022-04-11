@@ -60,6 +60,14 @@ class firebaseInstance {
     return data.x + '_' + data.y + '_' + data.z
   }
 
+  savePlayerPosition(position, player_uid) {
+    return new Promise((resolve) => {
+      update(ref(this.db, 'players/' +player_uid+"/position"), position).then(() => {
+        resolve(position);
+      });
+    })
+  }
+
   addCube(data) {
     return new Promise((resolve) => {
       const dbRef = ref(this.db, 'cubes');
